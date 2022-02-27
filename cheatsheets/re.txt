@@ -1,0 +1,86 @@
+Reverse Engineering (RE)
+
+* Go to the bottom to read some important definitions
+* Run the program to see memory addresses
+* In x64 programs, RSI and RDI may be used to pass function arguments instead of pushing them to the stack
+* Linux offers many essential functions called system calls or syscalls. Some common syscalls: execve, write
+
+File information:                 file <file>
+Display data in hex numbers:      hd <file> (hd is an alias for hexdump -C)
+Disassemble binary:               objdump -M intel <program> (-s: full contents, -S: source and disassembly, -d: disassemble exec sections, -D: disassemble all sections, -x: headers)
+Addresses of entries in GOT:      objdump --dynamic-reloc <program>
+Show info about ELF files:        readelf (-h: header, -S: sections, -l: segments)
+Print program printable strings:  strings <program>
+Trace system calls and signals:   strace <program_path>
+Trace library calls:              ltrace <program_path>
+Print shared libraries:           ldd <program>
+ASCII to hex:                     xxd -p <<< 'ABC' (Line feed is added at the end, 0x0a)
+Hex to ASCII:                     xxd -r <<< 0x414243
+
+
+GDB - GNU Debugger:
+
+Ask for help:                     h [<command>]
+Quit:                             q
+Open binary:                      gdb <binary>
+Disassemble function:             disas <function> (e.g.: disas main)
+Set Intel syntax:                 set disassembly-flavor intel
+Set breakpoint:                   b <function | line | *address>
+Set watchpoint (expr changes):    watch <expr>
+Run program:                      r [arglist]
+Display val of expr:              p [/<format={x|d|u|o|t|a|c|f}>] <expression>
+Examine memory at address expr:   x [/<count><unit={b|h|w|g}><format={s|i}>] <expr> (e.g.: x/s <addr> to see string val at addr)
+Display program stack:            bt
+Continue execution:               c
+Next line, step over func:        n
+Next line, step into func:        s
+Register values:                  info registers (most regs); info all-reg (all regs); info <reg> (given reg)
+Change var value                  set $<var_name | register>=<value>
+Show next 10 lines of source:     list
+
+radare2 — Hexadecimal editor, disassembler and debugger:
+
+* r2 (radare2) starts at the beginning of the text segments, that is, _start (entry0 in r2; see stackoverflow.com/a/45595101 for more info)
+* Use commands like less and grep to make things easier
+
+Open program:                             r2 <program> (-d: debug mode)
+Ask for help:                             ?[<command>] (use ? anywhere)
+Quit:                                     q | exit
+Analyse and autoname functions:           aaa
+Print all functions:                      afl
+Seek to address / function:               s <addr | function> (go to main: s sym.main)
+Print disassembly of cur function:        pdf
+Enter visual mode (control flow graph):   VV (tab, shift-tab: move around; R: randomize colors; p: rotate graph modes; =: toggle graph layout)
+Enter visual mode (panels):               V! (use s/S to step into/over)
+Enter command mode in visual:             :
+Add breakpoint (debug mode):              db <addr | function> (e.g.: db sym.main)
+Run | continue execution:                 dc
+Change registers:                         dr <register>=<value>
+Register values:                          dr [<register>] (all by default)
+Examine memory:                           x @ <addr | func> | x/[...] same as gdb
+Evaluate expr in other formats:           ? <expr>
+Find string in memory segment:            izz | grep <segment>
+Rename local variable:                    afvn <prev_name> <new_name>
+
+
+Memory layout of C programs:
+
+.text:   contain executable code
+.data:   contain global initialized data and static initialized data
+.rodata: string literal or const variable
+.bss:    global uninitialized data and static uninitialized data (doesn't occupy any size in ELF)
+heap:    dynamically allocated memory
+stack:   program stack (ret addr, func params, tmp vars), each func call creates a new stack frame
+
+
+Definitions:
+
+Debugger: a debugger or debugging tool is a computer program used to test and debug other programs (the "target" program). The main use of a debugger is to run the target program under controlled conditions that permit the programmer to track its operations in progress and monitor changes in computer resources (most often memory areas used by the target program or the computer's operating system) that may indicate malfunctioning code. Typical debugging facilities include the ability to run or halt the target program at specific points, display the contents of memory, CPU registers or storage devices (such as disk drives), and modify memory or register contents in order to enter selected test data that might be a cause of faulty program execution.
+
+Debug symbol (sym): is a special kind of symbol that attaches additional information to the symbol table of an object file, such as a shared library or an executable. This information allows a debugger to gain access to information from the source code of the binary, such as the names of identifiers, including variables and routines. The symbolic information may be compiled together with the module's binary file, or distributed in a separate file, or simply discarded during the compilation and/or linking. This information can be helpful while trying to investigate and fix a crashing application or any other fault.
+
+Machine code: is any low-level programming language, consisting of machine language instructions, which are used to control a computer's central processing unit (CPU). Each instruction causes the CPU to perform a very specific task, such as a load, a store, a jump, or an arithmetic logic unit (ALU) operation on one or more units of data in the CPU's registers or memory. Machine code is a strictly numerical language which is designed to run as fast as possible, and may be considered as the lowest-level representation of a compiled or assembled computer program or as a primitive and hardware-dependent programming language.
+
+Assembly language (asm): or assembler language, is any low-level programming language in which there is a very strong correspondence between the instructions in the language and the architecture's machine code instructions.Assembly language usually has one statement per machine instruction (1:1), but constants, comments, assembler directives, symbolic labels of, e.g., memory locations, registers, and macros are generally also supported. Assembly code is converted into executable machine code by a utility program referred to as an assembler. 
+
+Disassembler: is a computer program that translates machine language into assembly language—the inverse operation to that of an assembler. A disassembler differs from a decompiler, which targets a high-level language rather than an assembly language. Disassembly, the output of a disassembler, is often formatted for human-readability rather than suitability for input to an assembler, making it principally a reverse-engineering tool.

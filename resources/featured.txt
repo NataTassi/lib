@@ -1,0 +1,13 @@
+https://tryhackme.com/
+https://academy.hackthebox.com/
+https://primer.picoctf.com/
+https://book.hacktricks.xyz/
+https://dayzerosec.com/blog/2021/02/02/getting-started.html
+https://sushant747.gitbooks.io/total-oscp-guide/content/
+https://ctf101.org/
+https://github.com/Hacker0x01/hacker101
+https://github.com/RPISEC
+https://www.offensive-security.com/metasploit-unleashed/
+https://www.cybrary.it/catalog/
+https://microcorruption.com/login (great to learn about BinExpl & RE)
+https://crackmes.one/ (reverse engineering challenges)

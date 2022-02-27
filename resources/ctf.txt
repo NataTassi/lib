@@ -1,0 +1,20 @@
+https://ctftime.org/
+https://github.com/apsdehal/awesome-ctf
+https://ctftime.org/ctf-wtf/
+http://smashthestack.org/faq.html
+http://captf.com/practice-ctf/ --> List
+http://ctf.infosecinstitute.com/
+https://www.facebook.com/notes/facebook-ctf/facebook-ctf-is-now-open-source/525464774322241/
+https://stripe.com/blog/capture-the-flag 
+https://resources.infosecinstitute.com/tools-of-trade-and-resources-to-prepare-in-a-hacker-ctf-competition-or-challenge/
+https://ictf.cs.ucsb.edu/
+https://ttorial.com/ethical-hacking-capture-flag-walkthroughs
+https://hackaday.com/tag/capture-the-flag/
+https://www.root-me.org/en/Capture-The-Flag/CTF-all-the-day/
+http://www.cipher-ctf.org/CaptureTheFlag.php
+https://www.praetorian.com/challenges/pwnable
+https://www.endgame.com/blog/technical-blog/how-get-started-ctf
+https://ctf.infysec.com/
+https://hsctf.com/
+https://ictf.cs.ucsb.edu/
+https://pentesterlab.com/exercises

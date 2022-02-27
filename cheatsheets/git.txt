@@ -1,0 +1,56 @@
+Save credentials:
+
+https://stackoverflow.com/q/35942754/8413482
+git config --global user.email "you@example.com"
+git config --global user.name "Your user name"
+Password authentification was removed from CLI, but you can use tokens.
+To create a personal access token to use in place of a pass with the CLI:
+    Log into GitHub -> Settings -> Developer settings -> Personal access tokens -> Generate new token
+
+
+Clone online repo into an offline one:
+git clone [link].git            
+
+
+Create a new repository on the command line:
+
+Create and move to a new folder
+echo "# Description" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git remote add origin https://github.com/<user>/<project>.git
+git push -u origin master
+
+
+Update local repo:
+git pull
+
+
+Update remote (cloud) repo:
+git pull                   // ALWAYS do this before making any changes in the local repo
+Add, delete, or modify files
+git add .                  // use only if you added new files 
+git commit -a -m "comment" // apply changes 
+git push                   // update online repo
+
+
+Remove directory:
+git rm -r dir-name
+git commit -m "note"
+git push -u origin master
+
+
+Fix merge errors:
+
+If you mean you want the pull to overwrite local changes, doing the merge as if the working tree were clean, well, clean the working tree:
+git reset --hard
+git pull
+
+If there are untracked local files you could use git clean to remove them. Use git clean -f to remove untracked files, -df to remove untracked files and directories, and -xdf to remove untracked or ignored files or directories.
+
+If on the other hand you want to keep the local modifications somehow, you'd use stash to hide them away before pulling, then reapply them afterwards:
+git stash
+git pull
+git stash pop
+I don't think it makes any sense to literally ignore the changes, though - half of pull is merge, and it needs to merge the committed versions of content with the versions it fetched.

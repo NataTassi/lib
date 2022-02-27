@@ -1,0 +1,10 @@
+https://github.com/Hack-with-Github/Awesome-Hacking
+https://github.com/vitalysim/Awesome-Hacking-Resources
+https://github.com/carpedm20/awesome-hacking
+https://github.com/search?o=desc&p=1&q=pentest&s=stars&type=Repositories
+https://github.com/search?o=desc&p=1&q=hack&s=stars&type=Repositories
+
+https://opensecuritytraining.info
+http://www.securitytube.net/
+http://www.orkspace.net/secdocs/
+https://kalitut.com/penetration-testing-resources/

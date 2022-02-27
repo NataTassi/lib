@@ -1,0 +1,32 @@
+tmux is a terminal multiplexer: it enables a number of terminals to be 
+created, accessed, and controlled from a single screen (see manual page).
+
+* See what a pseudo-terminal is in the manual page - man pty
+
+New tmux session:             tmux [new -s <session_name>] OR prefix + :new
+Prefix to send commands:      ctrl-b (sometimes ctrl-a)
+List open sessions:           tmux ls OR prefix :s
+Close current session:        prefix :kill-session [-t <number | name>]
+Detach from session:          prefix + d
+Attach to session:            tmux a [-t <number | name>]
+List shortcuts:               prefix + ?
+Name session:                 prefix + $
+
+Enter copy mode (scrolling):  prefix + [
+Enter command mode:           prefix + :
+Escape command / copy mode:   esc
+
+New window:                   prefix + c
+Move to window [number]:      prefix + [number]
+Rename current window:        prefix + ,
+Move current window:          prefix + .
+List windows:                 prefix + w
+Kill window:                  prefix + &                              
+
+Pane horizontal split:        prefix + %
+Pane vertical split:          prefix + "
+Swap panes:                   prefix + o
+Move between panes:           prefix + <arrow>
+Show pane numbers:            prefix + q
+Move to pane number:          prefix + q + <num>
+Kill pane:                    prefix + x

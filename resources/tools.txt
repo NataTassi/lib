@@ -1,0 +1,5 @@
+https://www.virustotal.com/
+https://valkyrie.comodo.com/
+https://www.alexa.com/siteinfo/google.com
+https://asciinema.org/
+https://github.com/icholy/ttygif

