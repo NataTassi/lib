@@ -39,3 +39,7 @@ import os
 def cls():
     os.system('cls' if os.name=='nt' else 'clear')
 cls()
+
+
+def reversed_str(s: str):
+    return s[::-1] if s else None
