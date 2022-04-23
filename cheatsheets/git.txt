@@ -41,9 +41,19 @@ git commit -m "note"
 git push -u origin master
 
 
+Uncommit changes:
+
+- If all you want to do is undo the act of committing, leaving everything else intact, use:
+    git reset --soft HEAD^
+- If you want to undo the act of committing and everything you'd staged, but leave the work tree (your files) intact:
+    git reset HEAD^
+- If you actually want to completely undo it, throwing away all uncommitted changes, resetting everything to the previous commit (as the original question asked):
+    git reset --hard HEAD^
+
+
 Fix merge errors:
 
-If you mean you want the pull to overwrite local changes, doing the merge as if the working tree were clean, well, clean the working tree:
+If you want the pull to overwrite local changes, doing the merge as if the working tree were clean, well, clean the working tree:
 git reset --hard
 git pull
 

