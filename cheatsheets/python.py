@@ -55,3 +55,24 @@ https://stackoverflow.com/questions/661603/how-do-i-know-if-a-generator-is-empty
 https://stackoverflow.com/questions/30081275/why-is-1000000000000000-in-range1000000000000001-so-fast-in-python-3?rq=1
 
 """
+
+
+# Rules for Python variables:
+
+# A variable name must start with a letter or the underscore character
+# A variable name cannot start with a number
+# A variable name can only contain alpha-numeric characters and underscores (A-z, 0-9, and _ )
+# Variable names are case-sensitive (age, Age and AGE are three different variables)
+
+
+# Operators: https://cheatography.com/nouha-thabet/cheat-sheets/python-operators-and-booleans/pdf/
+
+
+def is_leap_year(year):
+    """Determine whether a year is a leap year."""
+
+    return year % 4 == 0 and (year % 100 != 0 or year % 400 == 0)
+
+
+
+# Install Python packages with pip and requirements.txt: pip install -r requirements.txt

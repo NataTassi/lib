@@ -114,6 +114,7 @@ It is possible to leave out the line with the shebang and still run the script b
 
 
 Terminal control sequences:
+
 Commands sent to the terminal that input a specific non-printable ASCII character to perform an associated action.
 
 ctrl-c: interrupts the running program
@@ -173,14 +174,16 @@ Show current user id:             id
 Show current user name:           whoami
 Become another user:              su <user> (don't specify a user to become superuser; add -l to inherit more properties of the new user, like env vars)
 Change file privileges:           chmod <file> (chmod +x: execution, chmod 777: all privileges), you can't chmod FAT32 filesystems, move the executable
+Change the owner of a file:       chown <new_owner> <file>
+Change group ownership of a file: chgrp <new_group> <file>
 Execute command as root:          sudo <command>
 
 System information:               uname -a
 Processes information:            ps [aux] (add 'aux' to see the processes run by other users and the system; add axjf to view process tree)
 Real-time processes info:         top (stats are updated every 10 secs or when you use the arrow keys)
 Kill a process:                   kill <pid> (we can send signals to the process to be killed: SIGTERM to allow cleanup (default), SIGKILL to avoid cleanup, SIGSTOP to stop a process)
-
 Block devices:                    lsblk
+Disk space usage:                 df -h
 
 Decompress tar file:              tar -xvzf <file>
 Decompress zip file:              unzip <file>
@@ -299,12 +302,13 @@ Delete user:
 2. sudo deluser --remove-home <user> (also deletes the user dir)
 
 A group is a collection of users (a user can belong to multiple groups). The primary purpose of the groups is to define a set of privileges like read, write, or execute permission for a given resource that can be shared among the users within the group. You can see all the groups with: cat /etc/group
-Create group:              sudo groupadd <group>
-Add user to a group:       sudo usermod -aG <group> <user>
-Delete user from a group:  sudo gpasswd -d <user> <group>
-Delete group:              sudo groupdel <group>
-Change pass:               passwd <user>
-Change user:               su [-] <user> (if - is added before the user, then the env is changed to the user's)
+List a user's groups:          groups <user>
+Create group:                  sudo groupadd <group>
+Add user to a group:           sudo usermod -aG <group> <user>
+Delete user from a group:      sudo gpasswd -d <user> <group>
+Delete group:                  sudo groupdel <group>
+Change pass:                   passwd <user>
+Run commands as other user:    su [-] [<user> = root] (if - is added before the user, then the env is changed to the user's)
 
 The /etc/passwd contains one entry per line for each user (user account) of the system. This file shuld be world-readable as many utilities use it to map user IDs to user names. All fields are separated by a colon (:) symbol. There are 7 fields:
 
@@ -317,13 +321,24 @@ The /etc/passwd contains one entry per line for each user (user account) of the 
 7. Command/shell: The absolute path of a command or shell (/bin/bash). Typically, this is a shell. Please note that it does not have to be a shell. For example, sysadmin can use the nologin shell, which acts as a replacement shell for the user accounts. If shell set to /sbin/nologin and the user tries to log in to the Linux system directly, the /sbin/nologin shell closes the connection.
 
 
+Format drive:
+1. lsblk -f or df
+2. sudo umount /dev/<device_name>
+3. sudo mkfs.[vfat|ntfs] -f -L <volume_name> /dev/<partition_name>
+
+
 Create bootable Linux USB drive:
-1. Unmount USB partition:         sudo umount /dev/sd<?><?> (use lsblk to find your device partition)
+1. Unmount USB partition:         sudo umount /dev/name (use lsblk to find your device partition)
 2. Copy content from ISO:         sudo dd bs=4M if=/path/to/input.iso of=/dev/sd<?> conv=fdatasync status=progress
 
 
-Free up space:
+Make GRUB recognize Windows:
+1. Boot Ubuntu and mount your Windows partition (simply use your file explorer)
+2. Run the following on the command line (Ctrl+Alt+t): sudo os-prober
+3. If your Windows installation was found, you can run: sudo update-grub
 
+
+Free up space:
 1. Empty trash folder: rm -rf ~/.local/share/Trash/*
 2. Get rid of packages that are no longer required: sudo apt-get autoremove
 3. Uninstall unnecessary applications: sudo apt-get remove <package-name>
@@ -367,7 +382,7 @@ Pressing Ctrl+Z sends the TSTP signal to your process. This halts execution (the
 The shell has the functionality to 'background' the process, but this is a relationship between the shell and the process. The process itself doesn't really have the concept of 'background' or 'foreground'.
 
 
-Packet management:
+Package management:
 
 A package manager is a tool that allows users to install, remove, upgrade, configure and manage software packages on an operating system. The package manager can be a graphical application like a software center like Discover or a command line tool like apt or pacman.
 Dpkg is a base package management system for the Debian Linux family (which includes Ubuntu, Linux Mint, Kali Linux and Parrot OS), it is used to install, remove, store and provide information about .deb packages. It is a low-level tool and there are front-end tools that help users to obtain packages from remote repositories and/or handle complex package relations and these include: APT (Advanced Packaging Tool), Aptitude Package Manager, and Synaptic Package Manager.
@@ -402,6 +417,7 @@ Crontabs can be edited by using crontab -e. Use cron job generators as https://c
 
 
 Logs:
+
 Located in the /var/log directory, these files and folders contain logging information for applications and services running on your system.
 These services and logs are a great way in monitoring the health of your system and protecting it. Not only that, but the logs for services such as a web server contain information about every single request - allowing developers or administrators to diagnose performance issues or investigate an intruder's activity.
 

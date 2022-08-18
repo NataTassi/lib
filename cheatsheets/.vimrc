@@ -1,0 +1,5 @@
+syntax on                         " autodetect syntax (syn)
+color slate                       " color scheme (colo)
+set number                        " shows line numbers (nu)
+set tabstop=4                     " Number of spaces that a <Tab> in the file counts for (ts)
+set clipboard=unnamed,unnamedplus " make copy/paste operations behave as expected

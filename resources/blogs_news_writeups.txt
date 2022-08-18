@@ -6,3 +6,4 @@ https://research.nccgroup.com/
 https://infosecwriteups.com/
 https://kalitut.com/
 https://github.com/osirislab
+https://blog.sean-wright.com/findings/

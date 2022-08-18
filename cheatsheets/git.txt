@@ -1,31 +1,25 @@
 Save credentials:
-
-https://stackoverflow.com/q/35942754/8413482
-git config --global user.email "you@example.com"
-git config --global user.name "Your user name"
-Password authentification was removed from CLI, but you can use tokens.
-To create a personal access token to use in place of a pass with the CLI:
+* Password authentification was removed from CLI, but you can use tokens
+1. To create a personal access token to use in place of a pass with the CLI:
     Log into GitHub -> Settings -> Developer settings -> Personal access tokens -> Generate new token
-
+2. git config --global credential.helper store (or use gh CLI tool)
+3. Log in only once using the token instead of the password
+Note: use 'git config --global user.name <name>' and 'git config --global user.email <email>' to save personal data globally
 
 Clone online repo into an offline one:
-git clone [link].git            
-
+git clone [repo_url]
 
 Create a new repository on the command line:
-
-Create and move to a new folder
-echo "# Description" >> README.md
-git init
-git add README.md
-git commit -m "first commit"
-git remote add origin https://github.com/<user>/<project>.git
-git push -u origin master
-
+1. Create a new folder and set as current working directory
+2. echo "# Description" >> README.md
+3. git init
+4. git add README.md
+5. git commit -m "first commit"
+6. git remote add origin https://github.com/<user>/<project>.git
+7. git push -u origin master
 
 Update local repo:
 git pull
-
 
 Update remote (cloud) repo:
 git pull                   // ALWAYS do this before making any changes in the local repo
@@ -34,33 +28,22 @@ git add .                  // use only if you added new files
 git commit -a -m "comment" // apply changes 
 git push                   // update online repo
 
-
 Remove directory:
 git rm -r dir-name
 git commit -m "note"
 git push -u origin master
 
-
 Uncommit changes:
-
 - If all you want to do is undo the act of committing, leaving everything else intact, use:
     git reset --soft HEAD^
 - If you want to undo the act of committing and everything you'd staged, but leave the work tree (your files) intact:
     git reset HEAD^
 - If you actually want to completely undo it, throwing away all uncommitted changes, resetting everything to the previous commit (as the original question asked):
     git reset --hard HEAD^
+* If there are untracked local files you could use git clean to remove them. Use git clean -f to remove untracked files, -df to remove untracked files and directories, and -xdf to remove untracked or ignored files or directories.
+* If on the other hand you want to keep the local modifications somehow, you'd use stash to hide them away before pulling, then reapply them afterwards:
+git stash && git pull && git stash pop
 
-
-Fix merge errors:
-
-If you want the pull to overwrite local changes, doing the merge as if the working tree were clean, well, clean the working tree:
-git reset --hard
-git pull
-
-If there are untracked local files you could use git clean to remove them. Use git clean -f to remove untracked files, -df to remove untracked files and directories, and -xdf to remove untracked or ignored files or directories.
-
-If on the other hand you want to keep the local modifications somehow, you'd use stash to hide them away before pulling, then reapply them afterwards:
-git stash
-git pull
-git stash pop
-I don't think it makes any sense to literally ignore the changes, though - half of pull is merge, and it needs to merge the committed versions of content with the versions it fetched.
+Change last commit name:
+1. Type 'git commit --amend' and edit the commit message
+2. If you pushed the last commit, use the 'git push --force-with-lease' command to force push over the old commit

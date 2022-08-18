@@ -1,0 +1,7 @@
+Command palette:    ctrl + shift + p
+Settings:           ctrl + ,
+Quick open:         ctrl + p
+Switch tabs:        ctrl + tab
+
+Use vimrc: 
+Settings -> type vimrc -> Enable 'Use Keymappings from a .vimrc file'
