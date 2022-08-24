@@ -153,6 +153,7 @@ Show current location:            pwd
 List directory contents:          ls -la <location = .> (-l: as list, -a: show hidden files, -h: human-readable sizes)
 Shortcut for ls -la:              ll
 Show file content:                cat <file>
+Print last 10 lines of the file:  tail <file>
 Redirect input to file & stdout:  tee <file> (e.g.: ls -la | tee listing.txt)
 Change directory:                 cd <directory> (.: current dir, ..: parent dir)
 Create new empty file:            touch <file>
@@ -181,6 +182,7 @@ Execute command as root:          sudo <command>
 System information:               uname -a
 Processes information:            ps [aux] (add 'aux' to see the processes run by other users and the system; add axjf to view process tree)
 Real-time processes info:         top (stats are updated every 10 secs or when you use the arrow keys)
+Interactive process viewer:       htop
 Kill a process:                   kill <pid> (we can send signals to the process to be killed: SIGTERM to allow cleanup (default), SIGKILL to avoid cleanup, SIGSTOP to stop a process)
 Block devices:                    lsblk
 Disk space usage:                 df -h
@@ -405,7 +407,9 @@ Common commands in apt:
 * Update package db:  sudo apt update
 * Upgrade packages:   sudo apt upgrade
 
-To install a package from a .deb file use: sudo dpkg -i <file>
+To install a package from a .deb file use:
+1. sudo dpkg -i <file>
+2. If install fails due to missing dependencies use 'apt-get -f install' and install igain
 
 
 Automation:

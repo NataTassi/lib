@@ -1,0 +1,1 @@
+Delete commands from bash history: history -a && vim ~/.bash_history

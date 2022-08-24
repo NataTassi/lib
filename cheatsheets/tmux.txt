@@ -2,6 +2,8 @@ tmux is a terminal multiplexer: it enables a number of terminals to be
 created, accessed, and controlled from a single screen (see manual page).
 
 * See what a pseudo-terminal is in the manual page - man pty
+* To send a command to tmux running inside tmux (like when you SSH into a server 
+from a local tmux session and open a remote tmux session) press the prefix twice 
 
 New tmux session:             tmux [new -s <session_name>] OR prefix + :new
 Prefix to send commands:      ctrl-b (sometimes ctrl-a)
