@@ -153,8 +153,10 @@ Show current location:            pwd
 List directory contents:          ls -la <location = .> (-l: as list, -a: show hidden files, -h: human-readable sizes)
 Shortcut for ls -la:              ll
 Show file content:                cat <file>
-Print last 10 lines of the file:  tail <file>
+Print first lines of the file:    head [-n <lines>] <file>
+Print last lines of the file:     tail [-n <lines>] <file>
 Redirect input to file & stdout:  tee <file> (e.g.: ls -la | tee listing.txt)
+Print columns from tabular data:  awk '{print "Min:", $3, "Max:", $2}' <file>
 Change directory:                 cd <directory> (.: current dir, ..: parent dir)
 Create new empty file:            touch <file>
 Make new directory:               mkdir <dir_name>
@@ -199,6 +201,8 @@ Print file checksum:              <*>sum <file> (* = {md5|sha1|...})
 
 Misc:
 
+Print lines with > x chars:      awk 'length($0) > <x>' <file>
+Find length of the longest line:  awk '{ if (length($0) > max) max = length($0) } END { print max }' <file>
 Turn file into string with '\n':  awk '$1=$1' ORS='\\n' <file>
 Run VLC from CLI:                 cvlc --play-and-exit audio.mp3 
 Decrypt PDF:                      qpdf --password=<pass> --decrypt <input> <output>
