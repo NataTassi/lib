@@ -23,6 +23,13 @@ defined variables (btw, you can define variables with var=value).
 * You can use the output of one command as a parameter of another executing the command like this $(<command>). e.g.: sudo openvpn $(ls | grep TryHackMe)
 This is called command substitution. You could also surround a command with backsticks (`command`) to achieve the same purpose. $ is more readable and powerful.
 
+* Programs executed from the shell inherit all of the environment variables from the shell. The set of all environment variables that have values is collectively known as the environment.
+The environment keeps track of information that is shared by many programs, changes infrequently, and that is less frequently used.
+Standard environment variables are used for information about the user’s home directory, terminal type, current locale, path, etc.
+
+* You can set environment variables when running a specified program: VAR=<value> program <parameters>
+or set them for the current shell session using: export VAR=<value>
+
 * Edit ~/.bashrc to add env vars and commands to execute at bash startup, e.g.:
 export PATH=$PATH:/my/dir
 myprogram
@@ -33,8 +40,6 @@ myprogram
 
 * You can append a command with '2>/dev/null' to redirect errors to '/dev/null' (null device, a special file where input is discarded) and have a cleaner output.
 Here 2 is the file descriptor associated to stderr (standard error).
-
-* You can set environment variables before executing a command with: VAR=<value> command <parameters>
 
 * The system call is the fundamental interface between an application and the Linux kernel (type 'man syscalls' for more info)
 
@@ -140,6 +145,8 @@ Commands usually have a --help option. This option will list the possible option
 This option is, in fact, a formatted output of what is called the man page (short for manual), which contains documentation for Linux commands and applications.
 To access this documentation, we can use the man command and then provide the command we want to read the documentation for. e.g.: man ls
 
+Note: <param> denotes a parameter and [option] denotes an optional parameter
+
 Clear screen:                     clear
 Show manual page of <name>:       man [<page>] <name>
 Search for commands:              apropos <keyword>
@@ -156,6 +163,7 @@ Show file content:                cat <file>
 Print first lines of the file:    head [-n <lines>] <file>
 Print last lines of the file:     tail [-n <lines>] <file>
 Redirect input to file & stdout:  tee <file> (e.g.: ls -la | tee listing.txt)
+Display specific lines of a file: sed -n '<start_line>[<end_line>]p' <file>
 Print columns from tabular data:  awk '{print "Min:", $3, "Max:", $2}' <file>
 Change directory:                 cd <directory> (.: current dir, ..: parent dir)
 Create new empty file:            touch <file>
@@ -164,7 +172,7 @@ Copy file:                        cp <source> <destination> (-R: copy folder)
 Move file:                        mv <source> <destination>
 Remove file:                      rm <file> (-r: delete dirs, -f: never prompt)
 File type and information:        file <filepath>
-Find files:                       find -name / *.txt (find all txt files in the root directory)
+Find files:                       find / -name *.txt (find all txt files in the root directory); see 'Finding files' section
 Locate file:                      locate <name | relative path>
 Check file types or existence:    [  ([ -d bin ] to check if a dir called bin exists in the current folder) 
 Find patterns in text:            grep <pattern>
@@ -199,9 +207,9 @@ Check file checksum:              echo "<hash> <filename>" | {md5sum | sha1sum |
 Print file checksum:              <*>sum <file> (* = {md5|sha1|...})
 
 
-Misc:
+Misc commands:
 
-Print lines with > x chars:      awk 'length($0) > <x>' <file>
+Print lines with > x chars:       awk 'length($0) > <x>' <file>
 Find length of the longest line:  awk '{ if (length($0) > max) max = length($0) } END { print max }' <file>
 Turn file into string with '\n':  awk '$1=$1' ORS='\\n' <file>
 Run VLC from CLI:                 cvlc --play-and-exit audio.mp3 
@@ -245,12 +253,6 @@ Notes:
 Note: you can remove the group operation, i.e. (\ (\, if you want to exclude only one dir. For more info read stackoverflow.com/a/63523300)
 
 
-Virtual machines networking configurations:
-- Host-only: only permits network operations with the Host OS (and other VMs connected to the same host-only network).
-- NAT: will mask all network activity as if it came from your Host OS (as a router does), the VM will be assigned in a separate subnet.
-- Bridged: replicates another node on the physical network and your VM will receive it's own IP address if DHCP is enabled in the network.
-
-
 Understanding ls command output:
 The columns of the output in the long listing format are from left to right: file type and permissions, link count, owner, group, file size, last modified date, and file name.
 Unix file systems keep track of a "link count" to all objects in the file system. This "link count" value is the number of different directory entries that all point to the inode associated with the object. In the case of a regular file, the link count is the number of hard links to that file. However, Unix file systems don't let you create hard links to directories, yet the link count on a directory is always at least two. Why is this so? There are pointers from parent directories to child directories, and viceversa (the ".." link). And every dir contains the "." link that points back to itself.
@@ -292,6 +294,10 @@ You can add them with their symbol (as a capital letter if execute permission is
 - SUID (4 | s): execute a file as its owner
 - SGID (2 | s): if set on a file, execute as the group owner, and if set on a dir, files created in that dir will have their group ownership set to that of the group owner
 - Sticky (1 | t): only affects dirs, it restricts file deletion, only the owner of a file or root can remove it (e.g.: /tmp or /var/spool/cron/crontabs)
+
+Real user ID: process owner
+Effective user ID: current privileges of the process
+Saved user ID: saved user to switch when a task is completed
 
 Create user (a group with the same name will be created by default):
 1. sudo useradd -m -s /bin/bash <user> (-m: create a user dir inside /home; -s: login shell) 
@@ -424,3 +430,10 @@ Logs:
 
 Located in the /var/log directory, these files and folders contain logging information for applications and services running on your system.
 These services and logs are a great way in monitoring the health of your system and protecting it. Not only that, but the logs for services such as a web server contain information about every single request - allowing developers or administrators to diagnose performance issues or investigate an intruder's activity.
+
+
+Linux kernel headers:
+
+They define an interface. They specify how the functions in the source file are defined.
+They are used so that a compiler can check if the usage of a function is correct as the function signature (return value and parameters) is present in the header file. For this task the actual implementation of the function is not necessary.
+You could do the same with the complete kernel sources but you will install a lot of unnecessary files.

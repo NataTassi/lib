@@ -1,0 +1,39 @@
+Standard C header files:
+
+<assert.h>	   Program assertion functions
+<ctype.h>	   Character type functions
+<locale.h>	   Localization functions
+<math.h>	   Mathematics functions
+<setjmp.h>	   Jump functions
+<signal.h>	   Signal handling functions
+<stdarg.h>	   Variable arguments handling functions
+<stdio.h>	   Standard Input/Output functions
+<stdlib.h>	   Standard Utility functions
+<string.h>	   String handling functions
+<time.h>	   Date time functions
+<unistd.h>     Standard symbolic constants and types
+<sys/types.h>  Data types
+
+
+Program arguments:
+
+The system starts a C program by calling the function main. It is up to you to write a function named main—otherwise, you won’t even be able to link your program without errors.
+In ISO C you can define main either to take no arguments, or to take two arguments that represent the command line arguments to the program, like this:
+    int main (int argc, char *argv[])
+The command line arguments are the whitespace-separated tokens given in the shell command used to invoke the program; thus, in ‘cat foo bar’, the arguments are ‘foo’ and ‘bar’. The only way a program can look at its command line arguments is via the arguments of main. If main doesn’t take arguments, then you cannot get at the command line.
+The value of the argc argument is the number of command line arguments. The argv argument is a vector of C strings; its elements are the individual command line argument strings. The file name of the program being run is also included in the vector as the first element; the value of argc counts this element. A null pointer always follows the last element: argv[argc] is this null pointer.
+For the command ‘cat foo bar’, argc is 3 and argv has three elements, "cat", "foo" and "bar".
+In Unix systems you can define main a third way, using three arguments:
+    int main (int argc, char *argv[], char *envp[])
+The first two arguments are just the same. The third argument envp gives the program’s environment; it is the same as the value of environ. 
+
+
+Getting and setting user privileges:
+
+Needed header: <unistd.h>
+getuid()    returns the real user ID of the calling process.
+geteuid()   returns the effective user ID of the calling process.
+getgid()    analogous to getuid()
+getegid()   analogous to geteuid()
+setresuid() sets the real user ID, the effective user ID, and the saved set-user-ID of the calling process.
+setresgid() analogous to setresuid() for group IDs
