@@ -37,3 +37,42 @@ getgid()    analogous to getuid()
 getegid()   analogous to geteuid()
 setresuid() sets the real user ID, the effective user ID, and the saved set-user-ID of the calling process.
 setresgid() analogous to setresuid() for group IDs
+
+
+Needed header: <stdio.h>
+int printf(const char *format, ...):                 print formatted data to stdout
+int fprintf(FILE *stream, const char *format, ...):  print formatted data to stream
+int dprintf(int fd, const char *format, ...):        print formatted data to file descriptor
+int sprintf(char *str, const char *format, ...):     print formatted data to string buffer (requires large enough buffer)
+int asprintf(char **restrict str, const char *restrict format, ...): print formatted data to automatically sized and allocated string buffer
+See: man 3 printf
+scanf(const char *format, ...):   reads data from stdin and stores them according to the parameter format into the locations pointed by the additional arguments
+See: man scanf
+
+Format specifiers:
+
+Format specifiers define the type of data to be printed on standard output. You need to use format 
+specifiers whether you're printing formatted output with printf() or accepting input with scanf().
+
+%c	a single character
+%s	a string
+%hi	short (signed)
+%hu	short (unsigned)
+%Lf	long double
+%n	prints nothing
+%d	a decimal integer (assumes base 10)
+%i	a decimal integer (detects the base automatically)
+%o	an octal (base 8) integer
+%x	a hexadecimal (base 16) integer
+%p	an address (or pointer)
+%f	a floating point number for floats
+%u	int unsigned decimal
+%e	a floating point number in scientific notation
+%E	a floating point number in scientific notation
+%%	the % symbol
+
+
+Needed header: <stdlib.h>
+getenv(var): get an environment variable
+system(cmd): execute a shell command
+

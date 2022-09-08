@@ -1,17 +1,17 @@
 Considerations:
 
-* Remember that everything in Linux is a file and the output of one command can become the input of another using a pipe. Files and folders that start with "." are hidden files.
+* Everything in Linux is a file and the output of one command can become the input of another using a pipe. Files and folders that start with "." are hidden files.
 All files in a linux filesystem stem from the root directory, / (just a slash).
 
 * A file descriptor is an integer number that uniquely represents an opened file for a process. The OS maintains two file descriptor tables, one is per-process and the other system-wide.
 In UNIX systems sockets are also indices into the same table as files (Windows is different). 
 On a Unix-like operating system, the first three file descriptors, by default, are STDIN (standard input), STDOUT (standard output), and STDERR (standard error).
 
-* Use * to expand it to anything (including empty) when a name is needed. e.g.: rm -rf * | ./expl*
+* Use * to expand it to anything (including empty) when a name is needed. e.g.: rm -rf * | ./autocompl*
 
 * As in any computer program, remember to use the arrow keys, start/end, and prev/next page to move around.
 
-* In bash (or similar modern TTYs) use tab for command autocompletion (press twice to disambiguate), ctrl-r to search command history, and the up/down arrow keys to insert recent commands.
+* In the bash shell (and the like) use tab for command autocompletion (press twice to disambiguate), ctrl-r to search command history, and the up/down arrow keys to insert recent commands.
 
 * Use ctrl-c to discard the command you are typing (also useful to interrupt programs).
 
@@ -20,28 +20,46 @@ On a Unix-like operating system, the first three file descriptors, by default, a
 * Some characters have special meanings, so they are reserved, you can escape them using back slack (\). One example is $, as it's used to access the value of 
 defined variables (btw, you can define variables with var=value).
 
-* You can use the output of one command as a parameter of another executing the command like this $(<command>). e.g.: sudo openvpn $(ls | grep TryHackMe)
+* You can use the output of one command as a parameter of another executing the command like this $(<command>). e.g.: sudo openvpn $(ls | grep my_vpn_file)
 This is called command substitution. You could also surround a command with backsticks (`command`) to achieve the same purpose. $ is more readable and powerful.
 
-* Programs executed from the shell inherit all of the environment variables from the shell. The set of all environment variables that have values is collectively known as the environment.
-The environment keeps track of information that is shared by many programs, changes infrequently, and that is less frequently used.
-Standard environment variables are used for information about the user’s home directory, terminal type, current locale, path, etc.
-
-* You can set environment variables when running a specified program: VAR=<value> program <parameters>
-or set them for the current shell session using: export VAR=<value>
-
 * Edit ~/.bashrc to add env vars and commands to execute at bash startup, e.g.:
-export PATH=$PATH:/my/dir
-myprogram
-
-* Use 'source ~/.bashrc' to load the new config into your current shell
+    export PATH=$PATH:/my/dir
+    myprogram
+Use 'source ~/.bashrc' to load the new config into your current shell
 
 * When you are in a terminal you can copy and paste with ctrl-shift-c and ctrl-shift-v.
 
-* You can append a command with '2>/dev/null' to redirect errors to '/dev/null' (null device, a special file where input is discarded) and have a cleaner output.
+* You can append a command with '2> /dev/null' to redirect errors to '/dev/null' (null device, a special file where input is discarded) and have a cleaner output.
 Here 2 is the file descriptor associated to stderr (standard error).
 
 * The system call is the fundamental interface between an application and the Linux kernel (type 'man syscalls' for more info)
+
+
+Environment variables:
+
+An environment variable (env var) is a variable with a name and an associated value.
+Environment variables allow you to customize how the system works and the behavior of the applications on the system.
+Programs executed from the shell inherit all of the environment variables from the shell. 
+The set of all environment variables that have values is collectively known as the environment.
+The environment keeps track of information that is shared by many programs, changes infrequently, and that is less frequently used.
+Standard environment variables are used for information about the user's home directory, terminal type, current locale, path, etc.
+
+You can set environment variables when running a specified program: [env] VAR=<value> program <parameters>
+or set them for the current shell session using: export VAR=<value>.
+See: https://askubuntu.com/a/205698
+
+Use 'printenv' to print all env vars and 'printenv' <var> to print a specific variable.
+
+
+Shell and related terms:
+
+Terminal = tty: text input/output environment
+Console: physical terminal
+Shell: command line interpreter
+Command line: interface to type commands
+
+See https://askubuntu.com/a/506628
 
 
 Executing a script in the shell:
