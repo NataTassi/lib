@@ -3,11 +3,10 @@ Considerations:
 * Everything in Linux is a file and the output of one command can become the input of another using a pipe. Files and folders that start with "." are hidden files.
 All files in a linux filesystem stem from the root directory, / (just a slash).
 
-* A file descriptor is an integer number that uniquely represents an opened file for a process. The OS maintains two file descriptor tables, one is per-process and the other system-wide.
+* A file descriptor (fd) is a non-negative integer number that uniquely represents an opened file for a process. The OS maintains two file descriptor tables, one is per-process and the other system-wide.
 In UNIX systems sockets are also indices into the same table as files (Windows is different). 
-On a Unix-like operating system, the first three file descriptors, by default, are STDIN (standard input), STDOUT (standard output), and STDERR (standard error).
-
-* Use * to expand it to anything (including empty) when a name is needed. e.g.: rm -rf * | ./autocompl*
+On a Unix-like operating system, the first three file descriptors, by default, are STDIN (standard input), STDOUT (standard output), and STDERR (standard error) with fds 0, 1 and 2 respectively. When a new file is open the lowest-numbered file descriptor not
+currently open for the process is used.
 
 * As in any computer program, remember to use the arrow keys, start/end, and prev/next page to move around.
 
@@ -279,11 +278,12 @@ If a kernel-level rootkit would be used to hide a directory, the link count woul
 
 Links (Linux shortcuts and dup file node):
 A symlink (also called a symbolic link) is a type of file in Linux that points to another file or a folder on your computer. Symlinks are similar to shortcuts in Windows.
-In Linux systems, the data structure that does the actual storing of information is called an Inode. A hard link is a file all its own, and the file references or points to the exact spot on a hard drive where the Inode stores the data. A soft link isn't a separate file, it points to the name of the original file, rather than to a spot on the hard drive.
+In Linux systems, the data structure that does the actual storing of information is called an Inode. A hard link is a file all on its own, and the file references or points to the exact spot on a hard drive where the Inode stores the data. A soft link isn't a separate file, it points to the name of the original file, rather than to a spot on the hard drive.
 ln is the link command. By default, ln creates hard links, add the -s flag to make it soft.
 Create symlink: ln -s /path/to/file /path/to/symlink
 Delete symlink: unlink /path/to/symlink | rm /path/to/symlink                  
 Find broken symlinks: find . -xtype l
+Note: you cannot create hard links to files in different partitions
 
 
 Users, groups and permissions:

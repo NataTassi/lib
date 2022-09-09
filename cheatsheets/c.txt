@@ -28,15 +28,9 @@ In Unix systems you can define main a third way, using three arguments:
 The first two arguments are just the same. The third argument envp gives the program’s environment; it is the same as the value of environ. 
 
 
-Getting and setting user privileges:
+Compiling programs without header files:
 
-Needed header: <unistd.h>
-getuid()    returns the real user ID of the calling process.
-geteuid()   returns the effective user ID of the calling process.
-getgid()    analogous to getuid()
-getegid()   analogous to geteuid()
-setresuid() sets the real user ID, the effective user ID, and the saved set-user-ID of the calling process.
-setresgid() analogous to setresuid() for group IDs
+In C, when the compiler does not find the definition of a function, it assumes it's an external function returning an integer. So the code compiles, and if the linker then finds a function with a corresponding name it will use it, but possibly with unexpected results.
 
 
 Needed header: <stdio.h>
@@ -48,8 +42,7 @@ int asprintf(char **restrict str, const char *restrict format, ...): print forma
 See: man 3 printf
 scanf(const char *format, ...):   reads data from stdin and stores them according to the parameter format into the locations pointed by the additional arguments
 See: man scanf
-
-Format specifiers:
+Note: restrict can be used in pointer declarations, by adding this type qualifier, a programmer hints to the compiler that for the lifetime of the pointer, no other pointer will be used to access the object to which it points
 
 Format specifiers define the type of data to be printed on standard output. You need to use format 
 specifiers whether you're printing formatted output with printf() or accepting input with scanf().
@@ -73,6 +66,73 @@ specifiers whether you're printing formatted output with printf() or accepting i
 
 
 Needed header: <stdlib.h>
-getenv(var): get an environment variable
-system(cmd): execute a shell command
+char* getenv(const char *var):  get an environment variable
+int system(const char *cmd):    execute a shell command
+void exit(int status):          cause normal process termination
 
+
+Needed header: <err.h>
+noreturn void err(int eval, const char *fmt, ...): display formatted error on stderr and exit with the value 'eval'
+Note: noreturn indicates the function does not return by executing the return statement or by reaching the end of the function body
+
+
+Getting and setting user privileges:
+
+Needed header: <unistd.h>
+getuid()    returns the real user ID of the calling process.
+geteuid()   returns the effective user ID of the calling process.
+getgid()    analogous to getuid()
+getegid()   analogous to geteuid()
+setresuid() sets the real user ID, the effective user ID, and the saved set-user-ID of the calling process.
+setresgid() analogous to setresuid() for group IDs
+
+
+Needed header: <fcntl.h>
+int open(const char *pathname, int flags): open and possibly create a file, returns fd to the file
+The argument flags must include one of the following access modes: O_RDONLY (read-only), O_WRONLY (write-only), or O_RDWR (read-write).
+
+
+A file descriptor (fd) is a low-level integer "handle" used to identify an opened file (or socket, or whatever) at the kernel level, in Linux and other Unix-like systems.
+A FILE pointer is a C standard library-level construct, used to represent a file. The FILE wraps the file descriptor, and adds buffering and other features to make I/O easier.
+
+Needed header: <unistd.h> 
+ssize_t read(int fd, void *buf, size_t count):        read from a fd, returns the num of bytes read or -1 on error
+ssize_t write(int fd, const void *buf, size_t count): write to a fd, returns the num of bytes written or -1 on error
+
+Read files whose name doesn't include "token" up to 1024 chars and output the content to stdout:
+
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
+#include <stdio.h>
+#include <fcntl.h>
+#include <err.h>
+
+int main(int argc, char **argv, char **envp) {
+  char buf[1024];
+
+  if (argc == 1) {
+      printf("%s [file to read]\n", argv[0]);
+      exit(EXIT_FAILURE);
+  }
+  if (strstr(argv[1], "token") != NULL) {
+      printf("You may not access '%s'\n", argv[1]);
+      exit(EXIT_FAILURE);
+  }
+
+  int fd = open(argv[1], O_RDONLY);
+  if (fd == -1) {
+      err(EXIT_FAILURE, "Unable to open %s", argv[1]);
+  }
+
+  int rc = read(fd, buf, sizeof(buf));
+  if (rc == -1) {
+      err(EXIT_FAILURE, "Unable to read fd %d", fd);
+  }
+
+  write(1, buf, rc);
+}
+
+
+Needed header: <string.h>                                                      
+char *strstr(const char *haystack, const char *needle): return a pointer to the beginning of the located substring, or NULL if the substring is not found
