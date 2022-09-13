@@ -1,2 +1,11 @@
 HTTP server:   python3 -m http.server [<port>]
+
 Download file: printf 'GET /<relative_path> \n' | nc <host> <port> > <filename>
+
+Transfer file: 
+    receiver: nc -lp <port> > <file>
+    sender:   nc -w 3 <host> <port> < <file>
+
+Transfer compressed file: 
+    receiver: nc -lp <port> | gzip -cd | tar xfp -
+    sender:   tar cfp - <dir> | gzip -c | nc -w 3 <host> <port>
