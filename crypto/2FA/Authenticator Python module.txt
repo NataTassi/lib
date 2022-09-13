@@ -1,0 +1,16 @@
+Instead of scanning a QR code with an authenticator app for mobile devices
+you can use a Python module called authenticator.
+Internally, an authenticator uses the secret key along with the current time
+to derive a code (usually a 6-digit one).
+
+Install:
+pip3 install authenticator
+authenticator --help
+
+Add keys:
+authenticator add <name> (recommended format: vendor:userid)
+type password
+type secret key
+
+Generate keys:
+authenticator gen <name>

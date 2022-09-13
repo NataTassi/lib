@@ -1,9 +1,62 @@
 Reverse Engineering (RE)
 
-* Go to the bottom to read some important definitions
-* Run the program to see memory addresses
-* In x64 programs, RSI and RDI may be used to pass function arguments instead of pushing them to the stack
-* Linux offers many essential functions called system calls or syscalls. Some common syscalls: execve, write
+
+Definitions:
+
+Debugger: a debugger or debugging tool is a computer program used to test and debug other programs (the "target" program). The main use of a debugger is to run the target program under controlled conditions that permit the programmer to track its operations in progress and monitor changes in computer resources (most often memory areas used by the target program or the computer's operating system) that may indicate malfunctioning code. Typical debugging facilities include the ability to run or halt the target program at specific points, display the contents of memory, CPU registers or storage devices (such as disk drives), and modify memory or register contents in order to enter selected test data that might be a cause of faulty program execution.
+
+Debug symbol (sym): is a special kind of symbol that attaches additional information to the symbol table of an object file, such as a shared library or an executable. This information allows a debugger to gain access to information from the source code of the binary, such as the names of identifiers, including variables and routines. The symbolic information may be compiled together with the module's binary file, or distributed in a separate file, or simply discarded during the compilation and/or linking. This information can be helpful while trying to investigate and fix a crashing application or any other fault.
+
+Machine code: is any low-level programming language, consisting of machine language instructions, which are used to control a computer's central processing unit (CPU). Each instruction causes the CPU to perform a very specific task, such as a load, a store, a jump, or an arithmetic logic unit (ALU) operation on one or more units of data in the CPU's registers or memory. Machine code is a strictly numerical language which is designed to run as fast as possible, and may be considered as the lowest-level representation of a compiled or assembled computer program or as a primitive and hardware-dependent programming language.
+
+Assembly language (asm): or assembler language, is any low-level programming language in which there is a very strong correspondence between the instructions in the language and the architecture's machine code instructions. Assembly language usually has one statement per machine instruction (1:1), but constants, comments, assembler directives, symbolic labels of, e.g., memory locations, registers, and macros are generally also supported. Assembly code is converted into executable machine code by a utility program referred to as an assembler. 
+
+CISC vs RISC CPU architectures: The CISC approach attempts to minimize the number of instructions per program, sacrificing the number of cycles per instruction. RISC does the opposite, reducing the cycles per instruction at the cost of the number of instructions per program.
+See: https://cs.stanford.edu/people/eroberts/courses/soco/projects/risc/risccisc/
+
+x86 instruction set architecture (ISA): is a family of CISC IPAs initially developed by Intel based on the Intel 8086 microprocessor and its 8088 variant. x86 refers to the set of instructions that x86-compatible microprocessors support. The x86 instruction set has been extended several times, introducing wider registers and datatypes as well as new functionality. Popular instruction set extensions include MMX, SSE and AVX technologies.
+
+x86 assembly language: is the name for the family of assembly languages which provide some level of backward compatibility with CPUs back to the Intel 8008 microprocessor. It's used to produce machine code for the x86 class of processors (the ones that use x86 ISA). 
+
+Opcode: each x86 assembly instruction is represented by a mnemonic which, often combined with one or more operands, translates to one or more bytes called an opcode (operation code); the NOP instruction translates to 0x90, for instance, and the HLT instruction translates to 0xF4. There are potential opcodes with no documented mnemonic which different processors may interpret differently, making a program using them behave inconsistently or even generate an exception on some processors. 
+
+Intel vs AT&T x86 ISA syntax: there are several different assembly languages for generating x86 machine code. x86 assembly language has two main syntax branches, Intel syntax and AT&T syntax. Intel syntax is dominant in the DOS and Windows world, and AT&T syntax is dominant in the Unix world, since Unix was created at AT&T Bell Labs. Many x86 assemblers use Intel syntax, including FASM, MASM, NASM, TASM, and YASM. Main differences:
+
+                           AT&T                                        Intel
+
+Parameter   source before destination                  destination before source
+order:      movl $5, %eax                              mov eax, 5
+
+Parameter   mnemonics are suffixed with a letter       derived from the name of the register
+size:       indicating the size of the operands.       that is used (e.g. rax, eax, ax, al  
+            q for qword, l for long (dword),           imply q, l, w, b, respectively).
+            w for word, and b for byte.                add esp, 4
+            addl $4, %esp                             
+
+Sigils:     immediate values prefixed with a "$",      The assembler automatically detects 
+            registers prefixed with a "%".             the type of symbols; i.e., whether 
+                                                       they are registers, constants or 
+                                                       something else. 
+
+Effective   General syntax of DISP(BASE,INDEX,SCALE).  Arithmetic expressions in square 
+addresses:  movl offset(%ebx,%ecx,4), %eax             brackets. Size keywords like byte,
+                                                       word, or dword have to be used if
+                                                       the size cannot be determined
+                                                       from the operands.
+
+Assembly program: is composed of a series of machine instructions that, when executed, are stored in the memory of the process. Each instruction is a stream of bytes that, when interpreted by the processor, modifies the state of the program. The code of a program written in assembly or assembler language allows you to work with a symbolic representation of that stream of bytes. For example, the x86 assembly instruction 'add eax, 0x1' adds 1 to the contents of the memory register eax. And 'add eax, 0x1' is actually a symbolic representation of the number '83 c0 01' (in hexadecimal) or what is the same '1000 0011 1100 0000 0000 0001'. The latter is the binary content actually stored in memory. For ease of reading the content written to memory is usually represented in hexadecimal and not binary.
+
+Disassembler: is a computer program that translates machine language into assembly language—the inverse operation to that of an assembler. A disassembler differs from a decompiler, which targets a high-level language rather than an assembly language. Disassembly, the output of a disassembler, is often formatted for human-readability rather than suitability for input to an assembler, making it principally a reverse-engineering tool.
+
+
+Syscalls:
+
+Linux offers many essential functions called system calls or syscalls. 
+The system call is the fundamental interface between an application and the Linux kernel.
+Some common syscalls: execve, write
+
+
+Commands:
 
 File information:                 file <file>
 Display data in hex numbers:      hd <file> (hd is an alias for hexdump -C)
@@ -16,6 +69,14 @@ Trace library calls:              ltrace <program_path>
 Print shared libraries:           ldd <program>
 ASCII to hex:                     xxd -p <<< 'ABC' (Line feed is added at the end, 0x0a)
 Hex to ASCII:                     xxd -r <<< 0x414243
+
+
+The stack and calling conventions:
+
+* In x64 programs, RSI and RDI may be used to pass function arguments instead of pushing them to the stack
+
+
+Note: remember you won't be able to see memory addresses without running the program
 
 
 GDB - GNU Debugger:
@@ -38,10 +99,10 @@ Register values:                  info registers (most regs); info all-reg (all 
 Change var value                  set $<var_name | register>=<value>
 Show next 10 lines of source:     list
 
+
 radare2 — Hexadecimal editor, disassembler and debugger:
 
 * r2 (radare2) starts at the beginning of the text segments, that is, _start (entry0 in r2; see stackoverflow.com/a/45595101 for more info)
-* Use commands like less and grep to make things easier
 
 Open program:                             r2 <program> (-d: debug mode)
 Ask for help:                             ?[<command>] (use ? anywhere)
@@ -65,22 +126,9 @@ Rename local variable:                    afvn <prev_name> <new_name>
 
 Memory layout of C programs:
 
-.text:   contain executable code
-.data:   contain global initialized data and static initialized data
+.text:   executable code
+.data:   global initialized data and static initialized data
 .rodata: string literal or const variable
 .bss:    global uninitialized data and static uninitialized data (doesn't occupy any size in ELF)
 heap:    dynamically allocated memory
 stack:   program stack (ret addr, func params, tmp vars), each func call creates a new stack frame
-
-
-Definitions:
-
-Debugger: a debugger or debugging tool is a computer program used to test and debug other programs (the "target" program). The main use of a debugger is to run the target program under controlled conditions that permit the programmer to track its operations in progress and monitor changes in computer resources (most often memory areas used by the target program or the computer's operating system) that may indicate malfunctioning code. Typical debugging facilities include the ability to run or halt the target program at specific points, display the contents of memory, CPU registers or storage devices (such as disk drives), and modify memory or register contents in order to enter selected test data that might be a cause of faulty program execution.
-
-Debug symbol (sym): is a special kind of symbol that attaches additional information to the symbol table of an object file, such as a shared library or an executable. This information allows a debugger to gain access to information from the source code of the binary, such as the names of identifiers, including variables and routines. The symbolic information may be compiled together with the module's binary file, or distributed in a separate file, or simply discarded during the compilation and/or linking. This information can be helpful while trying to investigate and fix a crashing application or any other fault.
-
-Machine code: is any low-level programming language, consisting of machine language instructions, which are used to control a computer's central processing unit (CPU). Each instruction causes the CPU to perform a very specific task, such as a load, a store, a jump, or an arithmetic logic unit (ALU) operation on one or more units of data in the CPU's registers or memory. Machine code is a strictly numerical language which is designed to run as fast as possible, and may be considered as the lowest-level representation of a compiled or assembled computer program or as a primitive and hardware-dependent programming language.
-
-Assembly language (asm): or assembler language, is any low-level programming language in which there is a very strong correspondence between the instructions in the language and the architecture's machine code instructions.Assembly language usually has one statement per machine instruction (1:1), but constants, comments, assembler directives, symbolic labels of, e.g., memory locations, registers, and macros are generally also supported. Assembly code is converted into executable machine code by a utility program referred to as an assembler. 
-
-Disassembler: is a computer program that translates machine language into assembly language—the inverse operation to that of an assembler. A disassembler differs from a decompiler, which targets a high-level language rather than an assembly language. Disassembly, the output of a disassembler, is often formatted for human-readability rather than suitability for input to an assembler, making it principally a reverse-engineering tool.

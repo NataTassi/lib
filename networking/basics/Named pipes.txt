@@ -1,0 +1,9 @@
+Both on Windows and POSIX systems, named-pipes provide a way for inter-process communication to occur among processes running on the same machine. What named pipes give you is a way to send your data without having the performance penalty of involving the network stack.
+
+Just like you have a server listening to a IP address/port for incoming requests, a server can also set up a named pipe which can listen for requests. In either cases, the client process (or the DB access library) must know the specific address (or pipe name) to send the request. Often, a commonly used standard default exists (much like port 80 for HTTP, SQL server uses port 1433 in TCP/IP; \\.\pipe\sql\query for a named pipe).
+
+By setting up additional named pipes, you can have multiple DB servers running, each with its own request listeners.
+
+The advantage of named pipes is that it is usually much faster, and frees up network stack resources.
+
+-- BTW, in the Windows world, you can also have named pipes to remote machines -- but in that case, the named pipe is transported over TCP/IP, so you will lose performance. Use named pipes for local machine communication.

