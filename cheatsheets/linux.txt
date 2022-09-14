@@ -193,7 +193,7 @@ File type and information:        file <filepath>
 Find files:                       find / -name *.txt (find all txt files in the root directory); see 'Finding files' section
 Locate file:                      locate <name | relative path>
 Check file types or existence:    [  ([ -d bin ] to check if a dir called bin exists in the current folder) 
-Find patterns in text:            grep <pattern>
+Find patterns in text:            grep <pattern> (-v: invert matches)
 Page through text:                less <file> (when inside less use: h: help, q: quit, /key: find key, n (N): next(prev) result
 Count lines/bytes/chars in file:  wc -l <file> (count lines)
 Locate command binary:            whereis <command>
@@ -230,15 +230,15 @@ Print file checksum:              <*>sum <file> (* = {md5|sha1|...})
 
 Misc commands:
 
+List files by file type:          find -type l -ls (list symlinks in the cur dir)
 Print lines with > x chars:       awk 'length($0) > <x>' <file>
 Find length of the longest line:  awk '{ if (length($0) > max) max = length($0) } END { print max }' <file>
 Turn file into string with '\n':  awk '$1=$1' ORS='\\n' <file>
-Print odd/even lines:             sed -n 'p;n' | sed -n 'n;p'
-Print prefix before symbol:       grep -o '[^<symbol>]*' | head -1
+Print odd/even lines:             sed -n 'p;n' / sed -n 'n;p'
+Split string with a delimiter:    cut -d "<delimiter>" -f <field_list>
 Run VLC from CLI:                 cvlc --play-and-exit audio.mp3 
 Read PDF:                         atril <pdf_file>
-Open dir in file manager:         thunar <dir> (thunar is the file manager for the Xfce Desktop Environment)
-Decrypt PDF:                      qpdf --password=<pass> --decrypt <input> <output>
+
 Translator (Translate Shell):     trans [-b|-brief] [source=en]:[target=en] [word | phrase] (langs use a two-letter code, read them all with 'trans -R'; install with 'apt install gawk && wget git.io/trans && chmod +x trans && mv trans /usr/local/bin')
 
 
@@ -268,12 +268,18 @@ We can create public/private key pairs to authenticate SSH connections with Open
 To generate a new key pair use the ssh-keygen command. This command will overwrite your old key pair and provision a new one. 
 Generate an RSA ssh key pair with 4096 bits using the command: ssh-keygen -t rsa -b 4096
 The command will prompt you for a file name. By default, the ssh key pairs are stored as id_rsa and id_rsa.pub in ~/.ssh for private key and public key, respectively. 
+
 You can protect your private key with a passphrase. In the case that someone gains access to your private key they won't be able to use it. The downside to passphrases is that you need to enter it every time you create a connection using SSH. You can temporarily cache your passphrase using ssh-agent so you don't have to enter it every time you connect.
-To use the SSH key pair you created, we need to copy the public key to the remote server we wish to manage with: ssh-copy-id <remote_user>@<host>. The command will prompt you to enter the SSH password. Once authenticated, the command appends the public key to the ~/.ssh/authorized_keys file. This file is a list of public keys that are allowed to log into that specific account on that specific server. Then, you should be able to SSH into the remote server without being prompted for a password (unless you entered a passphrase) as long as you keep your private key in your ~/.ssh directory.
-And with that, you have successfully used SSH key-based authentication. You can add an extra layer of security by disabling password logins. In file /etc/ssh/sshd_config uncomment and change to yes the value PasswordAuthentication. Then run: service ssh restart.
+
+To use the SSH key pair you created, we need to copy the public key to the remote server we wish to manage with: ssh-copy-id <remote_user>@<host>. The command will prompt you to enter the SSH password. Once authenticated, the command appends the public key to the ~/.ssh/authorized_keys file. This file is a list of public keys that are allowed to log into that specific account on that specific server. 
+
+Then, you should be able to SSH into the remote server without being prompted for a password (unless you entered a passphrase) as long as you keep your private key in your ~/.ssh directory or you use the -i flag to select a file from which the identity (private key) for public key authentication is read, i.e., you just have to type: ssh [-i <identity_file>] <remote_user>@<host>.
+
+You can add an extra layer of security by disabling password logins. In file /etc/ssh/sshd_config uncomment and change to yes the value PasswordAuthentication. Then run: service ssh restart.
 
 
 Finding files: 
+
 Some flags: find [<location>] [-perm { |-|/}<permissions>] [-type {d|f}] [-name <pattern>] [-user <user>] [-size {-| |+}<size>{c|k|M|G}]
 e.g.: find ~ -name *config* -type f -perm -g=r,o=r -size -2M --> Files in the current user's home, with a name that includes 'config', where the file owner's group and others can read, and the file size is less than 2 MB.
 Notes: 
@@ -298,6 +304,7 @@ If a kernel-level rootkit would be used to hide a directory, the link count woul
 
 
 Links (Linux shortcuts and dup file node):
+
 A symlink (also called a symbolic link) is a type of file in Linux that points to another file or a folder on your computer. Symlinks are similar to shortcuts in Windows.
 In Linux systems, the data structure that does the actual storing of information is called an Inode. A hard link is a file all on its own, and the file references or points to the exact spot on a hard drive where the Inode stores the data. A soft link isn't a separate file, it points to the name of the original file, rather than to a spot on the hard drive.
 ln is the link command. By default, ln creates hard links, add the -s flag to make it soft.
@@ -366,6 +373,14 @@ The /etc/passwd contains one entry per line for each user (user account) of the 
 5. User ID Info (GECOS): The comment field. It allow you to add extra information about the users such as user’s full name, phone number etc. This field is used by finger command.
 6. Home directory: The absolute path to the directory the user will be in when they log in. If this directory does not exist then user's directory becomes '/'.
 7. Command/shell: The absolute path of a command or shell (/bin/bash). Typically, this is a shell. Please note that it does not have to be a shell. For example, sysadmin can use the nologin shell, which acts as a replacement shell for the user accounts. If shell set to /sbin/nologin and the user tries to log in to the Linux system directly, the /sbin/nologin shell closes the connection.
+
+
+Automount drive:
+1. sudo blkid
+2. sudo mkdir /mnt/<name-of-the-drive>
+3. Append 'UUID=<uuid-of-your-drive> <mount-point> <file-system-type> <mount-option> <dump> <pass>' to /etc/fstab separating these items with tab. Usually you'll want to use defaults, 0 and 2 for the last three options, see 'man fstab'. 
+4. sudo mount -a
+Note: /media is where the system mounts removable media, and /mnt is for you to mount things manually.
 
 
 Format drive:
