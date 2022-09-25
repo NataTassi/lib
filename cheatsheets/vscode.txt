@@ -5,3 +5,12 @@ Switch tabs:        ctrl + tab
 
 Use vimrc: 
 Settings -> type vimrc -> Enable 'Use Keymappings from a .vimrc file'
+
+Extensions:
+- Docker
+- IntelliCode
+- JavaScript (ES6) Code Snippets
+- Python / Pylance
+- Simple React Snippets
+- Vim
+- vscode-pdf

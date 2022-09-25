@@ -16,6 +16,8 @@ currently open for the process is used.
 
 * Sometimes you need to surround text or paths between quotes, you can combine simple and double quotes to make one of the quotes part of the text.
 
+* The last command is saved in the env var called _ (underscore).
+
 * Some characters have special meanings, so they are reserved, you can escape them using back slack (\). One example is $, as it's used to access the value of 
 defined variables (btw, you can define variables with var=value).
 
@@ -48,7 +50,7 @@ You can set environment variables when running a specified program: [env] VAR=<v
 or set them for the current shell session using: export VAR=<value>.
 See: https://askubuntu.com/a/205698
 
-Use 'printenv' to print all env vars and 'printenv' <var> to print a specific variable.
+Use 'printenv' or 'env' to print all env vars and 'printenv' <var> to print a specific variable.
 
 
 Shell and related terms:
@@ -167,16 +169,16 @@ Note: <param> denotes a parameter and [option] denotes an optional parameter
 
 Clear screen:                     clear
 Show manual page of <name>:       man [<page>] <name>
+Create alias for a command:       alias NAME="VALUE" (append to .bashrc to persist it across logins)
 Search for commands:              apropos <keyword>
 Print text:                       echo <text>
-Environment variables:            env
 Shutdown the machine:             shutdown (0 | now: right away, -r: reboot)
 See ASCII codes:                  man ascii
 See exit code of prev command:    echo $? ('?' is a var that holds it)
 
 Show current location:            pwd
-List directory contents:          ls -la <location = .> (-l: as list, -a: show hidden files, -h: human-readable sizes)
-Shortcut for ls -la:              ll
+List directory contents:          ls <location = .> (-l: as list, -a: show hidden files, -h: human-readable sizes)
+Common shortcut for ls -la:       ll (shortcuts or aliases are defined with alias)
 Show file content:                cat <file>
 Print first lines of the file:    head [-<lines>] <file> (10 by default)
 Print last lines of the file:     tail [-<lines>] <file> (10 by default)
@@ -238,6 +240,7 @@ Print odd/even lines:             sed -n 'p;n' / sed -n 'n;p'
 Split string with a delimiter:    cut -d "<delimiter>" -f <field_list>
 Run VLC from CLI:                 cvlc --play-and-exit audio.mp3 
 Read PDF:                         atril <pdf_file>
+Read all kinds of media:          google-chrome <file>
 
 Translator (Translate Shell):     trans [-b|-brief] [source=en]:[target=en] [word | phrase] (langs use a two-letter code, read them all with 'trans -R'; install with 'apt install gawk && wget git.io/trans && chmod +x trans && mv trans /usr/local/bin')
 

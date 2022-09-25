@@ -1,9 +1,23 @@
-tmux is a terminal multiplexer: it enables a number of terminals to be 
-created, accessed, and controlled from a single screen (see manual page).
+tmux is a terminal multiplexer: it enables a number of terminals to be created, accessed, and controlled from a single screen (see tmux manual page; also see what a pseudo-terminal is with 'man pty').
 
-* See what a pseudo-terminal is in the manual page - man pty
-* To send a command to tmux running inside tmux (like when you SSH into a server 
-from a local tmux session and open a remote tmux session) press the prefix twice 
+* To send a command to tmux running inside tmux (like when you SSH into a server from a local tmux session and open a remote tmux session) press the prefix twice 
+
+Save and restore tmux environment:
+
+tmux-resurrect saves all the little details from your tmux environment so it can be completely restored after a system restart (or when you feel like it). 
+
+Installation:
+    1. git clone https://github.com/tmux-plugins/tmux-resurrect ~/clone/path
+    2. echo "run-shell ~/clone/path/resurrect.tmux" >> ~/.tmux.conf
+    3. Reload tmux environment with: tmux source-file ~/.tmux.conf
+
+Save: prefix + ctrl-s
+Restore: prefix + ctrl-r
+
+Restore previously saved environments: all save files are kept in ~/.tmux/resurrect/ directory, to choose a different save file to use when restoring, just symlink the 'last' file to the desired save file (file names have a timestamp): cd ~/.tmux/resurrect && ln -sf <file_name> last
+
+
+Commands:
 
 New tmux session:             tmux [new -s <session_name>] OR prefix + :new
 Prefix to send commands:      ctrl-b (sometimes ctrl-a)
@@ -11,8 +25,9 @@ List open sessions:           tmux ls OR prefix :s
 Close current session:        prefix :kill-session [-t <number | name>]
 Detach from session:          prefix + d
 Attach to session:            tmux a [-t <number | name>]
-List shortcuts:               prefix + ?
+List all tmux key bindings:   prefix + ?
 Name session:                 prefix + $
+Search/move across panes:     prefix + f
 
 Enter copy mode (scrolling):  prefix + [
 Enter command mode:           prefix + :

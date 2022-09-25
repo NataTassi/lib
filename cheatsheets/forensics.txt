@@ -1,4 +1,5 @@
 Delete commands from bash history: history -a && vim ~/.bash_history
 Data recovery with TestDisk:       www.cgsecurity.org/wiki/TestDisk
-Shred and delete the file:         shred -u <file>
+Shred and delete file:             shred -u <file>
+Command outside bash history:      [space]<command>
 

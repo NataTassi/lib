@@ -1,0 +1,11 @@
+First update the repos and upgrade your packages: apt update && apt upgrade
+Install a package with: pkg install <package>
+
+man
+x11-repo
+vim-gtk
+nmap
+netcat-openbsd
+iproute2
+tmux
+openssh
