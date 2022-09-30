@@ -16,10 +16,7 @@ currently open for the process is used.
 
 * Sometimes you need to surround text or paths between quotes, you can combine simple and double quotes to make one of the quotes part of the text.
 
-* The last command is saved in the env var called _ (underscore).
-
-* Some characters have special meanings, so they are reserved, you can escape them using back slack (\). One example is $, as it's used to access the value of 
-defined variables (btw, you can define variables with var=value).
+* Some characters have special meanings, so they are reserved, you can escape them using back slack (\). One example is $, as it's used to access the value of defined variables (btw, you can define variables with var=value).
 
 * You can use the output of one command as a parameter of another executing the command like this $(<command>). e.g.: sudo openvpn $(ls | grep my_vpn_file)
 This is called command substitution. You could also surround a command with backsticks (`command`) to achieve the same purpose. $ is more readable and powerful.
@@ -78,42 +75,41 @@ Type the command '. script.sh' or 'source script.sh' (they are equivalent). This
 
 Chaining operators:
 
-Chaining of Linux commands means, combining several commands and make them execute based upon the behaviour of the operator used in between them. 
-It's important to note that, unlike many other languages, the short-circuiting booleans (&& and ||) have the same precedence, they also associate to the left.
+Chaining of Linux commands means combining several commands and making them execute based upon the behavior of the operator used between them. It's important to note that, unlike many other languages, the short-circuiting booleans (&& and ||) have the same precedence, they also associate to the left.
 
-1. Ampersand Operator (&):
-The function of ‘&‘ is to make the command run in background. Just type the command followed with a white space and ‘&‘. You can execute more than one command in the background, in a single go. e.g.: apt-get update & apt-get upgrade & (these commands run simultaneously)
+1. Ampersand Operator (&): makes the command run in the background. Just type the command followed with a white space and ‘&‘. You can execute more than one command in the background in a single go. e.g.: command1 & command2 & (these commands run simultaneously)
 
-2. semi-colon Operator (;):
-The semi-colon operator makes it possible to run, several commands in a single go and the execution of command occurs sequentially. e.g.: apt-get update ; apt-get upgrade ;
+2. Semi-colon Operator (;): used to run several commands at once and sequentially. e.g.: apt-get update; apt-get upgrade;
 
-3. AND Operator (&&):
-The AND Operator (&&) would execute the second command only, if the execution of first command SUCCEEDS, i.e., the exit status of the first command is 0. This command is very useful in checking the execution status of last command. e.g.: ping -c3 www.tecmint.com && links www.tecmint.com (visit the website only if the host is live)
+3. AND Operator (&&): executes the second command only if the execution of the first command succeeds, i.e., the exit status of the first command is 0. e.g.: ping -c3 www.tecmint.com && links www.tecmint.com (visit the website only if the host is live)
 
-4. OR Operator (||):
-The OR Operator (||) is much like an ‘else‘ statement in programming. The above operator allow you to execute second command only if the execution of first command fails, i.e., the exit status of first command is ‘1‘.
+4. OR Operator (||): executes the second command only if the execution of the first command fails, i.e., the exit status of the first command is not 0.
 
-5. NOT Operator (!):
-The NOT Operator (!) is much like an ‘except‘ statement. This command will execute all except the condition provided. e.g.: rm -r !(*.html) (delete all the files except ‘html‘ files)
+5. NOT Operator (!): matches all except the condition provided, e.g., rm -r !(*.html) (delete all the files except ‘html‘ files). It's also used to invert a command's exit status, e.g., '! echo 'hi'; echo $?' (prints 1 instead of 0)
 
-6. PIPE Operator (|):
+6. PIPE Operator (|): makes the output of the first command the input of the second command, e.g., 'ls -l | less' (pipeline the output of 'ls -l' to 'less' to see a paginated directory listing).
 
-This PIPE operator is very useful where the output of first command acts as an input to the second command. For example, pipeline the output of ‘ls -l‘ to ‘less‘ and see the output of the command. e.g.: ls -l | less
+7. Command Combination Operator {}: combines two or more commands, the second command depends upon the execution of the first command. For example, check if a directory 'bin' is available or not, and output corresponding output with: [ -d bin ] || { echo Directory does not exist, creating directory now.; mkdir bin; } && echo Directory exists.
 
-7. Command Combination Operator {}:
-Combine two or more commands, the second command depends upon the execution of the first command. For example, check if a directory ‘bin‘ is available or not, and output corresponding output with: [ -d bin ] || { echo Directory does not exist, creating directory now.; mkdir bin; } && echo Directory exists.
+8. Precedence Operator (): makes it possible to execute commands in the desired precedence order. e.g.: '(command_1 && command_2) || (command_3 && command_4)'.
 
-8. Precedence Operator ():
-The Operator makes it possible to execute command in precedence order. e.g.: (Command_x1 &&Command_x2) || (Command_x3 && Command_x4)
+9. Concatenation Operator (\): concatenates long commands over several lines in the shell, e.g.: 'vim hello\ world.txt'.
 
-9. Concatenation Operator (\): 
-The Concatenation Operator (\) as the name specifies, is used to concatenate large commands over several lines in the shell. e.g.: vim text\(1\).txt
-
-10. Redirection Operators (<, >, >>): 
-These operators are used to redirect the output of a command or a group of commands to a stream or file. They can be used to redirect either standard input or standard output or both. Almost all commands accept input with redirection operators.
-Use > to redirect the output of a command, e.g., echo 'Hi there' > hi.txt (creates a file)
+10. Redirection Operators (<, >, >>): before a command is executed, its input and output may be redirected using a special notation interpreted by the shell. See Bash reference manual, section Redirections for more info.
+Use > to redirect the output of a command, e.g., echo 'Hi there' > hi.txt (creates/replaces a file named hi.txt)
 You can also redirect and append to the end of the file using >>.
 You can use < to use a file as input of a program, e.g., program < input.txt
+
+
+History expansion:
+
+!n:        Refer to command line n.
+!-n:       Refer to the command n lines back.
+!!:        Refer to the previous command. This is a synonym for ‘!-1’.
+$_:        Refer to the last argument to the previous command (env var called _)
+!:[n|^|$]: Refer to the [n-th | first | second] argument to the previous command
+!:*:       Refer to all arguments from the previously executed command
+!string:   Refer to the most recent command preceding the current position in the history list starting with string
 
 
 Scripts:
@@ -151,8 +147,8 @@ ctrl-h: deletes the last character typed
 ctrl-w: deletes the last word typed
 ctrl-u: deletes the last line typed
 ctrl-r: retrieves previously run commands so you can run them again
-ctrl-u: removes text from the command line and places it in the clipboard
-ctrl-y: grabs text from the clipboard and runs it
+ctrl-u: removes text from the command line and places it in the shell clipboard
+ctrl-y: grabs text from the clipboard
 ctrl-l: clears the screen
 ctrl-a: moves cursor to the beginning of the line
 ctrl-e: moves cursor to the end of the line

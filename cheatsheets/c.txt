@@ -1,3 +1,7 @@
+C doesn't have any built-in boolean types, see: https://stackoverflow.com/a/1921557
+
+
+
 Standard C header files:
 
 <assert.h>	   Program assertion functions

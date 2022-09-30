@@ -58,7 +58,7 @@ First non-blank character of the line:   ^
 Insert at the start of the line:         I
 Append after the cursor:                 a
 Append at the end of the line:           A
-Replace the current character:           r (it's replaced with next character you type)
+Replace the current character:           r (it's replaced with the next character you type)
 Make a new line under/above this line:   o / O
 Indent / unindent one level              > / <
 Insert file:                             :r <file>
