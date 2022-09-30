@@ -1,0 +1,80 @@
+When a program is running, different parts of it goes to different segments (places) in memory. This is so because although a program might seem a monolithic thing at first sight, without the possibility of dividing it for any good reason, this isn't so. The first division is fairly simple:
+
+Code & Data
+
+Code is what the program is supposed to do, and Data is what the program uses to store stuff (and eventually read it). So for example, if you have:
+
+a = b + c;
+
+In the Code segment you'll have something like this:
+
+> take value of [b] 
+> take value of [c] 
+> sum those values 
+> store the result in [a] 
+
+And in the Data segment you'll have something like this:
+
+> [a] is 8 
+> [b] is 3 
+> [c] is 5 
+
+This way the code part is composed of one instruction after another, and read the data from somewhere else in memory.
+
+But not all data goes to the Data segment, some of it goes to the Stack segment... Why?
+The answer is functions. Functions are reusable pieces of code that take parameters to work with. Not only that, functions also have it's own set of variables, arrays, structures. All of them also go to the Stack segment. But why?
+
+Suppose you have a recursive function that calls itself (I'm not going to provide an example, suffice to say you have a recursive function to calculate the factorial of a number). Every time the function calls itself their parameters differ (and also their internal variables). So you have for a same piece of code, several collections of values that have to be maintained in memory in order for the program to work. Those values 'stack' on top of each other. Every time you call a function, the values of that function 'stacks' on top of the function that called it. Similarly, every time a function returns, the values of that function are popped out of the stack.
+
+So basically:
+
+- The Data segment contains values that are global to the program, or static values that are always maintained.
+- The Stack segment contains values that are part of a particular function in a particular time of the life of the program (if you call that function again, those values might differ).
+
+Ok, but why the Heap segment then? The answer is that for some values, its size is unknown at compile time (the program must be running and its size may vary from one run to another). If a function has one of this values there is no way they can stack them in the Stack segment, because they might increase in size and corrupt the data above it. Values that can change during run time (aka dynamic) must go somewhere else in memory so as not to compromise the process.
+
+Why don't all variables go to the Heap segment then? That's a good question, but believe me, there are very good reasons for a program to be divided in a Code, a Data, a Stack and a Heap segment.
+
+
+
+(Warning: This is all x86, and many simplifications are made)
+The virtual address space for a program is going to look more or less like this:
+
+(See photo of memory segments.)
+
+You can see several sections:
+
+    The Text (code) section contains instruction code. This should be read-only (for obvious reasons)
+    The data segment contains initialized global data (in practice, this is broken into read-only sections (eg global strings) and writable sections) For Instance, a globally defined int x = 10; goes here
+    The bss segment contains unintialized data, which is set to zero. Eg, a globally defined int y; goes here (and is set to 0)
+    The Heap contains data you have explicitly allocated (more on this below), plus some additional things outside the scope of this answer.
+    The stack contains local variables, function parameters, etc. Each thread has their own stack space, so the above is slightly misleading (more on this below)
+
+When you use variables/structs/arrays in functions, these are going on the stack. Given this sample code,
+
+    int foo(int a) {
+      int b = 1 + a;
+      int c = bar(b);
+      return c;
+    }
+    int bar(int x) {
+    //do something
+    }
+
+
+Immediately at point of the //do something comment in bar, the stack contains: (from top to bottom, ignoring everything above foo for simplicity) the local variable(s) for foo, then the parameter(s) for bar, then some stack information (outside the scope of this answer), then any local variables used by bar. The locations of the local variables are determined at compile time as offsets from the top of the stack, since the function may be used at different places on the stack (or at multiple places at once, think recursive functions). When bar is done executing, it stores its return value in a register which foo knows to check for the return value. Additionally, there are special registers which keeps track of where the top and bottom of the stack for that function are. For instance, accessing parameters is done by reading memory at some offset of the top of the stack. After bar returns, the bottom of the stack will be in the same place it was before foo called it. However, each thread is generally given only a maximum amount of memory it can use on the stack (often 8 megabytes)
+
+When you use the dreaded malloc (and a corresponding free after, right? :) ), the resulting pointer points to an address on the heap. The goal of a malloc implementation is to (quickly) find an free space of memory on the heap that is at least as big as you asked for, and return that address for you (unsurprisingly, this is a hard problem which a lot of work has gone into). This operation is also relatively slow compared to using a local variable/struct/array, which goes to a predetermined location on the stack.
+
+So what are the pros & cons of using each for storing things? In broad strokes:
+
+Pros for the stack
+
+    Very fast (you already know where to put stuff)
+    Don't have to explicitly de-allocate after finishing (after you have returned from a function, the bottom of the stack will just be where it was before the function that called it pushed parameters there. Later, that space can be easily reused)
+
+Pros for the heap
+
+    Can be easily shared among different threads
+    Actually usable for storing a variable amount of space. If you aren't sure how long that int[] needs to be, you would have to allocate space for its largest possible length (do you know that?) and then, even if you somehow could put a realistic upper bound cap on its size, likely use only a minuscule fraction of that. Instead, you can store a 4 or 8 byte (depending on platform) pointer on the stack as a variable which remembers where in the heap you allocated  your big array.
+    Doesn't have the size limitations stacks do.
