@@ -240,6 +240,14 @@ Read all kinds of media:          google-chrome <file>
 
 Translator (Translate Shell):     trans [-b|-brief] [source=en]:[target=en] [word | phrase] (langs use a two-letter code, read them all with 'trans -R'; install with 'apt install gawk && wget git.io/trans && chmod +x trans && mv trans /usr/local/bin')
 
+YouTube downloader (youtube-dl):
+- Installation:
+    sudo curl -L https://yt-dl.org/downloads/latest/youtube-dl -o /usr/local/bin/youtube-dl
+    sudo chmod a+rx /usr/local/bin/youtube-dl
+- Usage: 
+    Download video/playlist: youtube-dl [--write-sub] [--write-description] <url>
+    Download audio:          youtube-dl -x --audio-format mp3 <url>
+
 
 Networking:
 
