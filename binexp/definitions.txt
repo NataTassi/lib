@@ -1,0 +1,70 @@
+Definitions:
+
+Executable: also called executable code, executable file, executable program or binary, causes a computer to perform indicated tasks according to encoded instructions, as opposed to a data file that must be interpreted (parsed) by a program to be meaningful. The exact interpretation depends upon the use. "Instructions" is traditionally taken to mean machine code instructions for a physical CPU. In some contexts, a file containing scripting instructions (such as bytecode) may also be considered executable. 
+
+Source code: code written in a particular programming language.
+
+Compiler: translates source code from a high-level programming language to a lower level language (e.g. assembly language, object code, or machine code) to create an executable program.
+
+Object code / object module: is the product of a compiler. It's a sequence of instructions in machine code (binary) or an intermediate language such as Register Transfer Language (RTL). The term indicates that the code is the goal or result of the compiling process, with some early sources referring to source code as a "subject program". Object files can in turn be linked to form an executable file or library file. In order to be used, object code must either be placed in an executable file, a library file, or an object file. Whereas machine code is binary code that can be executed directly by the CPU, object code has the jumps partially parametrized so that a linker can fill them in. 
+
+Object file: is a computer file containing object code, that is, machine code output of an assembler or compiler. The object code is usually relocatable, and not usually directly executable. There are various formats for object files, and the same machine code can be packaged in different object file formats. An object file may also work like a shared library. 
+
+Linker: links several object (and library) files to generate an executable.
+
+Assembler: is used to convert assembly code into machine code (object code). Assemblers can also assemble directly to machine code executable files without the object intermediary step. 
+
+Disassembler: is a computer program that translates machine language into assembly language—the inverse operation to that of an assembler. A disassembler differs from a decompiler, which targets a high-level language rather than an assembly language. Disassembly, the output of a disassembler, is often formatted for human-readability rather than suitability for input to an assembler, making it principally a reverse-engineering tool.
+
+Debugger: a debugger or debugging tool is a computer program used to test and debug other programs (the "target" program). The main use of a debugger is to run the target program under controlled conditions that permit the programmer to track its operations in progress and monitor changes in computer resources (most often memory areas used by the target program or the computer's operating system) that may indicate malfunctioning code. Typical debugging facilities include the ability to run or halt the target program at specific points, display the contents of memory, CPU registers or storage devices (such as disk drives), and modify memory or register contents in order to enter selected test data that might be a cause of faulty program execution.
+
+Debug symbol (sym): is a special kind of symbol that attaches additional information to the symbol table of an object file, such as a shared library or an executable. This information allows a debugger to gain access to information from the source code of the binary, such as the names of identifiers, including variables and routines. The symbolic information may be compiled together with the module's binary file, or distributed in a separate file, or simply discarded during the compilation and/or linking. This information can be helpful while trying to investigate and fix a crashing application or any other fault.
+
+Machine code: is any low-level programming language, consisting of machine language instructions, which are used to control a computer's central processing unit (CPU). Each instruction causes the CPU to perform a very specific task, such as a load, a store, a jump, or an arithmetic logic unit (ALU) operation on one or more units of data in the CPU's registers or memory. Machine code is a strictly numerical language which is designed to run as fast as possible, and may be considered as the lowest-level representation of a compiled or assembled computer program or as a primitive and hardware-dependent programming language. Machine code is composed of a series of machine instructions that, when executed, are stored in the memory of the process. Each instruction is a stream of bytes that, when interpreted by the processor, modifies the state of the program. The code of a program written in assembly or assembler language allows you to work with a symbolic representation of that stream of bytes. For example, the x86 assembly instruction 'add eax, 0x1' adds 1 to the contents of the memory register eax. And 'add eax, 0x1' is actually a symbolic representation of the number '83 c0 01' (in hexadecimal) or what is the same '1000 0011 1100 0000 0000 0001'. The latter is the binary content actually stored in memory. For ease of reading the content written to memory is usually represented in hexadecimal and not binary.
+
+Instruction Set Architecture (ISA): describes the design of a computer in terms of the basic operations it must support. The ISA is not concerned with the implementation-specific details of a computer. It is only concerned with the set or collection of basic operations the computer must support. For example, the AMD Athlon and the Core 2 Duo processors have entirely different implementations but they support more or less the same set of basic operations as defined in the x86 Instruction Set. 
+
+x86 instruction set: is a family of CISC ISAs initially developed by Intel based on the Intel 8086 microprocessor and its 8088 variant. x86 refers to the set of instructions that x86-compatible microprocessors support. The x86 instruction set has been extended several times, introducing wider registers and datatypes as well as new functionality. Popular instruction set extensions include MMX, SSE and AVX technologies.
+
+Endianness: is the order or sequence of bytes of a word of digital data in computer memory. Endianness is primarily expressed as big-endian (BE) or little-endian (LE). A big-endian system stores the most significant byte of a word at the smallest memory address and the least significant byte at the largest. A little-endian system, in contrast, stores the least-significant byte at the smallest address. Bi-endianness is a feature supported by numerous computer architectures that feature switchable endianness in data fetches and stores or for instruction fetches. In the x86 ISA, data is stored using litte-endian.
+
+Microarchitecture: is the set of processor design techniques used, in a particular processor, to implement the instruction set architecture. It's the implementation of how the instructions are going to be executed and deals with concepts like Instruction Pipelining, Branch Prediction and Out of Order Execution. Different machines may be based on the same ISA but have different microarchitectures. The x86 architecture on which most of the Intel processors are based essentially remains the same across all these generations but, where they differ is in the underlying microarchitecture.
+
+CISC vs RISC CPU architectures: The CISC approach attempts to minimize the number of instructions per program, sacrificing the number of cycles per instruction. RISC does the opposite, reducing the cycles per instruction at the cost of the number of instructions per program.
+See: https://cs.stanford.edu/people/eroberts/courses/soco/projects/risc/risccisc/
+
+Assembly language (asm): or assembler language, is any low-level programming language in which there is a very strong correspondence between the instructions in the language and the architecture's machine code instructions. Assembly language usually has one statement per machine instruction (1:1), but constants, comments, assembler directives, symbolic labels of, e.g., memory locations, registers, and macros are generally also supported. Assembly code is converted into executable machine code by a utility program referred to as an assembler. 
+
+x86 assembly language: is the name for the family of assembly languages which provide some level of backward compatibility with CPUs back to the Intel 8008 microprocessor. It's used to produce machine code for the x86 class of processors (the ones that use x86 ISA). 
+
+Opcode: each assembly instruction is represented by a mnemonic which, often combined with one or more operands, translates to one or more bytes called an opcode (operation code). For example, in x86 the NOP instruction translates to 0x90, and the HLT instruction translates to 0xF4. There are potential opcodes with no documented mnemonic which different processors may interpret differently, making a program using them behave inconsistently or even generate an exception on some processors. 
+
+Intel vs AT&T x86 ISA syntax: there are several different assembly languages for generating x86 machine code. x86 assembly language has two main syntax branches, Intel syntax and AT&T syntax. Intel syntax is dominant in the DOS and Windows world, and AT&T syntax is dominant in the Unix world, since Unix was created at AT&T Bell Labs. Many x86 assemblers use Intel syntax, including FASM, MASM, NASM, TASM, and YASM. Main differences:
+
+                           AT&T                                        Intel
+
+Parameter   source before destination                  destination before source
+order:      movl $5, %eax                              mov eax, 5
+
+Parameter   mnemonics are suffixed with a letter       derived from the name of the register
+size:       indicating the size of the operands.       that is used (e.g. rax, eax, ax, al  
+            q for qword, l for long (dword),           imply q, l, w, b, respectively).
+            w for word, and b for byte.                add esp, 4
+            addl $4, %esp                             
+
+Sigils:     immediate values prefixed with a "$",      The assembler automatically detects 
+            registers prefixed with a "%".             the type of symbols; i.e., whether 
+                                                       they are registers, constants or 
+                                                       something else. 
+
+Effective   General syntax of DISP(BASE,INDEX,SCALE).  Arithmetic expressions in square 
+addresses:  movl offset(%ebx,%ecx,4), %eax             brackets. Size keywords like byte,
+                                                       word, or dword have to be used if
+                                                       the size cannot be determined
+                                                       from the operands.
+
+For more info see: 
+
+- https://en.wikipedia.org/wiki/Execution_(computing)
+- https://en.wikipedia.org/wiki/Computer_architecture
+

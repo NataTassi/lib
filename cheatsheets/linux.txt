@@ -52,10 +52,11 @@ Use 'printenv' or 'env' to print all env vars and 'printenv' <var> to print a sp
 
 Shell and related terms:
 
-Terminal = tty: text input/output environment
-Console: physical terminal
-Shell: command line interpreter
-Command line: interface to type commands
+Terminal = tty: physical device that can be used for entering data into, and transcribing data from a computer
+Console: physical device consisting of a keyboard and a screen (it's a kind of terminal, usually text-based)
+Terminal emulator: emulates a terminal and allows access to CLIs (like shells)
+Shell: exposes an OS's services to a user or program, usually via a CLI
+Command line interface (CLI): interface to type commands
 
 See https://askubuntu.com/a/506628
 
@@ -103,11 +104,11 @@ You can use < to use a file as input of a program, e.g., program < input.txt
 
 History expansion:
 
-!n:        Refer to command line n.
-!-n:       Refer to the command n lines back.
-!!:        Refer to the previous command. This is a synonym for ‘!-1’.
+!n:        Refer to command line n
+!-n:       Refer to the command n lines back
+!!:        Refer to the previous command, this is a synonym for ‘!-1’.
 $_:        Refer to the last argument to the previous command (env var called _)
-!:[n|^|$]: Refer to the [n-th | first | second] argument to the previous command
+!:[n|^|$]: Refer to the [n-th | first | last] argument to the previous command
 !:*:       Refer to all arguments from the previously executed command
 !string:   Refer to the most recent command preceding the current position in the history list starting with string
 
@@ -164,6 +165,7 @@ To access this documentation, we can use the man command and then provide the co
 Note: <param> denotes a parameter and [option] denotes an optional parameter
 
 Clear screen:                     clear
+Install package:                  apt -y install <package>
 Show manual page of <name>:       man [<page>] <name>
 Create alias for a command:       alias NAME="VALUE" (append to .bashrc to persist it across logins)
 Search for commands:              apropos <keyword>
@@ -176,6 +178,7 @@ Show current location:            pwd
 List directory contents:          ls <location = .> (-l: as list, -a: show hidden files, -h: human-readable sizes)
 Common shortcut for ls -la:       ll (shortcuts or aliases are defined with alias)
 Show file content:                cat <file>
+Split string with a delimiter:    cut -d "<delimiter>" -f <field_list>
 Print first lines of the file:    head [-<lines>] <file> (10 by default)
 Print last lines of the file:     tail [-<lines>] <file> (10 by default)
 Redirect input to file & stdout:  tee <file> (e.g.: ls -la | tee listing.txt)
@@ -187,6 +190,7 @@ Make new directory:               mkdir <dir_name>
 Copy file:                        cp <source> <destination> (-R: copy folder) 
 Move file:                        mv <source> <destination>
 Remove file:                      rm <file> (-r: delete dirs, -f: never prompt)
+Remove files recursively:         find . -name <pattern> -delete (first run it without -delete to see what you'll remove)
 File type and information:        file <filepath>
 Find files:                       find / -name *.txt (find all txt files in the root directory); see 'Finding files' section
 Locate file:                      locate <name | relative path>
@@ -212,40 +216,51 @@ Interactive process viewer:       htop
 Kill a process:                   kill <pid> (we can send signals to the process to be killed: SIGTERM to allow cleanup (default), SIGKILL to avoid cleanup, SIGSTOP to stop a process)
 Block devices:                    lsblk
 Disk space usage:                 df -h
+File space usage:                 du -h[D][d0] <file> (D: dereference symlinks, d0: depth zero, useful for dirs)
 Find out system uptime:           uptime (tells the current time, how long the system has been running and other stats)
 
-Create tar file:                  tar cfp < file | - > <dir> (use - to send to stdout)
+Create tar file:                  tar czfp < output | - > <dir> (use - to send to stdout, z filters through gzip)
 Decompress tar file:              tar xzfp < file | - >
 Compress into gzip file:          gzip <file> (-c: to stdout)
 Decompress gzip files (gz):       gzip -d <file>
 Compress into zip file:           zip -r <output> <input> (-e: encrypt)
 Decompress zip file:              unzip <file>
+Decompress multi-part files       7zip x [-p<pass>] <file>
 
-Find differences between files:   diff <file1> <file2>
+Find diffs between files/dirs:    diff <file1> <file2>
 Check file checksum:              echo "<hash> <filename>" | {md5sum | sha1sum | sha256sum | sha512sum} -c -
 Print file checksum:              <*>sum <file> (* = {md5|sha1|...})
-
-
-Misc commands:
 
 List files by file type:          find -type l -ls (list symlinks in the cur dir)
 Print lines with > x chars:       awk 'length($0) > <x>' <file>
 Find length of the longest line:  awk '{ if (length($0) > max) max = length($0) } END { print max }' <file>
 Turn file into string with '\n':  awk '$1=$1' ORS='\\n' <file>
 Print odd/even lines:             sed -n 'p;n' / sed -n 'n;p'
-Split string with a delimiter:    cut -d "<delimiter>" -f <field_list>
+Print sequence of numbers:        seq [<start> [<increment>]] <end>
+
+
+Media files:
+
+Open media file:                  [firefox | google-chrome] <file> (you can easily open images, audio, video, and documents)
+Open image:                       [feh | eog] <file> (feh cleanly shows you the image and eog allows you to browse images)
 Run VLC from CLI:                 cvlc --play-and-exit audio.mp3 
 Read PDF:                         atril <pdf_file>
-Read all kinds of media:          google-chrome <file>
+Remove password from PDF:         qpdf --password=<pass> --decrypt <input> <output>
 
-Translator (Translate Shell):     trans [-b|-brief] [source=en]:[target=en] [word | phrase] (langs use a two-letter code, read them all with 'trans -R'; install with 'apt install gawk && wget git.io/trans && chmod +x trans && mv trans /usr/local/bin')
+
+Translator (Translate Shell):     
+
+Usage: trans [-b|-brief] [source=en]:[target=en] [word | phrase]
+Languages: langs use a two-letter code, read them all with 'trans -R'
+Installation: install with 'apt install gawk && wget git.io/trans && chmod +x trans && mv trans /usr/local/bin')
+
 
 YouTube downloader (youtube-dl):
 - Installation:
     sudo curl -L https://yt-dl.org/downloads/latest/youtube-dl -o /usr/local/bin/youtube-dl
     sudo chmod a+rx /usr/local/bin/youtube-dl
 - Usage: 
-    Download video/playlist: youtube-dl [--write-sub] [--write-description] <url>
+    Download video/playlist: youtube-dl [--download-archive archive.txt] [--write-sub] [--write-description] <url | id>
     Download audio:          youtube-dl -x --audio-format mp3 <url>
 
 

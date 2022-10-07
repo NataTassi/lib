@@ -1,0 +1,7 @@
+gcc [-g[level]] [options] [source files] [object files] [-o output file]
+
+Flags:
+
+g      request the compiler and linker generate and retain source-level debugging/symbol info in the executable itself. See: stackoverflow.com/a/5179230. Levels: g1 minimal debug info, g default debug info, g3 maximal debug info
+m32    compile 32 bits objects on a compiler configured to compile 64 bits objects by default
+
