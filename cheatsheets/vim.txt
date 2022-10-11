@@ -15,7 +15,7 @@ Modes:
 
 - You can combine operators with motions. e.g: d$ deletes from the cursor to the end of the line and vf. selects until a dot is found.
 
-- There's a config file where you can save your preferences: ~/.vimrc in Linux and %userprofile%/_vimrc (just write each command in a different line)
+- There's a config file where you can save your preferences: ~/.vimrc in Linux and %userprofile%/_vimrc in Windows (just write each command in a different line)
 
 - A buffer in Vim is an open instance of a file. This means that the file may not be visible on the current screen, but it is saved somewhere in memory. 
 A window (also called split) in Vim is a viewport onto a single buffer. A tab in Vim is a collection of one or more windows.

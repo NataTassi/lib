@@ -25,5 +25,5 @@ When an ARP request is sent, a message is broadcasted to every other device foun
 
 * HTTPS (Hypertext Transfer Protocol Secure): is the secure version of HTTP. HTTPS data is encrypted so it not only stops people from seeing the data you are receiving and sending, but it also gives you assurances that you're talking to the correct web server and not something impersonating it.
 
-* SSH (Secure Shell): allows us to remotely execute commands on another device remotely. Any data sent between the devices is encrypted when it is sent over a network such as the Internet.
+* SSH (Secure Shell): allows us to remotely execute commands on another device. Any data sent between the devices is encrypted when it is sent over a network such as the Internet.
 e.g. ssh root@10.11.12.13 to log into the server with that IP as the superuser.

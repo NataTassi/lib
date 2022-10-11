@@ -8,7 +8,7 @@ Commands:
 
 File information:                 file <file>
 Display data in hex numbers:      hd <file> (hd is an alias for hexdump -C)
-Disassemble binary:               objdump -M intel <program> (-s: full contents, -S: source and disassembly, -d: disassemble exec sections, -D: disassemble all sections, -x: headers)
+Disassemble binary:               objdump -M intel -S <program> (-s: full contents, -S: source and disassembly, -d: disassemble exec sections, -D: disassemble all sections, -x: headers)
 Addresses of entries in GOT:      objdump --dynamic-reloc <program>
 Show info about ELF files:        readelf (-h: header, -S: sections, -l: segments)
 Print program printable strings:  strings <program>
@@ -46,7 +46,7 @@ Display program stack:            bt
 Continue execution:               c
 Next line, step over function:    n
 Next line, step into function:    s
-Register values:                  info registers (most regs); info all-reg (all regs); info <reg> (given reg)
+Register values:                  i r (or info registers; most regs); info all-reg (all regs); i r <reg> (given reg)
 Change var value                  set $<var_name | register>=<value>
 Show next 10 lines of source:     list
 

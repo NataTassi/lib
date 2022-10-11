@@ -157,10 +157,7 @@ ctrl-e: moves cursor to the end of the line
 
 General commands:
 
-A majority of commands allow for arguments to be provided. These arguments are identified by a hyphen and a certain keyword known as flags or switches.
-Commands usually have a --help option. This option will list the possible options that the command accepts, provide a brief description and example of how to use it.
-This option is, in fact, a formatted output of what is called the man page (short for manual), which contains documentation for Linux commands and applications.
-To access this documentation, we can use the man command and then provide the command we want to read the documentation for. e.g.: man ls
+A majority of commands allow for arguments to be provided. These arguments are identified by a hyphen and a certain keyword known as flags or switches. Commands usually have a --help option. This option will list the possible options that the command accepts, provide a brief description and example of how to use it. This option is, in fact, a formatted output of what is called the man page (short for manual), which contains documentation for Linux commands and applications. To access this documentation, we can use the man command and then provide the command we want to read the documentation for, e.g. 'man ls'.
 
 Note: <param> denotes a parameter and [option] denotes an optional parameter
 
@@ -218,6 +215,7 @@ Block devices:                    lsblk
 Disk space usage:                 df -h
 File space usage:                 du -h[D][d0] <file> (D: dereference symlinks, d0: depth zero, useful for dirs)
 Find out system uptime:           uptime (tells the current time, how long the system has been running and other stats)
+Change display settings:          xrandr (e.g. set brightness with '--output <screen_name> --brightness 0.5', get the screen name without args)
 
 Create tar file:                  tar czfp < output | - > <dir> (use - to send to stdout, z filters through gzip)
 Decompress tar file:              tar xzfp < file | - >

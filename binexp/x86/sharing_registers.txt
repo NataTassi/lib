@@ -1,0 +1,9 @@
+How does a computer use just a few registers?
+
+Multi-threading itself doesn't affect the number of registers in use. When a thread is swapped out, it generally has its registers saved to memory and the next thread to run has those registers loaded up from its previous save.
+
+An example is a system having a thread control block structure (TCB). This structure would contain (while the thread wasn't running), the saved instruction pointer, stack pointer, general purpose registers, floating point registers, thread statistics and so on. In short, everything needed to totally restore the thread to the state it was in when it was swapped out for another thread to run.
+
+And not everything that goes on in a computer is done in registers. Modern compilers can optimise code so that the data items used the most are kept in registers but the vast majority of data is held in memory and only bought into registers when needed.
+
+https://stackoverflow.com/questions/3410778/how-does-a-computer-use-just-a-few-registers

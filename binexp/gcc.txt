@@ -1,7 +1,14 @@
 gcc [-g[level]] [options] [source files] [object files] [-o output file]
 
+gcc -m32 -no-pie -fno-stack-protector -ggdb -mpreferred-stack-boundary=2 -z execstack -o stack<x> stack<x>.c
+
+
 Flags:
 
-g      request the compiler and linker generate and retain source-level debugging/symbol info in the executable itself. See: stackoverflow.com/a/5179230. Levels: g1 minimal debug info, g default debug info, g3 maximal debug info
-m32    compile 32 bits objects on a compiler configured to compile 64 bits objects by default
+g: Request the compiler and linker generate and retain source-level debugging/symbol info in the executable itself. See: stackoverflow.com/a/5179230. Levels: g1 minimal debug info, g default debug info, g3 maximal debug info, ggdb debugging info for gdb
 
+m32: Compile 32 bits objects on a compiler configured to compile 64 bits objects by default (in a 64-bit OS get 32-bits gcc libs with: apt-get install gcc-multilib; for c++ get g++-multilib)
+
+no-pie: Tell gcc not to make a position independent executable (PIE). PIE is a precondition to enable address space layout randomization (ASLR). ASLR is a security feature where the kernel loads the binary and dependencies into a random location of virtual memory each time it's run.
+
+mpreferred-stack-boundary=x: align stack pointer on (2^x)-byte boundary
