@@ -11,21 +11,18 @@ Modes:
 
 - You can access docs for any command/component with :help <command | component> or just :h.
 
-- You can repeat a command many times by prepending the number before the command. e.g.: 2yy
+- You can repeat a command many times by prepending the number before the command. e.g. 2yy.
 
-- You can combine operators with motions. e.g: d$ deletes from the cursor to the end of the line and vf. selects until a dot is found.
+- You can combine operators with motions. e.g. d$ deletes from the cursor to the end of the line and vf. selects until a dot is found.
 
-- There's a config file where you can save your preferences: ~/.vimrc in Linux and %userprofile%/_vimrc in Windows (just write each command in a different line)
+- There's a config file where you can save your preferences: ~/.vimrc in Linux and %userprofile%/_vimrc in Windows (just write each command in a different line).
 
-- A buffer in Vim is an open instance of a file. This means that the file may not be visible on the current screen, but it is saved somewhere in memory. 
-A window (also called split) in Vim is a viewport onto a single buffer. A tab in Vim is a collection of one or more windows.
+- A buffer in Vim is an open instance of a file. This means that the file may not be visible on the current screen, but it is saved somewhere in memory. A window (also called split) in Vim is a viewport onto a single buffer. A tab in Vim is a collection of one or more windows.
 
 - By default Vim uses its own clipboard, the unnamed register (:help quotequote). Vim offers the + and * registers to reference 
-the system clipboard (:help quoteplus and :help quotestar). Note that on some systems, + and * are the same. But there's a difference in Linux.
-Add 'set clipboard=unnamed,unnamedplus' to the vimrc or set the command each time to make copy/paste operations behave as expected.
+the system clipboard (:help quoteplus and :help quotestar). Note that on some systems, + and * are the same. But there's a difference in Linux. Add 'set clipboard=unnamed,unnamedplus' to the vimrc or set the command each time to make copy/paste operations behave as expected.
 
-- When you enter a Visual Mode, just move around to select what you want. Use Visual Line Mode to select whole lines. And use Visual Block Mode to 
-select a block (rectangle), besides in this mode you can insert before/after the block with I / A or even replace all characters with r.
+- When you enter a Visual Mode, just move around to select what you want. Use Visual Line Mode to select whole lines. And use Visual Block Mode to select a block (rectangle), besides in this mode you can insert before/after the block with I / A or even replace all characters with r.
 
 
 Enter insert mode:                       i
@@ -89,7 +86,8 @@ Increase / decrease window size:         Ctrl-w + (> / <)
 
 Search forwars/backwards for a pattern:  /pattern / ?pattern
 Repeat last search in the same/opp dir:  n / N
-Search and replace:                      :%s/<old>/<new>/g (/g works in the whole file instead of the current line)
+Search and replace globally:             :%s/<old>/<new>/g (/g matches all appearances, not only the first)
+Search and replace in visual selection:  :'<,'>s/[\%V]<old>/<new>/g (pressing : will automatically add '<,'>; by adding \%V you restrict a pattern to match only inside the visual selection instead of whole lines)
 Use grep to search in multiple files:    :vimgrep <pattern> <file | *.txt | *>
 
 

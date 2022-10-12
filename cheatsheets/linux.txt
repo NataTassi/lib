@@ -33,6 +33,8 @@ Here 2 is the file descriptor associated to stderr (standard error).
 
 * The system call is the fundamental interface between an application and the Linux kernel (type 'man syscalls' for more info)
 
+* Pipe to clipboard: <content> | xclip -se c ('-se c' stands for '-selection clipboard'; see 'xclip -h')
+
 
 Environment variables:
 
@@ -170,6 +172,7 @@ Print text:                       echo <text>
 Shutdown the machine:             shutdown (0 | now: right away, -r: reboot)
 See ASCII codes:                  man ascii
 See exit code of prev command:    echo $? ('?' is a var that holds it)
+Pipe content to clipboard         <content> | xclip -se c
 
 Show current location:            pwd
 List directory contents:          ls <location = .> (-l: as list, -a: show hidden files, -h: human-readable sizes)
