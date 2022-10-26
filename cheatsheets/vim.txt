@@ -46,8 +46,8 @@ Go forward/backward by paragraph:        } / {
 Jump to the start of the next/prv word:  w / b
 Same as the prev one space separated:    W / B
 Jump to the end of the next/prv word:    e / ge
-Next occurrence of char (non-inclusive): t<char>
-Next occurrence of char (inclusive):     f<char>
+Nxt/prv occurrence of char (non-incl):   t/T<char>
+Nxt/prv occurrence of char (inclusive):  f/F<char>
 Start / end of line                      0 / $
 Jump between matching brackets:          %
 First non-blank character of the line:   ^

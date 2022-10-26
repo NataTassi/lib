@@ -30,20 +30,19 @@ Settings -> type vimrc -> Enable 'Use Keymappings from a .vimrc file' or add '"v
 Vim extension shared clipboard:
 Settings -> type vim clip -> Enable 'Use system clipboard for unnamed register' or add '"vim.useSystemClipboard": true' to settings.json file
 
-Extensions:
-- Vim
-- Docker
-- vscode-pdf
-- IntelliCode
-- Python / Pylance
-- Simple React Snippets
-- JavaScript (ES6) Code Snippets
+Install extension from CLI: code --install-extension <extension_id> (get id: search extension -> gear icon -> copy extension id)
+
+My extensions: C/C++, Docker, IntelliCode, Python, Vim, vscode-pdf
 
 Access VSCode settings.json file:
 1. Press Ctrl + , (or go to File > Preferences > Settings)
 2. Click the icon: "file with arrow" in the top right corner
 
-~/.config/Code/User/settings.json content:
+Settings file locations:
+Windows %APPDATA%\Code\User\settings.json
+Linux $HOME/.config/Code/User/settings.json
+
+My settings.json content:
 {
     "workbench.colorTheme": "Default Dark+",
     "html.validate.scripts": false,

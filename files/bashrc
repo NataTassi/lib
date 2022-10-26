@@ -1,0 +1,8 @@
+# execute tmux if it's installed, only in interactive shells and if it's not trying to run within itself
+if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
+  exec tmux
+fi
+
+alias c="clear"
+alias cb="xclip -se c"
+alias l="ls -lah"

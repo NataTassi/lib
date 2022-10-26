@@ -52,6 +52,15 @@ See: https://askubuntu.com/a/205698
 Use 'printenv' or 'env' to print all env vars and 'printenv' <var> to print a specific variable.
 
 
+Desktop environment shortcuts (super = Windows key):
+
+File explorer:    Super + e
+Minimize windows: Super + d (not in all distros)
+Web browser:      Super + w (not in all distros)
+Terminal:         Ctrl + Alt + t ('Super + t' could be handy)
+Action buttons:   Ctrl + Alt + Del
+
+
 Shell and related terms:
 
 Terminal = tty: physical device that can be used for entering data into, and transcribing data from a computer
@@ -165,7 +174,9 @@ A majority of commands allow for arguments to be provided. These arguments are i
 Note: <param> denotes a parameter and [option] denotes an optional parameter
 
 Clear screen:                     clear
-Install package:                  apt -y install <package>
+Install package:                  apt install -y <package>
+Show package info:                apt info <package> 2>/dev/null | awk '/Description/,0' (from 'Description' 'til the end of input)
+Check if package is installed:    apt list <package> OR apt list --installed | grep <package>
 Show manual page of <name>:       man [<page>] <name>
 Create alias for a command:       alias NAME="VALUE" (append to .bashrc to persist it across logins)
 Search for commands:              apropos <keyword>
@@ -178,7 +189,8 @@ Pipe content to clipboard         <content> | xclip -se c
 Show current location:            pwd
 List directory contents:          ls <location = .> (-l: as list, -a: show hidden files, -h: human-readable sizes)
 Common shortcut for ls -la:       ll (shortcuts or aliases are defined with alias)
-Show file content:                cat <file>
+Print file content:               cat <file>
+Print file (numbered lines):      nl <file>
 Split string with a delimiter:    cut -d "<delimiter>" -f <field_list>
 Print first lines of the file:    head [-<lines>] <file> (10 by default)
 Print last lines of the file:     tail [-<lines>] <file> (10 by default)
@@ -199,25 +211,29 @@ Check file types/existence:       [  (opening square bracket is command; [ -d bi
 Find patterns in text:            grep <pattern> (-v: invert matches)
 Page through text:                less <file> (when inside less use: h: help, q: quit, /key: find key, n (N): next(prev) result
 Count lines/bytes/chars in file:  wc -l <file> (count lines)
-Locate command binary:            whereis <command>
+locate a command:                 which <command>
+Locate command, src and man page: whereis <command>
 Sort file contents:               sort <file>
 
 Show current user id:             id
 Show current user name:           whoami
-Become another user:              su <user> (don't specify a user to become superuser; add -l to inherit more properties of the new user, like env vars)
+Become another user:              su <user> (don't specify a user to become superuser; add -l to inherit more properties of the new user, like env vars and bashrc)
 Change file privileges:           chmod <file> (chmod +x: execution, chmod 777: all privileges), you can't chmod FAT32 filesystems, move the executable
-Change the owner of a file:       chown <new_owner> <file>
+Change the owner of a file:       chown [<new_owner>][:[<new_group>]] <file>
 Change group ownership of a file: chgrp <new_group> <file>
 Execute command as root:          sudo <command>
 
 System information:               uname -a
+Find out OS version:              run 'hostnamectl' or 'cat /etc/os-release'
+Detailed system info:             neofetch
 Processes information:            ps [aux] (add 'aux' to see the processes run by other users and the system; add axjf to view process tree)
 Real-time processes info:         top (stats are updated every 10 secs or when you use the arrow keys)
 Interactive process viewer:       htop
 Kill a process:                   kill <pid> (we can send signals to the process to be killed: SIGTERM to allow cleanup (default), SIGKILL to avoid cleanup, SIGSTOP to stop a process)
-Block devices:                    lsblk
+Block devices:                    lsblk (-f: filesystems info)
+Installed harware and drivers:    lspci
 Disk space usage/mounted fs's:    df -h (fs = file system)
-File space usage:                 du -h[D][d0] <file> (D: dereference symlinks, d0: depth zero, useful for dirs)
+File space usage:                 du -sh[D] <file> (D: dereference symlinks, s: summarize, alternatively set depth to 0 with d0)
 Find out system uptime:           uptime (tells the current time, how long the system has been running and other stats)
 Change display settings:          xrandr (e.g. set brightness with '--output <screen_name> --brightness 0.5', get the screen name without args)
 
@@ -415,8 +431,8 @@ Format drive:
 
 
 Create bootable Linux USB drive:
-1. Unmount USB partition:         sudo umount /dev/name (use lsblk to find your device partition)
-2. Copy content from ISO:         sudo dd bs=1M if=/path/to/input.iso of=/dev/sd<?> conv=fdatasync status=progress
+1. Unmount USB partition:         sudo umount /dev/<device_name> (use lsblk to find your device partition)
+2. Copy content from ISO:         sudo dd if=/path/to/input.iso of=/dev/<device_name> conv=fdatasync status=progress
 
 
 Make GRUB recognize Windows:
@@ -492,9 +508,11 @@ Common commands in apt:
 * Update package db:  sudo apt update
 * Upgrade packages:   sudo apt upgrade
 
-To install a package from a .deb file use:
-1. sudo dpkg -i <file>
-2. If install fails due to missing dependencies use 'apt-get -f install' and install igain
+To install a package from a .deb file you can use either:
+    1. sudo dpkg -i <file> (if install fails due to missing dependencies use 'apt-get -f install' and install again)
+    2. sudo apt-get install -y ./file> (with the benefit that dependencies will be installed)
+
+Install a package from a .bundle file: sudo chmod +x <file> && sudo ./<file>
 
 Where to place executables or whole packages:
 /                     System-wide essential packages
