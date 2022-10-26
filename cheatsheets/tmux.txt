@@ -22,7 +22,7 @@ Commands:
 New tmux session:             tmux [new -s <session_name>] OR prefix + :new
 Prefix to send commands:      ctrl-b (sometimes ctrl-a)
 List open sessions:           tmux ls OR prefix :s
-Close current session:        prefix :kill-session [-t <number | name>]
+Kill current session:         prefix :kill-session [-t <number | name>]
 Detach from session:          prefix + d
 Attach to session:            tmux a [-t <number | name>]
 List all tmux key bindings:   prefix + ?

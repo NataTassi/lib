@@ -1,16 +1,57 @@
-Command palette:    ctrl + shift + p
-Settings:           ctrl + ,
-Quick open:         ctrl + p
-Switch tabs:        ctrl + tab
+Enable Python linter:
+1. Trust the workspace (if you are editing a file)
+2. Open the Command Palette (Ctrl+Shift+P) and select 'Python: Enable/Disable Linting'
+
+Edit multiple lines:
+- Windows: Ctrl + Alt + Arrow Keys
+- Linux: Shift + Alt + Arrow Keys
+- Mac: Opt + Cmd + Arrow Keys
+
+Keyboard shortcuts (File -> Preferences -> Keyboard Shortcuts):
+Command palette:              Ctrl + Shift + p
+Settings:                     Ctrl + ,
+Quick open:                   Ctrl + p
+Switch tabs:                  Ctrl + Tab
+New terminal:                 Ctrl + Shift + `
+---------------------------
+Duplicate line:               Ctrl + D
+Delete line (or selection):   Ctrl + Y
+Replace:                      Ctrl + H
+Replace all:                  Ctrl + Alt + Enter
+Find in selection:            Alt + L
+Insert line below:            Ctrl + Enter
+
+Autosave: 
+Settings -> type autosave -> choose an option (afterDelay is very handy)
 
 Use vimrc: 
-Settings -> type vimrc -> Enable 'Use Keymappings from a .vimrc file'
+Settings -> type vimrc -> Enable 'Use Keymappings from a .vimrc file' or add '"vim.vimrc.enable": true' to settings.json file
+
+Vim extension shared clipboard:
+Settings -> type vim clip -> Enable 'Use system clipboard for unnamed register' or add '"vim.useSystemClipboard": true' to settings.json file
 
 Extensions:
+- Vim
 - Docker
+- vscode-pdf
 - IntelliCode
-- JavaScript (ES6) Code Snippets
 - Python / Pylance
 - Simple React Snippets
-- Vim
-- vscode-pdf
+- JavaScript (ES6) Code Snippets
+
+Access VSCode settings.json file:
+1. Press Ctrl + , (or go to File > Preferences > Settings)
+2. Click the icon: "file with arrow" in the top right corner
+
+~/.config/Code/User/settings.json content:
+{
+    "workbench.colorTheme": "Default Dark+",
+    "html.validate.scripts": false,
+    "files.autoSave": "afterDelay",
+    "vim.useSystemClipboard": true,
+    "vim.vimrc.enable": true
+}
+
+Troubleshooting:
+- The name org.freedesktop.secrets was not provided by any .service files: sudo apt install gnome-keyring
+

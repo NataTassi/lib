@@ -1,0 +1,7 @@
+{
+    "workbench.colorTheme": "Default Dark+",
+    "html.validate.scripts": false,
+    "files.autoSave": "afterDelay",
+    "vim.useSystemClipboard": true,
+    "vim.vimrc.enable": true
+}

@@ -72,6 +72,7 @@ Cut a character:                         x
 Write changes to the file:               :w
 Write changes to the file (root)         :w !sudo tee %
 Write and quit:                          :wq
+Write new file:                          :saveas <file>
 Quit:                                    :q
 Force quit:                              :q!
 Save and quit all active tabs:           :wqa                                          

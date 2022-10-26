@@ -31,24 +31,30 @@ Note: remember you won't be able to see memory addresses without running the pro
 GDB - GNU Debugger:
 
 * There's an init file for gdb called .gdbinit to set options to be run at gdb's startup (you can create one in the cur dir, this overrides the global $HOME/.gdbinit file)
+* Stepping into means diving into functions, stepping over is the opposite.
 
-Ask for help:                     h [<command>]
-Quit:                             q
+Ask for help:                     h[elp] [<command>]
+Quit:                             q[uit]
 Open binary:                      gdb <binary>
-Disassemble function:             disas <function> (e.g.: disas main)
+Disassemble function:             disas[ssemble] <function> (e.g.: disas main)
 Set Intel syntax:                 set disassembly-flavor intel
-Set breakpoint:                   b <function | line | *address>
+Set breakpoint:                   b[reakpoint] <function | line | *address>
+Delete breakpoint:                d[elete] [<breakpoint_num>] (all if no number is specified)
+List breakpoints:                 i[nfo] b[reakponts]
 Set watchpoint (expr changes):    watch <expr>
-Run program:                      r [arglist]
-Display val of expr:              p [/<format={x|d|u|o|t|a|c|f}>] <expression>
+Run program:                      r[un] [arglist]
+Display val of expr:              p[rint] [/<format={x|d|u|o|t|a|c|f}>] <expression>
 Examine memory at address expr:   x [/<count><unit={b|h|w|g}><format={s|i}>] <expr> (e.g.: x/s <addr> to see string val at addr)
-Display program stack:            bt
-Continue execution:               c
-Next line, step over function:    n
-Next line, step into function:    s
-Register values:                  i r (or info registers; most regs); info all-reg (all regs); i r <reg> (given reg)
-Change var value                  set $<var_name | register>=<value>
-Show next 10 lines of source:     list
+Display program stack:            bt (backtrack)
+Continue execution:               c[ontinue]
+Next source line (step over):     n[ext]
+Next source line (step into):     s[tep]
+Next instruction (step over):     ni (next machine instruction)
+Next instruction (step into):     si (step machine instruction)
+Register values:                  i[nfo] r[egisters] (most regs); i all[-reg] (all regs); i r <reg> (given reg)
+Change var value                  set $<var_name | register> = <value>
+Return given value from function: return <expression>
+Show next 10 lines of source:     list (if a symbol table is available)
 
 
 radare2 — Hexadecimal editor, disassembler and debugger:

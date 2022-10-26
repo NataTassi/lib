@@ -1,6 +1,6 @@
 To get consistent memory addresses when running the program and debugging it with gdb:
 
-* Make sure to disable ASLR with 'sudo sysctl -w kernel.randomize_va_space=0 #no random'.
+* Make sure to disable ASLR with 'sudo sysctl -w kernel.randomize_va_space=0'
 Running directly: env -i PWD=$(pwd) $(pwd)/<binary>  (you can pipe input into the binary by piping it to env)
 Running with gdb: env -i gdb <binary> < <(cat gdb.txt -) (you can read input with 'r < file')
 

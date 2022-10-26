@@ -8,7 +8,7 @@ In UNIX systems sockets are also indices into the same table as files (Windows i
 On a Unix-like operating system, the first three file descriptors, by default, are STDIN (standard input), STDOUT (standard output), and STDERR (standard error) with fds 0, 1 and 2 respectively. When a new file is open the lowest-numbered file descriptor not
 currently open for the process is used.
 
-* As in any computer program, remember to use the arrow keys, start/end, and prev/next page to move around.
+* In a shell, as in any computer program, remember to use the arrow keys, start/end, and prev/next page to move around.
 
 * In the bash shell (and the like) use tab for command autocompletion (press twice to disambiguate), ctrl-r to search command history, and the up/down arrow keys to insert recent commands.
 
@@ -24,7 +24,7 @@ This is called command substitution. You could also surround a command with back
 * Edit ~/.bashrc to add env vars and commands to execute at bash startup, e.g.:
     export PATH=$PATH:/my/dir
     myprogram
-Use 'source ~/.bashrc' to load the new config into your current shell
+Use '. ~/.bashrc' ('.' is the same as 'source') to load the new config into your current shell
 
 * When you are in a terminal you can copy and paste with ctrl-shift-c and ctrl-shift-v.
 
@@ -61,19 +61,6 @@ Shell: exposes an OS's services to a user or program, usually via a CLI
 Command line interface (CLI): interface to type commands
 
 See https://askubuntu.com/a/506628
-
-
-Executing a script in the shell:
-
-There are two ways of doing it:
-1. Launch the script as a program, where it has its own process.
-2. Source the script as a bunch of text, where the text is processed by the current shell.
-
-To launch the script as a program:
-Add the line #!/bin/bash as the first line of the script. This will be read by the loader, which has special logic that interperts the first two characters #! as "launch the program coming next, and pass the contents into it". Note this only properly works for programs written to receive the contents.
-
-To source the script into the current shell:
-Type the command '. script.sh' or 'source script.sh' (they are equivalent). This acts as if you typed in the contents of "script.sh". For example, if you set a variable in "script.sh" then that variable will be set in the current shell. You will need to undefine the variable to clear it from the current shell. This differs heavily from the #!/bin/bash example, because setting a variable in the new bash subprocess won't impact the shell you launched the subprocess from.
 
 
 Chaining operators:
@@ -137,6 +124,20 @@ Whilst you could use a relative path for the interpreter, most of the time you a
 It is possible to leave out the line with the shebang and still run the script but it is unwise. If you are at a terminal and running the Bash shell and you execute a script without a shebang then Bash will assume it is a Bash script. So this will only work assuming the user running the script is running it in a Bash shell and there are a variety of reasons why this may not be the case, which is dangerous.
 
 
+Executing a script in the shell:
+
+There are two ways of doing it:
+1. Launch the script as a program, where it has its own process.
+2. Source the script as a bunch of text, where the text is processed by the current shell.
+
+To launch the script as a program:
+Add the line #!/bin/bash as the first line of the script. This will be read by the loader, which has special logic that interperts the first two characters #! as "launch the program coming next, and pass the contents into it". Note this only properly works for programs written to receive the contents.
+
+To source the script into the current shell:
+Type the command '. script.sh' or 'source script.sh' (they are equivalent). This acts as if you typed in the contents of "script.sh". For example, if you set a variable in "script.sh" then that variable will be set in the current shell. You will need to undefine the variable to clear it from the current shell. This differs heavily from the #!/bin/bash example, because setting a variable in the new bash subprocess won't impact the shell you launched the subprocess from.
+
+
+
 Terminal control sequences:
 
 Commands sent to the terminal that input a specific non-printable ASCII character to perform an associated action.
@@ -194,7 +195,7 @@ Remove files recursively:         find . -name <pattern> -delete (first run it w
 File type and information:        file <filepath>
 Find files:                       find / -name *.txt (find all txt files in the root directory); see 'Finding files' section
 Locate file:                      locate <name | relative path>
-Check file types or existence:    [  ([ -d bin ] to check if a dir called bin exists in the current folder) 
+Check file types/existence:       [  (opening square bracket is command; [ -d bin ] to check if a dir called bin exists in the current folder) 
 Find patterns in text:            grep <pattern> (-v: invert matches)
 Page through text:                less <file> (when inside less use: h: help, q: quit, /key: find key, n (N): next(prev) result
 Count lines/bytes/chars in file:  wc -l <file> (count lines)
@@ -215,7 +216,7 @@ Real-time processes info:         top (stats are updated every 10 secs or when y
 Interactive process viewer:       htop
 Kill a process:                   kill <pid> (we can send signals to the process to be killed: SIGTERM to allow cleanup (default), SIGKILL to avoid cleanup, SIGSTOP to stop a process)
 Block devices:                    lsblk
-Disk space usage:                 df -h
+Disk space usage/mounted fs's:    df -h (fs = file system)
 File space usage:                 du -h[D][d0] <file> (D: dereference symlinks, d0: depth zero, useful for dirs)
 Find out system uptime:           uptime (tells the current time, how long the system has been running and other stats)
 Change display settings:          xrandr (e.g. set brightness with '--output <screen_name> --brightness 0.5', get the screen name without args)
@@ -233,6 +234,7 @@ Check file checksum:              echo "<hash> <filename>" | {md5sum | sha1sum |
 Print file checksum:              <*>sum <file> (* = {md5|sha1|...})
 
 List files by file type:          find -type l -ls (list symlinks in the cur dir)
+Check if string is empty:         [ -z <string> ]
 Print lines with > x chars:       awk 'length($0) > <x>' <file>
 Find length of the longest line:  awk '{ if (length($0) > max) max = length($0) } END { print max }' <file>
 Turn file into string with '\n':  awk '$1=$1' ORS='\\n' <file>
@@ -414,7 +416,7 @@ Format drive:
 
 Create bootable Linux USB drive:
 1. Unmount USB partition:         sudo umount /dev/name (use lsblk to find your device partition)
-2. Copy content from ISO:         sudo dd bs=4M if=/path/to/input.iso of=/dev/sd<?> conv=fdatasync status=progress
+2. Copy content from ISO:         sudo dd bs=1M if=/path/to/input.iso of=/dev/sd<?> conv=fdatasync status=progress
 
 
 Make GRUB recognize Windows:
