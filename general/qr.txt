@@ -1,0 +1,20 @@
+A QR code (an initialism for quick response code) is a type of matrix barcode that is a machine-readable optical label that contains information about the item to which it is attached. In practice, QR codes often contain data for a locator, identifier, or tracker that points to a website or application. QR codes use four standardized encoding modes (numeric, alphanumeric, byte/binary, and kanji) to store data efficiently; extensions may also be used.
+
+Dependencies: pip3 install qrcode opencv-python
+
+
+Generate QR code:
+
+import qrcode
+data = "https://duckduckgo.com"
+img = qrcode.make(data)
+img.save("img.png")
+
+
+Read QR code:
+
+import cv2
+img = cv2.imread("img.png")
+detector = cv2.QRCodeDetector()
+data, pts, bin_data = detector.detectAndDecode(img)
+print(data)

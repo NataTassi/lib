@@ -1,0 +1,15 @@
+It's how disks connected through a NVM Express port are named. So, your disk is labeled as /dev/nvmen1 instead of /dev/sda, and your partitions /dev/nvme0n1p[x] instead of /dev/sda[x].
+Other than the naming, there should be no notable difference when it comes to simple partitioning operations.
+
+The NVMe naming standard describes:
+- nvme0: first registered device's device controller
+- nvme0n1: first registered device's first namespace
+- nvme0n1p1: first registered device's first namespace's first partition
+
+You can not rely on the name of the descriptor. So the overall naming is depended on your physical layout. And that can change depending on you use case by adding/removing block devices, drive failures, etc.
+What you can rely on is the order of the listed partitions for each device, as those are getting stored on and read from the block device' partition table. As long as you do not change the partition layout, the order stays the same.
+In the end, referring to either to the device UUID or PARTUUID is still the best practise. Depending on the use case, referring to the LABEL might be more convenient.
+
+Refs:
+https://askubuntu.com/a/932336
+https://unix.stackexchange.com/a/452135

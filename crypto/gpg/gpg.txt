@@ -1,5 +1,5 @@
 Symmetric encryption:
-Encrypt: gpg -o <output> -c <input> 
-Decrypt: gpg -o <output> -d <input>
+Encrypt: gpg -o <output> [--cipher-algo AES256] [--no-symkey-cache] -c <input> 
+Decrypt: gpg -o <output> [--no-symkey-cache] -d <input>
 
 Clear cache: echo RELOADAGENT | gpg-connect-agent
