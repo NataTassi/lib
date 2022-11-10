@@ -1,0 +1,13 @@
+authenticator
+elasticsearch
+Flask
+Flask-HTTPAuth
+gunicorn[gevent]
+numpy
+pwntools
+pygame
+python-dotenv
+redis
+requests
+scapy
+scrapy

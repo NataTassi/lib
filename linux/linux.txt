@@ -352,6 +352,7 @@ ln is the link command. By default, ln creates hard links, add the -s flag to ma
 Create symlink: ln -s /path/to/file /path/to/symlink
 Delete symlink: unlink /path/to/symlink | rm /path/to/symlink                  
 Find broken symlinks: find . -xtype l
+Find resolved symlink: readlink -f <symlink> (-f: follow symlinks recursively)
 Note: you cannot create hard links to files in different partitions
 
 

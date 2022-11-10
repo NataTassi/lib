@@ -1,0 +1,9 @@
+# bashrc
+# vimrc
+# git credentials
+# ngrok auth token
+# vscode settings
+# repos
+# Python modules
+# xfce4-terminal settings
+# xfce DE panels, shortcuts and settings
