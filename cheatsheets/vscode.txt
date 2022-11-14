@@ -12,13 +12,16 @@ Command palette:              Ctrl + Shift + p
 Settings:                     Ctrl + ,
 Quick open:                   Ctrl + p
 Switch tabs:                  Ctrl + Tab
+Toggle terminal:              Ctrl + `
 New terminal:                 Ctrl + Shift + `
----------------------------
-Duplicate line:               Ctrl + D
-Delete line (or selection):   Ctrl + Y
-Replace:                      Ctrl + H
+Close tab:                    Ctrl + w (won't work when editing files with Vim extension)
+------------------------------------------------
+Edition commands (not to be used with Vim extension):
+Duplicate line:               Ctrl + d
+Delete line (or selection):   Ctrl + y
+Replace:                      Ctrl + h
 Replace all:                  Ctrl + Alt + Enter
-Find in selection:            Alt + L
+Find in selection:            Alt + l
 Insert line below:            Ctrl + Enter
 
 Autosave: 
