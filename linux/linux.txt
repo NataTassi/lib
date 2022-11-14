@@ -550,6 +550,11 @@ Located in the /var/log directory, these files and folders contain logging infor
 These services and logs are a great way in monitoring the health of your system and protecting it. Not only that, but the logs for services such as a web server contain information about every single request - allowing developers or administrators to diagnose performance issues or investigate an intruder's activity.
 
 
+Crash reports:
+
+Ubuntu uses Apport to automatically collect data from crashed processes and compile a problem report in /var/crash (you can delete all the files in this dir to get rid of startup error messages like "System program problem detected").
+
+
 Linux kernel headers:
 
 They define an interface. They specify how the functions in the source file are defined.
