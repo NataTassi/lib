@@ -1,0 +1,2 @@
+Encode to base64: base64 <data>
+Decode from base64: base64 -d <data>

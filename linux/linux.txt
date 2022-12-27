@@ -390,12 +390,13 @@ e.g.: chmod o+w file.txt (add write permission for other users to 'file.txt')
 0 = no permission, 1 = execute, 2 = write, 3 = execute and write, 4 = read, 5 = read and execute, 6 = read and write, 7 = read, write, and execute. 
 e.g.: chmod 774 file.txt (the user and its group have every permission but others only can read)
 
-Special permissions (each of them replace the execute permission in user, group and other as listed below respectively):
+Special permissions (each of them replaces the execute permission in user, group and other as listed below respectively):
 You can add them with their symbol (as a capital letter if execute permission is not set) or with a fourth bit prepended in octal. 
 - SUID (4 | s): execute a file as its owner
 - SGID (2 | s): if set on a file, execute as the group owner, and if set on a dir, files created in that dir will have their group ownership set to that of the group owner
 - Sticky (1 | t): only affects dirs, it restricts file deletion, only the owner of a file or root can remove it (e.g.: /tmp or /var/spool/cron/crontabs)
 
+Process ownership:
 Real user ID: process owner
 Effective user ID: current privileges of the process
 Saved user ID: saved user to switch when a task is completed
@@ -405,6 +406,9 @@ Create user (a group with the same name will be created by default):
 2. sudo adduser <user> (this does the same as the previous command)
 Afterwards, you need to set a password with: sudo passwd <user>
 Note: you can issue 'cat /etc/passwd' to verify the new user has been created
+
+Change pass:                   passwd <user>
+Run commands as other user:    su [-] [<user> = root] (if - is added before the user, then the env is changed to the user's)
 
 Delete user:
 1. sudo userdel <user>, then you must delete the user directory
@@ -416,13 +420,11 @@ Create group:                  sudo groupadd <group>
 Add user to a group:           sudo usermod -aG <group> <user>
 Delete user from a group:      sudo gpasswd -d <user> <group>
 Delete group:                  sudo groupdel <group>
-Change pass:                   passwd <user>
-Run commands as other user:    su [-] [<user> = root] (if - is added before the user, then the env is changed to the user's)
 
 The /etc/passwd contains one entry per line for each user (user account) of the system. This file shuld be world-readable as many utilities use it to map user IDs to user names. All fields are separated by a colon (:) symbol. There are 7 fields:
 
 1. Username: It is used when user logs in. It should be between 1 and 32 characters in length.
-2. Password: An x character indicates that encrypted password is stored in /etc/shadow file.
+2. Password: An x character indicates that the encrypted password is stored in /etc/shadow file.
 3. User ID (UID): Each user must be assigned a user ID (UID). UID 0 (zero) is reserved for root and UIDs 1-99 are reserved for other predefined accounts. Further UID 100-999 are reserved by system for administrative and system accounts/groups.
 4. Group ID (GID): The primary group ID (stored in /etc/group file).
 5. User ID Info (GECOS): The comment field. It allow you to add extra information about the users such as user’s full name, phone number etc. This field is used by finger command.
