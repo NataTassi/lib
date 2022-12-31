@@ -266,6 +266,7 @@ Open image:                       [feh | eog] <file> (feh cleanly shows you the 
 Run VLC from CLI:                 cvlc --play-and-exit audio.mp3 
 Read PDF:                         atril <pdf_file>
 Remove password from PDF:         qpdf --password=<pass> --decrypt <input> <output>
+Compress video:                   ffmpeg -i <input_video> -vcodec libx265 -crf 27 output.mp4 (keep CRF range for H.265 in [24-30], lower values, higher quality)
 
 
 Translator (Translate Shell):     
