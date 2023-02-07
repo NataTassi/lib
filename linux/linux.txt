@@ -197,6 +197,7 @@ Print last lines of the file:     tail [-<lines>] <file> (10 by default)
 Redirect input to file & stdout:  tee <file> (e.g.: ls -la | tee listing.txt)
 Print specific lines of a file:   sed -n '<start_line>[<end_line>]p' <file>
 Print columns from tabular data:  awk '{print "Min:", $3, "Max:", $2}' <file>
+Print last column:                awk '{print $NF}' <file>
 Change directory:                 cd <directory> (.: current dir, ..: parent dir)
 Create new empty file:            touch <file>
 Make new directory:               mkdir <dir_name>
@@ -517,8 +518,6 @@ Some methods to add repos in Debian-based distros:
 2. Editing /etc/apt/sources.list and adding manually the new entry
 3. Creating a file like new_repo.list in /etc/apt/sources.list.d and entering the repository information
 
-Consider using snap, a command that manages snaps, packages that work across many different Linux distributions.
-
 Common commands in apt:
 * Install package:    sudo apt install <package> (-y: automatic yes to prompts)
 * Remove package:     sudo apt remove <package>
@@ -530,6 +529,11 @@ To install a package from a .deb file you can use either:
     2. sudo apt-get install -y ./file> (with the benefit that dependencies will be installed)
 
 Install a package from a .bundle file: sudo chmod +x <file> && sudo ./<file>
+
+Consider using snap, a command that manages snaps, packages that work across many different Linux distributions.
+Update snap:            sudo snap refresh <snap>
+Update all snaps:       sudo snap refresh
+List available updates: sudo snap refresh --list
 
 Where to place executables or whole packages:
 /                     System-wide essential packages
