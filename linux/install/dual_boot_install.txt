@@ -1,0 +1,28 @@
+1. Install Linux distro (when partitioning make sure to create a EFI System Partition (ESP) and mount it at /boot/efi).
+
+2. Install Windows. Considerations: 
+	- You can get a Windows 10 ISO image from https://www.microsoft.com/software-download/windows10
+	- You can get a Windows 11 ISO image from https://www.microsoft.com/software-download/windows11
+	- You can make a bootable USB stick with a tool like Rufus or YUMI.
+	- You may need to download and extract into a USB stick some drivers from your computer manufacturer website). To do this you may have to look for your specific product by using a serial number that you can get with 'sudo dmidecode -s system-serial-number' and then find the drivers section. For example, for my Acer A514-54-501Z these are the drivers: 
+		* All drivers: https://www.acer.com/us-en/support?search=NXA25AA002142013623400;NX.A25AA.002;A514-54&filter=global_download
+		* Needed for Windows 11 install: IRST (Intel® Rapid Storage Technology) Driver (my SSD wasn't being recognized)
+	- Use KMSpico to active Windows (and Microsoft Office)
+
+3. Go to BIOS/UEFI and change the boot priority to start from the disk instead of Windows Boot Manager.
+
+4. Log into Linux and make GRUB scan new operating systems:
+	- Ubuntu/Debian: sudo update-grub
+	- Other distros: grub-mkconfig -o /boot/grub/grub.cfg
+
+5. To run Windows from GRUB you may have to enter a BitLocker key that you can find in your Microsoft Account. You can disable BitLocker in the settings.
+
+
+Notes:
+
+- BIOS/UEFI settings and boot menu hotkeys by manufacturer: 
+https://www.sysnative.com/forums/threads/get-access-to-bios-settings-boot-menu-f-keys-hotkeys-by-system-manufacturer-oem.23010
+
+- A kernel update in Linux may be needed to use certain hardware drivers. Debian 11's kernel wasn't able to detect my wireless network card.
+
+- My audio speakers sounded very soft in Debian and sound was distorted in Windows, I clearly needed a better audio driver. I installed the recommended driver from my computer manufacturer in Windows and the problem there was solved. Regrettably, they only had drivers for Windows, for Linux the easiest way was going for Ubuntu.
