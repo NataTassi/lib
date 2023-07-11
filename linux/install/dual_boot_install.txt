@@ -18,6 +18,25 @@
 5. To run Windows from GRUB you may have to enter a BitLocker key that you can find in your Microsoft Account. You can disable BitLocker in the settings.
 
 
+Repair dual boot:
+
+sudo add-apt-repository ppa:yannubuntu/boot-repair
+sudo apt-get update
+sudo apt-get install -y boot-repair && boot-repair
+
+boot-repair note: please do not forget to make your UEFI firmware boot on the Ubuntu entry (sdb1/efi/ubuntu/grubx64.efi file). 
+If your computer reboots directly into Windows, try to change the boot order in your UEFI firmware.
+If your UEFI firmware does not allow to change the boot order, change the default boot entry of the Windows bootloader. For example you can boot into Windows, then type the following command in an admin command prompt: bcdedit /set {bootmgr} path \EFI\ubuntu\grubx64.efi
+
+
+Customize GRUB entries:
+
+sudo add-apt-repository ppa:danielrichter2007/grub-customizer
+sudo apt-get update
+sudo apt-get install grub-customizer
+grub-customizer
+
+
 Notes:
 
 - BIOS/UEFI settings and boot menu hotkeys by manufacturer: 
@@ -26,3 +45,7 @@ https://www.sysnative.com/forums/threads/get-access-to-bios-settings-boot-menu-f
 - A kernel update in Linux may be needed to use certain hardware drivers. Debian 11's kernel wasn't able to detect my wireless network card.
 
 - My audio speakers sounded very soft in Debian and sound was distorted in Windows, I clearly needed a better audio driver. I installed the recommended driver from my computer manufacturer in Windows and the problem there was solved. Regrettably, they only had drivers for Windows, for Linux the easiest way was going for Ubuntu.
+
+- Dual boot with Windows Boot Manager: https://i12bretro.github.io/tutorials/0346.html
+
+- Arch Linux dual boot docs: https://wiki.archlinux.org/title/Dual_boot_with_Windows

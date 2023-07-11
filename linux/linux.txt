@@ -191,8 +191,10 @@ List directory contents:          ls <location = .> (-l: as list, -a: show hidde
 Common shortcut for ls -la:       ll (shortcuts or aliases are defined with alias)
 Print file content:               cat <file>
 Print file (numbered lines):      nl <file>
-Split string with a delimiter:    cut -d "<delimiter>" -f <field_list>
+Split string with a delimiter:    cut -d '<delimiter>' -f <field_list> (e.g. -3,5,7-9,13-)
+Get prefix/suffix/sucharacters:   cut -c <chars_list> (e.g. -3,5,7-9,13-)
 Print first lines of the file:    head [-<lines>] <file> (10 by default)
+Print all but the last lines:     head -n -<lines> <file>
 Print last lines of the file:     tail [-<lines>] <file> (10 by default)
 Redirect input to file & stdout:  tee <file> (e.g.: ls -la | tee listing.txt)
 Print specific lines of a file:   sed -n '<start_line>[<end_line>]p' <file>
@@ -437,9 +439,13 @@ The /etc/passwd contains one entry per line for each user (user account) of the 
 Automount drive:
 1. sudo blkid
 2. sudo mkdir /mnt/<name-of-the-drive>
-3. Append 'UUID=<uuid-of-your-drive> <mount-point> <file-system-type> <mount-option> <dump> <pass>' to /etc/fstab separating these items with tab. Usually you'll want to use defaults, 0 and 2 for the last three options, see 'man fstab'. 
+3. Append 'UUID=<uuid-of-your-drive> <mount-point> <file-system-type> <mount-options> <dump> <pass>' to /etc/fstab separating these items with tab. Usually you'll want to use defaults, 0 and 2 for the last three options, see 'man fstab'. 
 4. sudo mount -a
 Note: /media is where the system mounts removable media, and /mnt is for you to mount things manually.
+
+Mount an external drive at boot time only if it is plugged in:
+Use mount options: rw,auto,nofail (read-write, automount during boot, boot normally if device doesn't exist)
+If you connect the device while the system is running, the device may not mount immediately, type mount -a to reload fstab.
 
 
 Format drive:
@@ -580,3 +586,12 @@ Linux kernel headers:
 They define an interface. They specify how the functions in the source file are defined.
 They are used so that a compiler can check if the usage of a function is correct as the function signature (return value and parameters) is present in the header file. For this task the actual implementation of the function is not necessary.
 You could do the same with the complete kernel sources but you will install a lot of unnecessary files.
+
+
+Reboot takes too long:
+
+In Ubuntu, it's usually the snap daemon that causes a delay to the shutdown process. When Ubuntu it's shutting down, press F2 to see what is happening.
+You can change the time delay before Ubuntu force stops the process:
+sudo vim /etc/systemd/system.conf
+Remove # at the beginning of DefaultTimeoutStopSec=90s and change value to 5s
+
