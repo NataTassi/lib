@@ -1,3 +1,6 @@
+Application launchers:
+----------------------
+
 Create a text file with a .desktop extension in your ~/.local/share/applications directory, for example ~/.local/share/applications/studio.desktop
 
 Include at least the following lines, which tell the desktop how to launch the application.
@@ -14,3 +17,10 @@ If the script does not launch a graphical application, but instead should run in
 A valid .desktop file in a valid location, with a valid command on the exec= line will automatically, within seconds, appear in your menu system and be searchable.
 
 More fields are available. Study some files under /usr/share/applications to see how it works.
+
+
+Remove home folder and trash icon from Gnome desktop:
+-----------------------------------------------------
+
+gsettings set org.gnome.shell.extensions.desktop-icons show-home false
+gsettings set org.gnome.shell.extensions.desktop-icons show-trash false
