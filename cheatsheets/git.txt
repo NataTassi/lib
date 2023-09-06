@@ -1,3 +1,79 @@
+Concepts:
+---------
+
+Git repository: stores all the versions of files within a project, enabling developers to track changes, collaborate, and easily revert to previous versions if needed. Each file's changes are recorded as commits, which are organized into branches, providing a structured history of the project's development. This system allows developers to work on different branches independently and later merge their changes back into the main branch.
+It's a hidden directory (.git) including an objects directory containing all versions of every file in the repo (local branches and copies of remote branches) as a compressed "blob" file.
+
+Local repository: the .git repo on your computer. It possibly contains changes you didn't "commit" to the "remote" repositories.
+
+Remote repositories: are versions of your project that are hosted on the Internet or network somewhere. You can have several of them, each of which generally is either read-only or read/write for you. Collaborating with others involves managing these remote repositories and pushing and pulling data to and from them when you need to share work.
+
+* You can learn other concepts in: https://git-scm.com/docs/gitglossary
+
+Object: The unit of storage in Git. It is uniquely identified by the SHA-1 of its contents. Consequently, an object cannot be changed.
+
+Object name: The unique identifier of an object. The object name is usually represented by a 40 character hexadecimal string. Also colloquially called SHA-1.
+
+Object database: Stores a set of "objects", and an individual object is identified by its object name. The objects usually live in $GIT_DIR/objects/.
+
+Object type: One of the identifiers "commit", "tree", "tag" or "blob" describing the type of an object.
+
+Origin: The default upstream repository.
+
+Repository: A collection of refs together with an object database containing all objects which are reachable from the refs, possibly accompanied by meta data from one or more porcelains. 
+
+Tree object: An object containing a list of file names and modes along with refs to the associated blob and/or tree objects. A tree is equivalent to a directory.
+
+Ref: A name that begins with refs/ (e.g. refs/heads/master) that points to an object name or another ref (the latter is called a symbolic ref). For convenience, a ref can sometimes be abbreviated when used as an argument to a Git command. Refs are stored in the repository.
+The ref namespace is hierarchical. Different subhierarchies are used for different purposes (e.g. the refs/heads/ hierarchy is used to represent local branches).
+There are a few special-purpose refs that do not begin with refs/. The most notable example is HEAD.
+
+Branch: A "branch" is a line of development. The most recent commit on a branch is referred to as the tip of that branch. The tip of the branch is referenced by a branch head, which moves forward as additional development is done on the branch. A single Git repository can track an arbitrary number of branches, but your working tree is associated with just one of them (the "current" or "checked out" branch), and HEAD points to that branch.
+
+Master: The default development branch. Whenever you create a Git repository, a branch named "master" is created, and becomes the active branch. In most cases, this contains the local development, though that is purely by convention and is not required.
+
+Index: A collection of files with stat information, whose contents are stored as objects. The index is a stored version of your working tree. 
+
+Index entry: The information regarding a particular file, stored in the index. 
+
+Commit: 
+- As a noun: A single point in the Git history; the entire history of a project is represented as a set of interrelated commits. The word "commit" is often used by Git in the same places other revision control systems use the words "revision" or "version". Also used as a short hand for commit object.
+- As a verb: The action of storing a new snapshot of the project’s state in the Git history, by creating a new commit representing the current state of the index and advancing HEAD to point at the new commit.
+
+Revision: Synonym for commit (the noun).
+
+Commit object: An object which contains the information about a particular revision, such as parents, committer, author, date and the tree object which corresponds to the top directory of the stored revision.
+Head: A named reference to the commit at the tip of a branch.
+
+HEAD: The current branch. In more detail: Your working tree is normally derived from the state of the tree referred to by HEAD. HEAD is a reference to one of the heads in your repository, except when using a detached HEAD, in which case it directly references an arbitrary commit. HEAD with n ^'s or HEAD~n (e.g. HEAD^^^ or HEAD~3) points to n-th parent commit.
+
+Working tree: The tree of actual checked out files. The working tree normally contains the contents of the HEAD commit’s tree, plus any local changes that you have made but not yet committed.
+
+Clean: A working tree is clean, if it corresponds to the revision referenced by the current head. 
+
+Dirty: A working tree is said to be "dirty" if it contains modifications which have not been committed to the current branch.
+
+Stash entry: An object used to temporarily store the contents of a dirty working directory and the index for future reuse.
+
+Checkout: 
+The action of updating all or part of the working tree with a tree object or blob from the object database, and updating the index and HEAD if the whole working tree has been pointed at a new branch.
+
+Fetch: Fetching a branch means to get the branch’s head ref from a remote repository, to find out which objects are missing from the local object database, and to get them, too.
+
+Merge: 
+- As a verb: To bring the contents of another branch (possibly from an external repository) into the current branch. In the case where the merged-in branch is from a different repository, this is done by first fetching the remote branch and then merging the result into the current branch. This combination of fetch and merge operations is called a pull. Merging is performed by an automatic process that identifies changes made since the branches diverged, and then applies all those changes together. In cases where changes conflict, manual intervention may be required to complete the merge.
+- As a noun: unless it is a fast-forward, a successful merge results in the creation of a new commit representing the result of the merge, and having as parents the tips of the merged branches. This commit is referred to as a "merge commit", or sometimes just a "merge".
+
+Pull: Pulling a branch means to fetch it and merge it.
+
+Rebase: To reapply a series of changes from a branch to a different base, and reset the head of that branch to the result.
+
+Tag: A ref under refs/tags/ namespace that points to an object of an arbitrary type (typically a tag points to either a tag or a commit object). In contrast to a head, a tag is not updated by the commit command.
+
+Hook: During the normal execution of several Git commands, call-outs are made to optional scripts that allow a developer to add functionality or checking. Typically, the hooks allow for a command to be pre-verified and potentially aborted, and allow for a post-notification after the operation is done. The hook scripts are found in the $GIT_DIR/hooks/ directory, and are enabled by simply removing the .sample suffix from the filename. 
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 Save credentials:
 * Password authentification was removed from CLI, but you can use tokens
 1. To create a personal access token to use in place of a pass with the CLI:
@@ -6,34 +82,28 @@ Save credentials:
 3. Log in only once using the token instead of the password
 Note: use 'git config --global user.name <name>' and 'git config --global user.email <email>' to save personal data globally
 
-Clone online repo into an offline one:
+Clone remote repo locally:
 git clone [repo_url]
 
-Create a new repository on the command line:
-1. Create a new folder and set as current working directory
-2. echo "# Description" >> README.md
-3. git init
-4. git add README.md
-5. git commit -m "first commit"
-6. git remote add origin https://github.com/<user>/<project>.git
-7. git push -u origin master
-
-Update local repo:
+Update local repo with remote changes:
 git pull
 
-Update remote (cloud) repo:
-git pull                   // ALWAYS do this before making any changes in the local repo
-Add, delete, or modify files
-git add .                  // use only if you added new files 
-git commit -a -m "comment" // apply changes 
-git push                   // update online repo
+Avoid passing remote to pull/push (argument-less git-pull/push):
+git push -u <remote> <branch> (from now on git push/pull is enough, for other remotes you have to be explicit with "git push <remote> <branch>")
+
+Update repo / apply changes:
+git pull                   // ALWAYS do this before making any changes in the local repo to avoid merge conflicts
+# Make changes
+git add .                  // add (stage) all files in the current directory 
+git commit -m "comment"    // apply changes (commit)
+git push                   // update remote repo (you may want to add "-u origin master" the first time)
 
 Remove directory:
 git rm -r dir-name
 git commit -m "note"
-git push -u origin master
+git push
 
-Uncommit changes:
+Uncommit from local repo:
 - If all you want to do is undo the act of committing, leaving everything else intact, use:
     git reset --soft HEAD^
 - If you want to undo the act of committing and everything you'd staged, but leave the work tree (your files) intact:
@@ -44,6 +114,25 @@ Uncommit changes:
 * If on the other hand you want to keep the local modifications somehow, you'd use stash to hide them away before pulling, then reapply them afterwards:
 git stash && git pull && git stash pop
 
+Uncommit from remote repo / undo push:
+git push -f origin <commit>:<branch> (e.g. HEAD^:master to undo last commit in master) 
+
 Change last commit name:
 1. Type 'git commit --amend' and edit the commit message
 2. If you pushed the last commit, use the 'git push --force-with-lease' command to force push over the old commit
+
+Rename local and remote branch:
+1. Rename the local branch to the new name: git branch -m <old_name> <new_name>
+2 Delete the old branch on remote - where <remote> is, for example, origin: git push <remote> --delete <old_name> (or just git push <remote> :<old_name>)
+3. Prevent git from using the old name when pushing in the next step. Otherwise, git will use the old upstream name instead of <new_name>: git branch --unset-upstream <new_name>
+4. Push the new branch to remote: git push <remote> <new_name>
+5. Reset the upstream branch for the new_name local branch: git push <remote> -u <new_name>
+
+Create a new repository on the command line:
+1. Create a new folder and set as current working directory
+2. echo "# Description" >> README.md
+3. git init
+4. git add README.md
+5. git commit -m "first commit"
+6. git remote add origin https://github.com/<user>/<project>.git
+7. git push -u origin master
