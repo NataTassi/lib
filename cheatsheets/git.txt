@@ -74,13 +74,32 @@ Hook: During the normal execution of several Git commands, call-outs are made to
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+Credential helpers:
+Git provides credential helpers to save credentials more securely. Credential helpers can store data in multiple ways and even integrate with 3rd party systems like password keychains.
+- Cache Credential Helper: never writes redentials to disk, although the credentials are accessible using Unix sockets. You can provide a timeout argument. 
+git config credential.helper 'cache --timeout=86400'
+- Store Credential Helper: indefinitely saves credentials to a file. While the file contents are not encrypted, they are protected using file system access controls to the user that created the file.
+git config credential.helper store
+By default, the file is stored as ~/.git-credentials. We can override the file location by passing a file argument to the command:
+git config credential.helper 'store --file=/full/path/to/.git_credentials'
+- Custom Credential Helpers: it’s also possible to configure custom helpers.
+
 Save credentials:
 * Password authentification was removed from CLI, but you can use tokens
 1. To create a personal access token to use in place of a pass with the CLI:
     Log into GitHub -> Settings -> Developer settings -> Personal access tokens -> Generate new token
 2. git config --global credential.helper store (or use gh CLI tool)
-3. Log in only once using the token instead of the password
-Note: use 'git config --global user.name <name>' and 'git config --global user.email <email>' to save personal data globally
+3. Log in only once using the token instead of the password (then the token will be saved according to your set credential helper)
+Note: use 'git config --global user.name <name>' and 'git config --global user.email <email>' to save config globally, or remove the '--global' flag to apply the config to the current repo
+
+Configuring SSH keys:
+Most modern Git servers offer access to repositories using SSH keys instead of a username (or token) and a password over HTTPS.
+The easiest way to enable SSH for a Git repository is to use SSH for the protocol when cloning it: git clone git@gitlab.com:group/project.git
+For an existing repository, we can update the remote with the following command: git remote set-url origin git@gitlab.com:group/project.git
+1. Generate a new key pair: ssh-keygen -t <type> -C "comment"
+2. Copy public key content (by default in ~/.ssh/id_<type>.pub)
+3. Go to GitHub/GitLab settings and add the key
+4. Make sure the remote's URL is using SSH with 'git remote -v', if it starts with HTTPS it will always ask for creds
 
 Clone remote repo locally:
 git clone [repo_url]
@@ -143,8 +162,30 @@ Create a new repository on the command line:
 6. git remote add origin https://github.com/<user>/<project>.git
 7. git push -u origin master
 
-Configuring SSH keys:
-1. ssh-keygen -t <type> -C "comment"
-2. Copy public key content (by default in ~/.ssh/id_<type>.pub)
-3. Go to GitHub/GitLab settings and add the key
-4. Make sure the remote's URL is using SSH with 'git remote -v', if it starts with HTTPS it will always ask for creds, so to switch from https to ssh type 'git remote set-url origin git@github.com:USERNAME/REPOSITORY.git'
+List settings:
+All settings: git config --list
+Commiter username: git config user.name
+Commiter email: git config user.email
+
+Conditional config file:
+The global git config file is located at ~/.gitconfig. The project-level config file is located at <repo_root>/.git/config.
+At the end of your .gitconfig file, you can put something like this to apply conditional settings by directory (it's actually a pattern):
+[includeIf "gitdir:~/company_a/"]
+  path = /path/to/.gitconfig-company_a
+[includeIf "gitdir:~/company_b/"]
+  path = /path/to/.gitconfig-company_b
+Example contents of .gitconfig-company_b to change username, email and SSH key file:
+[user]
+name = John Smith
+email = js@companyb.com
+[core]
+sshCommand = ssh -i ~/.ssh/id_rsa_companyb
+
+Change commit author username/email:
+* Attention! This changes commit SHA1 hashes
+1. First update user.name and user.email either globally, by project or with a conditional config file
+2. Choose a type of update:
+- Single commit: git commit --amend --no-edit --reset-author (updates last commit)
+- Multiple commits: git rebase -r <some commit before all of your bad commits> --exec 'git commit --amend --no-edit --reset-author'
+- Entire project history: git rebase -r --root --exec "git commit --amend --no-edit --reset-author"
+3. git push -f
