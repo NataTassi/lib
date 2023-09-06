@@ -213,6 +213,7 @@ Locate file:                      locate <name | relative path>
 Check file types/existence:       [  (opening square bracket is command; [ -d bin ] to check if a dir called bin exists in the current folder) 
 Find patterns in text:            grep <pattern> (-v: invert matches)
 Page through text:                less <file> (when inside less use: h: help, q: quit, /key: find key, n (N): next(prev) result
+List zip content:                 < vim | less > <file>
 Count lines/bytes/chars in file:  wc -l <file> (count lines)
 locate a command:                 which <command>
 Locate command, src and man page: whereis <command>
