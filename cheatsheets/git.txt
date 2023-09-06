@@ -95,7 +95,7 @@ Update repo / apply changes:
 git pull                   // ALWAYS do this before making any changes in the local repo to avoid merge conflicts
 # Make changes
 git add .                  // add (stage) all files in the current directory 
-git commit -m "comment"    // apply changes (commit)
+git commit -m "comment"    // apply changes (commit); you can use the flag -a to avoid staging modified or deleted files (you can skip 'git add .')
 git push                   // update remote repo (you may want to add "-u origin master" the first time)
 
 Remove directory:
@@ -127,6 +127,12 @@ Rename local and remote branch:
 3. Prevent git from using the old name when pushing in the next step. Otherwise, git will use the old upstream name instead of <new_name>: git branch --unset-upstream <new_name>
 4. Push the new branch to remote: git push <remote> <new_name>
 5. Reset the upstream branch for the new_name local branch: git push <remote> -u <new_name>
+
+Rename local and remote tags:
+git tag new old           # Create a new local tag named 'new' from tag 'old'.
+git push origin new       # Push 'new' to your remote named 'origin'
+git tag -d old            # Delete local tag 'old'
+git push origin :old      # Delete remote tag 'old' by pushing an empty tag name to it
 
 Create a new repository on the command line:
 1. Create a new folder and set as current working directory
