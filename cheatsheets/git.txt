@@ -136,3 +136,9 @@ Create a new repository on the command line:
 5. git commit -m "first commit"
 6. git remote add origin https://github.com/<user>/<project>.git
 7. git push -u origin master
+
+Configuring SSH keys:
+1. ssh-keygen -t <type> -C "comment"
+2. Copy public key content (by default in ~/.ssh/id_<type>.pub)
+3. Go to GitHub/GitLab settings and add the key
+4. Make sure the remote's URL is using SSH with 'git remote -v', if it starts with HTTPS it will always ask for creds, so to switch from https to ssh type 'git remote set-url origin git@github.com:USERNAME/REPOSITORY.git'
