@@ -140,6 +140,12 @@ Change last commit name:
 1. Type 'git commit --amend' and edit the commit message
 2. If you pushed the last commit, use the 'git push --force-with-lease' command to force push over the old commit
 
+Merge branch into master:
+git checkout master
+git pull origin master
+git merge <branch>
+git push origin master
+
 Rename local and remote branch:
 1. Rename the local branch to the new name: git branch -m <old_name> <new_name>
 2 Delete the old branch on remote - where <remote> is, for example, origin: git push <remote> --delete <old_name> (or just git push <remote> :<old_name>)
