@@ -171,7 +171,7 @@ General commands:
 
 A majority of commands allow for arguments to be provided. These arguments are identified by a hyphen and a certain keyword known as flags or switches. Commands usually have a --help option. This option will list the possible options that the command accepts, provide a brief description and example of how to use it. This option is, in fact, a formatted output of what is called the man page (short for manual), which contains documentation for Linux commands and applications. To access this documentation, we can use the man command and then provide the command we want to read the documentation for, e.g. 'man ls'.
 
-Note: <param> denotes a parameter and [option] denotes an optional parameter
+Note: <param> denotes a parameter, [option] denotes an optional parameter and (option) denotes an optional parameter with a description of it.
 
 Clear screen:                     clear
 Install package:                  apt install -y <package>
@@ -213,7 +213,6 @@ Locate file:                      locate <name | relative path>
 Check file types/existence:       [  (opening square bracket is command; [ -d bin ] to check if a dir called bin exists in the current folder) 
 Find patterns in text:            grep <pattern> (-v: invert matches, -B <num>: print  <num>  lines  of  leading  context  before  matching lines)
 Page through text:                less <file> (when inside less use: h: help, q: quit, /key: find key, n (N): next(prev) result
-List zip content:                 < vim | less > <file>
 Count lines/bytes/chars in file:  wc -l <file> (count lines)
 locate a command:                 which <command>
 Locate command, src and man page: whereis <command>
@@ -241,13 +240,15 @@ File space usage:                 du -sh[D] <file> (D: dereference symlinks, s: 
 Find out system uptime:           uptime (tells the current time, how long the system has been running and other stats)
 Change display settings:          xrandr (e.g. set brightness with '--output <screen_name> --brightness 0.5', get the screen name without args)
 
+List zip content:                 < vim | less > <file>
+List archive content:             7z l <file>
 Create tar file:                  tar czfp < output | - > <dir> (use - to send to stdout, z filters through gzip)
 Extract tar file:                 tar xzfp < file | - >
 Compress into gzip file:          gzip <file> (-c: to stdout)
 Decompress gzip files (gz):       gzip -d <file>
 Compress into zip file:           zip (-r: recursive) (-e: encrypt) (-9: best compression) <output> <input> 
 Decompress zip file:              unzip <file>
-Create 7zip archive:              7z a <output> <input> (-mx=9: best compression) (output extension determines compression method)
+Create 7zip archive:              7z a [-p<password | empty to be prompted for it>] (-mhe: hide names) <output> <input> (-mx=9: best compression) (output extension determines compression method)
 Decompress [multi-part] archives: 7zip x [-p<pass>] <file>
 
 Find diffs between files/dirs:    diff <file1> <file2>

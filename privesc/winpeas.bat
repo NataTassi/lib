@@ -1,3 +1,5 @@
+REM Comment to change hash to evade AVs
+
 @ECHO OFF & SETLOCAL EnableDelayedExpansion
 TITLE WinPEAS - Windows local Privilege Escalation Awesome Script
 COLOR 0F
