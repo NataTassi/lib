@@ -1,0 +1,56 @@
+Data types:
+
+Fundamental types in C++ are divided into three categories: integral, floating point, and void. Integral types are capable of handling whole numbers. Floating point types are capable of specifying values that may have fractional parts. The void type describes an empty set of values.
+The category integral includes the following datatypes: char, bool, short, int, long, long long, wchar_t, __wchar_t
+The category floating point includes the following datatypes: float, double, long double
+
+Useful functions:
+
+swap
+stoi/stoll/to_string
+toupper/tolower/isupper/islower/isalpha/isdigit/isalnum
+next_permutation
+sort/stable_sort/unique/is_sorted/merge
+any_of/all_of
+lower_bound/upper_bound
+random_shuffle
+fill
+min/max/max_element/min_element
+
+
+constexpr:
+The constexpr specifier declares that it is possible to evaluate the value of the function or variable at compile time. 
+
+Notes:
+
+- constexpr specifier is required when initializing static data members of non-integral types
+
+References:
+
+Tutorial: https://cplusplus.com/doc/tutorial
+Interview questions: https://www.interviewbit.com/cpp-interview-questions/
+Style: https://lefticus.gitbooks.io/cpp-best-practices/content/03-Style.html
+Boost style naming convetions: https://stackoverflow.com/questions/3706379/what-is-a-good-naming-convention-for-vars-methods-etc-in-c
+constexpr required: https://stackoverflow.com/questions/9141950/initializing-const-member-within-class-declaration-in-c
+What is __wchar_t: https://devblogs.microsoft.com/oldnewthing/20161201-00/?p=94836
+volatile qualifier: https://stackoverflow.com/questions/4437527/why-do-we-use-volatile-keyword
+https://www.geeksforgeeks.org/header-files-in-c-cpp-and-its-uses/
+https://www.geeksforgeeks.org/pointers-vs-references-cpp/
+https://en.cppreference.com/w/cpp/language/derived_class
+https://www.geeksforgeeks.org/friend-class-function-cpp/
+https://stackoverflow.com/questions/24938467/c-is-operator-automatically-provided-when-operator-defined
+https://stackoverflow.com/questions/1282295/what-exactly-is-nullptr
+https://stackoverflow.com/questions/6438086/iterator-invalidation-rules-for-c-containers
+https://stackoverflow.com/questions/3395180/what-is-an-iterators-default-value
+https://stackoverflow.com/questions/22874535/dependent-scope-need-typename-in-front
+https://stackoverflow.com/questions/610245/where-and-why-do-i-have-to-put-the-template-and-typename-keywords
+https://stackoverflow.com/questions/3801557/can-we-change-the-value-of-an-object-defined-with-const-through-pointers
+https://www.geeksforgeeks.org/new-and-delete-operators-in-cpp-for-dynamic-memory/
+https://www.geeksforgeeks.org/header-files-in-c-cpp-and-its-uses/
+https://www.geeksforgeeks.org/scope-resolution-operator-in-c/
+
+Advanced topics:
+
+https://iq.opengenus.org/advanced-cpp-topics
+https://dzone.com/articles/7-advanced-c-concepts-you-should-know
+https://www.incredibuild.com/blog/cpp-advanced-topics-for-experienced-cpp-devs

@@ -4,5 +4,17 @@ if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] &&
 fi
 
 alias c="clear"
-alias cb="xclip -se c"
 alias l="ls -lah"
+alias cb="xclip -se c" # copy input to clipboard
+
+# Create password-protected 7-zip archive with filenames hidden
+compress() {
+	7z a -p -mhe "$1" "$1"		
+}
+
+# Shred directory recursively and then delete it
+shreddir() {
+	find "$1" -type f -exec shred -uvz {} \;
+	rm -r "$1"
+	echo "Deletion finished"
+}

@@ -1,0 +1,58 @@
+JavaScript is a dynamic language with dynamic types. Variables in JavaScript are not directly associated with any particular value type, and any variable can be assigned (and re-assigned) values of all types:
+JavaScript is also a weakly typed language, which means it allows implicit type conversion when an operation involves mismatched types, instead of throwing type errors.
+
+Data types: 
+- Primitive: null, undefined, boolean, number, bigint, string, symbol
+- Object: arrays, functions, classes, date, map, set
+
+Asynchronous programming:
+JavaScript is single-threaded by nature. There's no paralleling; only concurrency. Asynchronous programming is powered by an event loop, which allows a set of tasks to be queued and polled for completion. There are three idiomatic ways to write asynchronous code in JavaScript:
+	- Callback-based (such as setTimeout())
+	- Promise-based
+	- async/await, which is a syntactic sugar for Promises
+
+Event loop: JavaScript has a runtime model based on an event loop, which is responsible for executing the code, collecting and processing events, and executing queued sub-tasks. 
+* Parts:
+- Stack: function calls form a stack of frames
+- Heap: objects are allocated in a heap which is just a name to denote a large (mostly unstructured) region of memory.
+- Queue: a list of messages to be processed. Each message has an associated function that gets called to handle the message. Calling a function creates a new stack frame for that function's use, the processing of functions continues until the stack is once again empty. Then, the event loop will process the next message in the queue (if there is one).
+* Properties:
+- Run-to-completion: each message is processed completely before any other message is processed.
+- Event-driven programming: messages are added anytime an event occurs and there is an event listener attached to it.
+- Zero delay: setTimout() sets a timer which executes a function once the timer expires. The delay is the minimum time required for the runtime to process the request (not a guaranteed time, as there may other messages in the queue).
+- Communication between runtimes: a web worker or a cross-origin iframe has its own stack, heap, and message queue. Two distinct runtimes can only communicate through sending messages via the postMessage method. 
+- Never blocking: handling I/O is typically performed via events and callbacks, so when waiting for a network or database request, it can still process other things like user input.
+
+AJAX (Asynchronous JavaScript and XML) programming: With the Ajax model, web applications are able to make quick, incremental updates to the user interface without reloading the entire browser page. This makes the application faster and more responsive to user actions. 
+
+XMLHttpRequest (XHR) objects: are used to interact with servers. You can retrieve data from a URL without having to do a full page refresh. This enables a Web page to update just part of a page without disrupting what the user is doing. XMLHttpRequest is used heavily in AJAX programming.
+
+Fetch API: provides an interface for fetching resources (including across the network). It is a more powerful and flexible replacement for XMLHttpRequest.
+
+WebSocket API: is an advanced technology that makes it possible to open a two-way interactive communication session between the user's browser and a server. With this API, you can send messages to a server and receive event-driven responses without having to poll the server for a reply.
+
+
+References:
+
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Language_overview
+https://www.programiz.com/javascript/constructor-function
+https://linuxhint.com/is-javascript-object-oriented/
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Event_loop
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Memory_management
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain
+https://www.interviewbit.com/javascript-interview-questions/
+https://developer.mozilla.org/en-US/docs/Web/JavaScript
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals
+https://developer.mozilla.org/en-US/docs/Learn/Tools_and_testing/Client-side_JavaScript_frameworks/Introduction
+https://www.w3schools.com/js/js_scope.asp
+https://www.w3schools.com/js/js_function_parameters.asp
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures#emulating_private_methods_with_closures
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Exponentiation
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Infinity
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment
+https://www.educative.io/answers/how-does-javascript-handle-divide-by-zero
+https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API
+https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest
+https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API
+https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API

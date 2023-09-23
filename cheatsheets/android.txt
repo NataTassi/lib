@@ -1,0 +1,192 @@
+Android Studio shortcuts:
+
+Undo / redo                          ctrl + z / ctrl + shift + z
+Complete current statement           ctrl + shift + enter
+Go to beginning / end of line        fn + left/right
+Go to previous / next word           ctrl + left/right
+Add a new line after current line    shift + enter
+Duplicate a line or selection        ctrl + d
+Delete current line                  ctrl + y
+Jump between methods up / down       alt up/down
+Extend / contract selection          ctrl + w / ctrl + shift + w
+Toggle case                          ctrl + shift + u
+Delete to word start/end             ctrl + backspace / ctrl + del
+Quick documentation                  ctrl + q
+Run                                  shift + f10
+Overpowered search tool              double shift
+Delete unused imports                ctrl + alt + o
+Close current tab                    ctrl + 4
+Comment selection as lines/block     ctrl + '/' / ctrl + shift + '/'
+
+------------------------------------------------------------------------------------------------------------------
+
+Useful Android install structure using symlinks pointing to a partition called Data:
+
+~/.android --> /media/$USER/Data/Android/.android 
+/opt/android-sdk --> /media/$USER/Data/Android/android-sdk
+/opt/android-studio --> /media/$USER/Data/Android/android-studio
+
+------------------------------------------------------------------------------------------------------------------
+
+mapping.txt location: <project_location>/app/build/outputs/mapping/release
+
+------------------------------------------------------------------------------------------------------------------
+
+Multilingual support:
+
+- Add 'resConfigs "en", "es"' to android.defaultConfig in your module-level build.gradle file.
+  src: https://developer.android.com/guide/topics/resources/multilingual-support#specify-the-languages-your-app-supports
+- Add an activity that overrides attachBaseContext(Context) with a Context with the current preferred locale:
+  @Override
+  protected void attachBaseContext(Context newBase) {
+      super.attachBaseContext(LocalizationUtils.ContextWrapperWithPreferredLocale(newBase));
+  }
+
+------------------------------------------------------------------------------------------------------------------
+
+App startup:
+
+App Startup library:
+- https://developer.android.com/topic/libraries/app-startup
+- https://medium.com/nerd-for-tech/boost-app-start-up-time-with-jetpack-startup-library-f1d61bdb640b
+Splash screen: 
+- https://developer.android.com/develop/ui/views/launch/splash-screen/migrate 
+- https://developer.android.com/develop/ui/views/launch/splash-screen
+- Note: make sure your splash icon has enough margin when creating it, otherwise it will get cropped
+AppIntro libray:
+- https://github.com/AppIntro/AppIntro
+
+------------------------------------------------------------------------------------------------------------------
+
+Android Studio:
+https://quickblox.com/blog/how-to-use-github-with-android-studio/
+https://stackoverflow.com/questions/31931812/suppress-potential-nullpointerexception-in-android-studio
+https://medium.com/@stevdza-san/new-logcat-in-android-studio-dolphin-is-amazing-cce5ffecb07b
+https://developer.android.com/studio/debug/logcat
+
+General:
+https://developer.android.com/studio/releases/platforms
+https://developer.android.com/build/configure-app-module
+https://developer.android.com/build/shrink-code#native-crash-support
+
+Deobfuscate or symbolicate crash stack traces:
+https://support.google.com/googleplay/android-developer/answer/9848633
+https://developer.android.com/build/shrink-code#retracing
+
+Permissions:
+https://developer.android.com/reference/android/Manifest.permission#READ_EXTERNAL_STORAGE
+https://developer.android.com/reference/android/Manifest.permission#WRITE_EXTERNAL_STORAGE
+https://developer.android.com/training/data-storage/shared/media#request-permissions
+
+Misc:
+Get a result from an activity: https://developer.android.com/training/basics/intents/result
+Handle implicit intents: https://developer.android.com/guide/components/intents-filters#Receiving
+Support Android 13+: https://medium.com/tech-takeaways/migrating-my-app-to-android-13-f5ad0649d23d
+https://stackoverflow.com/questions/2092098/why-do-most-fields-class-members-in-android-tutorial-start-with-m
+https://developer.android.com/reference/android/os/Handler
+
+Google Play / Mobile Ads:
+https://developers.google.com/admob/android/quick-start
+https://support.google.com/googleplay/android-developer/answer/6048248?hl=en
+https://support.google.com/googleplay/android-developer/answer/10632485?hl=en#enrollment
+https://developers.google.com/admob/android/privacy/play-data-disclosure
+https://liftoff.io/blog/app-set-id-android/
+
+UI:
+https://medium.com/tech-takeaways/how-to-migrate-the-deprecated-oncreateoptionsmenu-b59635d9fe10
+https://developer.android.com/topic/libraries/architecture/saving-states
+https://developer.android.com/guide/fragments/saving-state
+https://developer.android.com/topic/libraries/view-binding
+https://developer.android.com/guide/navigation/use-graph/multi-back-stacks
+https://developer.android.com/guide/navigation/use-graph/animate-transitions
+https://stackoverflow.com/questions/60433269/how-to-use-view-binding-on-custom-views
+https://developer.alibabacloud.com/tech-news/technology/gii2op7f7a-activitys-launchmode-singletop-singletask-and-singleinstance
+https://developer.android.com/guide/fragments/communicate#pass-parent-child
+https://developer.android.com/guide/fragments/dialogs
+https://developer.android.com/develop/ui/views/components/settings/use-saved-values
+https://developer.android.com/topic/libraries/architecture/datastore
+https://m2.material.io/resources/color/
+https://developer.android.com/topic/libraries/data-binding/two-way
+https://stackoverflow.com/questions/27730253/how-to-style-the-cursor-color-of-searchview-under-appcompat
+https://stackoverflow.com/questions/5575269/android-remove-all-fragmenttransactions-from-the-back-stack
+https://stackoverflow.com/questions/9294603/how-do-i-get-the-currently-displayed-fragment
+https://bladecoder.medium.com/you-should-simply-use-commitallowingstateloss-instead-8c50c2e177c4
+https://stackoverflow.com/questions/21231404/how-to-change-background-color-popup-menu-android
+https://medium.com/androiddevelopers/spantastic-text-styling-with-spans-17b0c16b4568
+https://stackoverflow.com/questions/4486034/get-root-view-from-current-activity
+https://stackoverflow.com/questions/67983163/startintentsenderforresult-deprecated-android
+https://stackoverflow.com/questions/53286583/attach-snackbar-to-recyclerview
+https://stackoverflow.com/questions/3542333/how-to-prevent-custom-views-from-losing-state-across-screen-orientation-changes
+https://github.com/DanielMartinus/Konfetti
+
+Data:
+https://developer.android.com/guide/background
+https://stackoverflow.com/questions/56176554/how-do-i-return-a-listenablefutureresult-with-work-manager-2-0
+https://developer.android.com/guide/background/persistent/getting-started/define-work#java
+https://developer.android.com/develop/ui/views/notifications/notification-permission#declare
+
+Settings:
+https://stackoverflow.com/questions/4371273/should-accessing-sharedpreferences-be-done-off-the-ui-thread
+
+Storage:
+https://medium.com/androiddevelopers/android-11-storage-faq-78cefea52b7c
+https://developer.android.com/training/data-storage/app-specific#java
+https://developer.android.com/training/data-storage/shared/media#manage-groups-files
+
+Sharing files:
+https://developer.android.com/reference/androidx/media3/common/MimeTypes
+https://developer.android.com/training/secure-file-sharing/setup-sharing
+https://developer.android.com/training/secure-file-sharing/share-file
+
+Firabase:
+https://firebase.google.com/docs/android/setup
+
+Billing:
+https://developer.android.com/google/play/billing/integrate#initialize
+https://developer.android.com/google/play/billing/migrate-gpblv5#showing-products
+https://developer.android.com/google/play/billing/test
+https://support.google.com/googleplay/android-developer/answer/2741495
+https://stackoverflow.com/questions/63313049/how-to-handle-billingclient-onbillingservicedisconnected
+https://stackoverflow.com/questions/64247870/what-should-you-put-in-onbillingservicedisconnected
+https://stackoverflow.com/questions/73027160/how-to-pass-token-of-a-one-time-purchase-product-to-google-play-billing-library
+https://stackoverflow.com/questions/11068686/this-version-of-the-application-is-not-configured-for-billing-through-google-pla
+https://developer.android.com/google/play/billing/test#non-consumable
+https://support.google.com/googleplay/android-developer/answer/6062777
+https://developer.android.com/google/play/licensing/setting-up.html#test-response
+
+Ads:
+https://stackoverflow.com/questions/38523735/it-is-necessary-to-initialize-firebase-analytics-in-every-activity
+https://developers.google.com/admob/android/test-ads
+https://developers.google.com/admob/android/test-ads#add_your_test_device_programmatically
+https://developers.google.com/admob/android/quick-start
+https://developers.google.com/admob/android/interstitial
+https://developers.google.com/admob/android/rewarded
+https://developers.google.com/admob/android/banner
+https://developers.google.com/admob/android/banner/anchored-adaptive
+https://developers.google.com/admob/android/ad-load-errors
+https://developers.google.com/admob/android/app-ads
+https://support.google.com/admob/answer/9787936
+https://support.google.com/admob/answer/9788846
+
+Java:
+https://www.javatpoint.com/java-string-format
+https://stackoverflow.com/questions/24202236/lambda-this-reference-in-java
+https://stackoverflow.com/questions/16164902/what-is-the-default-access-modifier-in-java
+https://www.mygreatlearning.com/blog/the-access-modifiers-in-java/
+https://bugfender.com/blog/data-flows-in-rxjava2-observable-flowable-single-maybe-completable/
+
+Microphone:
+https://stackoverflow.com/questions/11985518/android-record-sound-in-mp3-format
+
+Testing:
+https://support.google.com/googleplay/android-developer/answer/9844679?hl=en
+https://stackoverflow.com/questions/70986530/android-studio-emulator-in-a-separate-window
+https://stackoverflow.com/questions/2355884/how-to-simulate-killing-activity-to-conserve-memor
+https://stackoverflow.com/questions/11365301/how-to-simulate-android-killing-my-process
+https://dev.to/vtsen/how-to-simulate-process-death-in-android-24df
+https://stackoverflow.com/questions/4784341/how-do-you-connect-your-terminal-with-the-android-emulator
+https://android.stackexchange.com/questions/226952/can-i-get-more-ram-in-emulator-while-still-having-a-google-play-image
+Note: give your emulators enough resources, default RAM is quite slow for newer devices
+
+FFmpeg:
+https://github.com/arthenica/ffmpeg-kit/tree/main/android
