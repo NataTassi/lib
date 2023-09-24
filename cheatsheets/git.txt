@@ -117,6 +117,10 @@ git add .                  // add (stage) all files in the current directory
 git commit -m "comment"    // apply changes (commit); you can use the flag -a to avoid staging modified or deleted files (you can skip 'git add .')
 git push                   // update remote repo (you may want to add "-u origin master" the first time)
 
+Commits info:
+git log: all commits
+git log -1: last commit
+
 Remove directory:
 git rm -r dir-name
 git commit -m "note"
