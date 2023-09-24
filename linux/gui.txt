@@ -24,3 +24,11 @@ Remove home folder and trash icon from Gnome desktop:
 
 gsettings set org.gnome.shell.extensions.desktop-icons show-home false
 gsettings set org.gnome.shell.extensions.desktop-icons show-trash false
+
+
+Switch between workspaces:
+--------------------------
+
+Gnome:
+- Super -> Drag window to other workspace (right-hand side)
+- Super + Page up/down
