@@ -48,3 +48,4 @@ Show pane numbers:            prefix + q
 Move to pane number:          prefix + q + <num>
 Kill pane:                    prefix + x
 Resize pane:                  prefix + alt + <arrow>
+Rearrange layout:             prefix + space
