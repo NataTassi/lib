@@ -35,6 +35,8 @@ Here 2 is the file descriptor associated to stderr (standard error).
 
 * Pipe to clipboard: <content> | xclip -se c ('-se c' stands for '-selection clipboard'; see 'xclip -h')
 
+* There are some commands like ssh that consume stdin entirely, producing strange results in your scripts, like while loops stopping reading after the first line. To prevent this, pass the -n option to your ssh command to make it read from /dev/null instead of stdin. Other commands have similar flags, or you can universally use < /dev/null.
+
 
 Environment variables:
 
