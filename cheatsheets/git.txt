@@ -157,11 +157,18 @@ Rename local and remote branch:
 4. Push the new branch to remote: git push <remote> <new_name>
 5. Reset the upstream branch for the new_name local branch: git push <remote> -u <new_name>
 
+Delete local and remote tags:
+git tag -d <tag>            # Delete local tag
+git push origin :<tag>      # Delete remote tag by pushing an empty tag name to it
+
 Rename local and remote tags:
-git tag new old           # Create a new local tag named 'new' from tag 'old'.
-git push origin new       # Push 'new' to your remote named 'origin'
-git tag -d old            # Delete local tag 'old'
-git push origin :old      # Delete remote tag 'old' by pushing an empty tag name to it
+Delete local and remote tags
+git tag <new_tag> <old_tag>    # Create a new local tag from an old tag
+git push origin <new_tag>      # Push the new tag to your remote named 'origin'
+
+Delete local and remote branches:
+git branch -d <branch>               # Delete branch locally
+git push origin --delete <branch>    # Delete branch remotely
 
 Create a new repository on the command line:
 1. Create a new folder and set as current working directory

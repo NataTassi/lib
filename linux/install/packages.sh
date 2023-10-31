@@ -28,6 +28,7 @@ wireshark
 curl
 gparted
 neofetch
+p7zip-full
 tmux
 transmission-cli
 transmission-gtk

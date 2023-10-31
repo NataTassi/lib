@@ -249,7 +249,7 @@ Decompress gzip files (gz):       gzip -d <file>
 Compress into zip file:           zip (-r: recursive) (-e: encrypt) (-9: best compression) <output> <input> 
 Decompress zip file:              unzip <file>
 Create 7zip archive:              7z a [-p<password | empty to be prompted for it>] (-mhe: hide names) <output> <input> (-mx=9: best compression) (output extension determines compression method)
-Decompress [multi-part] archives: 7zip x [-p<pass>] <file>
+Decompress [multi-part] archives: 7z x [-p<pass>] <archive> [<files_to_extract>...]
 
 Find diffs between files/dirs:    diff <file1> <file2>
 Check file checksum:              echo "<hash> <filename>" | {md5sum | sha1sum | sha256sum | sha512sum} -c -
