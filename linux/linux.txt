@@ -250,7 +250,7 @@ Compress into gzip file:          gzip <file> (-c: to stdout)
 Decompress gzip files (gz):       gzip -d <file>
 Compress into zip file:           zip (-r: recursive) (-e: encrypt) (-9: best compression) <output> <input> 
 Decompress zip file:              unzip <file>
-Create 7zip archive:              7z a [-p<password | empty to be prompted for it>] (-mhe: hide names) <output> <input> (-mx=9: best compression) (output extension determines compression method)
+Create 7zip archive:              7z a [-p<password | empty to be prompted for it>] (-mhe: hide names) (-v<num>[k|m|g]: volume size) (-mx=9: best compression, -mx0: no compression) <output> <input> (output extension determines compression method)
 Decompress [multi-part] archives: 7z x [-p<pass>] <archive> [<files_to_extract>...]
 
 Find diffs between files/dirs:    diff <file1> <file2>
