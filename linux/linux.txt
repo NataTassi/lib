@@ -214,6 +214,7 @@ Find files:                       find / -name *.txt (find all txt files in the 
 Locate file:                      locate <name | relative path>
 Check file types/existence:       [  (opening square bracket is command; [ -d bin ] to check if a dir called bin exists in the current folder) 
 Find patterns in text:            grep <pattern> (-v: invert matches, -B <num>: print  <num>  lines  of  leading  context  before  matching lines)
+Find files with a pattern:        rgrep <pattern>
 Page through text:                less <file> (when inside less use: h: help, q: quit, /key: find key, n (N): next(prev) result
 Count lines/bytes/chars in file:  wc -l <file> (count lines)
 locate a command:                 which <command>
