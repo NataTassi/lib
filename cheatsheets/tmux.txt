@@ -17,14 +17,19 @@ Restore: prefix + ctrl-r
 Restore previously saved environments: all save files are kept in ~/.tmux/resurrect/ directory, to choose a different save file to use when restoring, just symlink the 'last' file to the desired save file (file names have a timestamp): cd ~/.tmux/resurrect && ln -sf <file_name> last
 
 
+Note: session can be referenced by their name or number
+
+
 Commands:
 
 New tmux session:             tmux [new -s <session_name>] OR prefix + :new
 Prefix to send commands:      ctrl-b (sometimes ctrl-a)
 List open sessions:           tmux ls OR prefix :s
-Kill current session:         prefix :kill-session [-t <number | name>]
+Switch between sessions:      prefix + s
+Kill session:                 tmux kill-session [-t <session] [-a: all but the given one or the one you are attached to]
+Kill current session:         prefix :kill-session [-t <session>]
 Detach from session:          prefix + d
-Attach to session:            tmux a [-t <number | name>]
+Attach to session:            tmux a [-t <session>]
 List all tmux key bindings:   prefix + ?
 Name session:                 prefix + $
 Search/move across panes:     prefix + f
