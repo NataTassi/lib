@@ -314,6 +314,8 @@ The code to start a reverse shell runs a new interactive instance of bash (bash 
 
 Combining commands:
 
+- Number of files in a folder:
+ls -1 | wc -l
 - Count the number of specific characters in a line: 
 CHAR=',' && echo a,b,,,e | sed "s/[^$CHAR]//g" | awk '{ print length }'
 
