@@ -318,6 +318,8 @@ Combining commands:
 ls -1 | wc -l
 - Count the number of specific characters in a line: 
 CHAR=',' && echo a,b,,,e | sed "s/[^$CHAR]//g" | awk '{ print length }'
+- Copy all csv files from <server_path> into the current directory:
+sshpass -p <pass> sftp <user>@<ftp_server>:<server_path>/*.csv .
 
 
 Secure Shell (SSH):
