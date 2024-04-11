@@ -32,3 +32,11 @@ Switch between workspaces:
 Gnome:
 - Super -> Drag window to other workspace (right-hand side)
 - Super + Page up/down
+
+
+Copy a screenshot of an area to clipboard:
+------------------------------------------
+
+Shortcut: Shift + Ctrl + Print
+Command: gnome-screenshot -a -c
+Settings path: Keyboard Shortcuts -> Screenshots section
