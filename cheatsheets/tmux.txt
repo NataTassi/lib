@@ -35,6 +35,7 @@ Name session:                 prefix + $
 Search/move across panes:     prefix + f
 
 Enter copy mode (scrolling):  prefix + [
+Copy mode search:             Ctrl + s (n: next match, Shift-n: previous match)
 Enter command mode:           prefix + :
 Escape command / copy mode:   esc
 
