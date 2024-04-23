@@ -184,6 +184,12 @@ All settings: git config --list
 Commiter username: git config user.name
 Commiter email: git config user.email
 
+Show changes between the working tree and a given commit/tree:
+Use 'git diff <target>', e.g.:
+git diff origin/master
+git diff master
+git diff HEAD
+
 Conditional config file:
 The global git config file is located at ~/.gitconfig. The project-level config file is located at <repo_root>/.git/config.
 At the end of your .gitconfig file, you can put something like this to apply conditional settings by directory (it's actually a pattern):
