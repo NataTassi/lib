@@ -242,6 +242,7 @@ Disk space usage/mounted fs's:    df -h (fs = file system)
 File space usage:                 du -sh[D] <file> (D: dereference symlinks, s: summarize, alternatively set depth to 0 with d0)
 Find out system uptime:           uptime (tells the current time, how long the system has been running and other stats)
 Change display settings:          xrandr (e.g. set brightness with '--output <screen_name> --brightness 0.5', get the screen name without args)
+List open files by process:       lsof [-p <pid>]
 
 List zip content:                 < vim | less > <file>
 List archive content:             7z l <file>
