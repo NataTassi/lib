@@ -1,5 +1,10 @@
-Symmetric encryption:
-Encrypt: gpg -o <output> [--cipher-algo AES256] [--no-symkey-cache] -c <input> 
-Decrypt: gpg -o <output> [--no-symkey-cache] -d <input>
-
-Clear cache: echo RELOADAGENT | gpg-connect-agent
+List private keys:             gpg --list-secret-keys
+List public keys:              gpg --list-keys
+Delete private keys:           gpg --delete-secret-keys <id1> <id2> ...
+Delete public keys:            gpg --delete-keys <id1> <id2> ...
+Import key:                    gpg --import <key>
+Symmetric encrypt:             gpg -o <output> [--cipher-algo AES256] [--no-symkey-cache] -c <input> 
+Decrypt file:                  gpg -d -o <output> [--no-symkey-cache] <input> (GnuPG requires keys (both public and private) to be stored in the GnuPG keyring)
+Export private key:            gpg --export-secret-keys --armor <key_id> > <exported_key_filename>.key
+Extend key expiration date:    gpg --edit-key <key_id> -> (optional: to update subkey) key 1 -> expire -> (follow prompts) -> save
+Clear cache:                   echo RELOADAGENT | gpg-connect-agent
