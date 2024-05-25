@@ -310,6 +310,7 @@ Get private IPs:                  ip -4 -o a | awk '{print $4}'
 Get public IP:                    curl -sL ipinfo.io/ip
 Show active network interfaces:   ifconfig
 Show accesible networks:          netstat -rn
+Find PID using a port:            sudo ss -lptn 'sport = :<port>'
 Download file using wget:         wget <url> (wget supports HTTP, HTTPS, and FTP; see curl for a powerful alternative to transfer data from or to a server)
 Download file using curl:         curl -L <url> -o <file>
 Download file using netcat:       printf 'GET /<relative_path> \n' | nc <host> <port> > <filename> 
