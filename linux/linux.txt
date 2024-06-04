@@ -230,6 +230,7 @@ Change group ownership of a file: chgrp <new_group> <file>
 Execute command as root:          sudo <command>
 
 System information:               uname -a
+Distribution information:         lsb_release -a
 Find out OS version:              run 'hostnamectl' or 'cat /etc/os-release'
 Detailed system info:             neofetch
 Processes information:            ps [aux] (add 'aux' to see the processes run by other users and the system; add axjf to view process tree)
