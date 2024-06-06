@@ -1,14 +1,6 @@
-Enable Python linter:
-1. Trust the workspace (if you are editing a file)
-2. Open the Command Palette (Ctrl+Shift+P) and select 'Python: Enable/Disable Linting'
-
-Edit multiple lines:
-- Windows: Ctrl + Alt + Arrow Keys
-- Linux: Shift + Alt + Arrow Keys
-- Mac: Opt + Cmd + Arrow Keys
-
 Keyboard shortcuts (File -> Preferences -> Keyboard Shortcuts):
 Command palette:              Ctrl + Shift + p
+Change projects/open recent:  Ctrl + r
 Settings:                     Ctrl + ,
 Quick open:                   Ctrl + p
 Switch tabs:                  Ctrl + Tab
@@ -23,6 +15,11 @@ Replace:                      Ctrl + h
 Replace all:                  Ctrl + Alt + Enter
 Find in selection:            Alt + l
 Insert line below:            Ctrl + Enter
+
+Edit multiple lines:
+- Windows: Ctrl + Alt + Arrow Keys
+- Linux: Shift + Alt + Arrow Keys
+- Mac: Opt + Cmd + Arrow Keys
 
 Autosave: 
 Settings -> type autosave -> choose an option (afterDelay is very handy)
@@ -53,6 +50,12 @@ My settings.json content:
     "vim.useSystemClipboard": true,
     "vim.vimrc.enable": true
 }
+
+
+Enable Python linter:
+1. Trust the workspace (if you are editing a file)
+2. Open the Command Palette (Ctrl+Shift+P) and select 'Python: Enable/Disable Linting'
+
 
 Troubleshooting:
 - The name org.freedesktop.secrets was not provided by any .service files: sudo apt install gnome-keyring
