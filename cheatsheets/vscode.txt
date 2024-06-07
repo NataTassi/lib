@@ -32,7 +32,8 @@ Settings -> type vim clip -> Enable 'Use system clipboard for unnamed register' 
 
 Install extension from CLI: code --install-extension <extension_id> (get id: search extension -> gear icon -> copy extension id)
 
-My extensions: C/C++, Docker, IntelliCode, Python, Vim, vscode-pdf
+My extensions: 
+Astro, Dev Containers, Docker, ESLint, GitHub Copilot, GitHub Copilot Chat, Live Share, MDX, PHP Intelephense, Prettier - Code formatter, Pylance, Python, Python Debugger, Tailwind CSS IntelliSense, Vim, vscode-pdf
 
 Access VSCode settings.json file:
 1. Press Ctrl + , (or go to File > Preferences > Settings)
@@ -44,11 +45,12 @@ Linux $HOME/.config/Code/User/settings.json
 
 My settings.json content:
 {
-    "workbench.colorTheme": "Default Dark+",
-    "html.validate.scripts": false,
     "files.autoSave": "afterDelay",
+    "html.validate.scripts": false,
     "vim.useSystemClipboard": true,
-    "vim.vimrc.enable": true
+    "vim.vimrc.enable": true,
+	"window.zoomLevel": 1,
+    "workbench.colorTheme": "Default Dark+"
 }
 
 
