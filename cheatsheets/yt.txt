@@ -1,0 +1,10 @@
+Install yt-dlp (audio/video downloader for any streaming platform):
+	sudo wget -q --show-progress https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -O /usr/local/bin/yt
+	sudo chmod +x /usr/local/bin/yt
+	cd /usr/bin
+	sudo ln -fs /usr/bin/python3 python
+
+
+Download audio/video: yt <url>
+Download audio from YouTube video: yt -f 'bestaudio[acodec=opus]' <youtube_url> -o "%(id)s"
+Download 480p video with auto ES subs from YouTube: yt --write-auto-subs --sub-format ttml --convert-subs vtt --sub-lang es -f 'bestvideo[height<=480][vcodec=vp9]+bestaudio[acodec=opus]' https://youtu.be/39yuDBN5Kbs -o "%(id)s"
