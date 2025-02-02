@@ -306,9 +306,9 @@ Test host reachability:           ping <host> (either domain or IP address)
 Web browser:                      links2 <url>
 Connect to a VPN:                 sudo openvpn <vpn_key_file>
 SSH into a machine:               ssh <user>@<ip>[:<port>] (you'll be prompted for a pass; add '<command> >> <local_file>' to send output to local file)
-Connect to ProtonVPN:             protonvpn-cli
+Connect to ProtonVPN:             protonvpn-cli 
 Get private IPs:                  ip -4 -o a | awk '{print $4}' 
-Get public IP:                    curl -sL ipinfo.io/ip
+Get public IP info:               curl -sL ipinfo.io (includes IP, hostname, city, country, ISP and location, you can get a specific value appending /<value>)
 Show active network interfaces:   ifconfig
 Show accesible networks:          netstat -rn
 Find PID using a port:            sudo ss -lptn 'sport = :<port>'
