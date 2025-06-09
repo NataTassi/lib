@@ -178,7 +178,7 @@ Note: <param> denotes a parameter, [option] denotes an optional parameter and (o
 Clear screen:                     clear
 Install package:                  apt install -y <package>
 Show package info:                apt info <package> 2>/dev/null | awk '/Description/,0' (from 'Description' 'til the end of input)
-Check if package is installed:    apt list <package> OR apt list --installed | grep <package>
+Check if package is installed:    apt list --installed | grep <package>
 Show manual page of <name>:       man [<page>] <name>
 Create alias for a command:       alias NAME="VALUE" (append to .bashrc to persist it across logins)
 Search for commands:              apropos <keyword>
@@ -239,10 +239,11 @@ Interactive process viewer:       htop
 Kill a process:                   kill <pid> (we can send signals to the process to be killed: SIGTERM to allow cleanup (default), SIGKILL to avoid cleanup, SIGSTOP to stop a process)
 Block devices:                    lsblk (-f: filesystems info)
 Installed harware and drivers:    lspci
+Install missing drivers:          ubuntu-drivers install
 Disk space usage/mounted fs's:    df -h (fs = file system)
 File space usage:                 du -sh[D] <file> (D: dereference symlinks, s: summarize, alternatively set depth to 0 with d0)
 Find out system uptime:           uptime (tells the current time, how long the system has been running and other stats)
-Change display settings:          xrandr (e.g. set brightness with '--output <screen_name> --brightness 0.5', get the screen name without args)
+Change display settings:          xrandr (also shows second monitor; usage example: set brightness with '--output <screen_name> --brightness 0.5', get the screen name without args)
 List open files by process:       lsof [-p <pid>]
 
 List zip content:                 < vim | less > <file>
